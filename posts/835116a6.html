@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>vim的基本入门 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="vim">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="前言工善其事，必利其器。Linux系统中常见的编辑技巧，vim必不可少。Vim是从vi发展出来的一个文本编辑器。其代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。Vim的第一个版本由布莱姆·米勒在ADM-3A终端上开发的，于1991年发布。 使用本篇学习于慕课网DevOps24h讲师的优雅玩转Vim-课程 移动、跳转和缩进 光标移动    按键 效果    h&#x2F;j&#x2F;k&#x2F;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim的基本入门">
+<meta property="og:url" content="https://zeffon.design/posts/835116a6.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="前言工善其事，必利其器。Linux系统中常见的编辑技巧，vim必不可少。Vim是从vi发展出来的一个文本编辑器。其代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。Vim的第一个版本由布莱姆·米勒在ADM-3A终端上开发的，于1991年发布。 使用本篇学习于慕课网DevOps24h讲师的优雅玩转Vim-课程 移动、跳转和缩进 光标移动    按键 效果    h&#x2F;j&#x2F;k&#x2F;l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zeffon.design/images/2019/11/vim.png">
+<meta property="article:published_time" content="2019-11-03T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:01:27.781Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zeffon.design/images/2019/11/vim.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.design/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/ZeffonWu" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vim的基本入门</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#移动、跳转和缩进"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">移动、跳转和缩进</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#删除、复制和粘贴"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">删除、复制和粘贴</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#修改、查找和替换"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">修改、查找和替换</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-base-vim"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vim的基本入门</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-11-03 12:00:00" datetime="2019-11-03T04:00:00.000Z"  itemprop="datePublished">2019-11-03</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Note/">Note</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">3</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工善其事，必利其器。Linux系统中常见的编辑技巧，vim必不可少。<br>Vim是从<code>vi</code>发展出来的一个<code>文本编辑器</code>。其代码补完、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。Vim的第一个版本由布莱姆·米勒在<code>ADM-3A</code>终端上开发的，于1991年发布。<br><img src="/images/2019/11/vim.png" width="80%" alt="adm-3a"></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>本篇学习于慕课网<code>DevOps24h</code>讲师的<code>优雅玩转Vim</code>-<a href="https://www.imooc.com/learn/1049" target="_blank" rel="noopener">课程</a></p>
+<h3 id="移动、跳转和缩进"><a href="#移动、跳转和缩进" class="headerlink" title="移动、跳转和缩进"></a>移动、跳转和缩进</h3><ol>
+<li><p><strong><code>光标移动</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">h/j/k/l</td>
+<td align="center">左/下/上/右</td>
+</tr>
+<tr>
+<td align="center">^/0</td>
+<td align="center">移动到行首/包括缩进空格</td>
+</tr>
+<tr>
+<td align="center">$</td>
+<td align="center">移动到行尾</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>单词和字符串移动</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">w/W</td>
+<td align="center">正向移动到下一个单词开头</td>
+</tr>
+<tr>
+<td align="center">b/B</td>
+<td align="center">反向移动</td>
+</tr>
+<tr>
+<td align="center">e/E</td>
+<td align="center">正向移动下一个单词行尾</td>
+</tr>
+<tr>
+<td align="center">ge</td>
+<td align="center">反向移动</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>跳转</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Ctrl-f/F</td>
+<td align="center">下一页</td>
+</tr>
+<tr>
+<td align="center">Ctrl-b/B</td>
+<td align="center">上一页</td>
+</tr>
+<tr>
+<td align="center">Ctrl-d/u</td>
+<td align="center">向下/上翻半页</td>
+</tr>
+<tr>
+<td align="center">gg</td>
+<td align="center">跳转到首行</td>
+</tr>
+<tr>
+<td align="center"><line_number>gg/G</line_number></td>
+<td align="center">跳转到指定行</td>
+</tr>
+<tr>
+<td align="center">{g} + Ctrl-g/G</td>
+<td align="center">跳转到最后一行</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>缩进</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&gt;&gt; / :&gt;</td>
+<td align="center">右缩进</td>
+</tr>
+<tr>
+<td align="center">m,n&gt; / :m&gt;(n-m+1)</td>
+<td align="center">m 到 n 行缩进</td>
+</tr>
+<tr>
+<td align="center">m&gt;n等价于命令:m,m+n-1&gt;</td>
+<td align="center">m行开始共n行缩进一次</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="删除、复制和粘贴"><a href="#删除、复制和粘贴" class="headerlink" title="删除、复制和粘贴"></a>删除、复制和粘贴</h3><ol>
+<li><p><strong><code>对比</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">windowa</th>
+<th align="center">Vim</th>
+<th align="center">不同处</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">cut</td>
+<td align="center">delete</td>
+<td align="center">和剪切相同，而不是直接删除</td>
+</tr>
+<tr>
+<td align="center">copy</td>
+<td align="center">yank</td>
+<td align="center">等同于复制由于c用于修改(change)被迫选了yank</td>
+</tr>
+<tr>
+<td align="center">paste</td>
+<td align="center">put</td>
+<td align="center">粘贴完全相同</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>基本操作</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">d = delete = cut</td>
+<td align="center">剪切</td>
+</tr>
+<tr>
+<td align="center">dd</td>
+<td align="center">剪切当前光标整行</td>
+</tr>
+<tr>
+<td align="center">y = yank ≈ copy</td>
+<td align="center">类似于复制</td>
+</tr>
+<tr>
+<td align="center">p/P = put ≈ paste</td>
+<td align="center">粘贴到光标后/光标前</td>
+</tr>
+<tr>
+<td align="center">u = undo</td>
+<td align="center">撤销之前操作</td>
+</tr>
+<tr>
+<td align="center">Ctrl-r = redo</td>
+<td align="center">重做/恢复之前操作</td>
+</tr>
+<tr>
+<td align="center">yw</td>
+<td align="center">复制当前光标单词</td>
+</tr>
+<tr>
+<td align="center">y2w</td>
+<td align="center">复制正向两个单词</td>
+</tr>
+<tr>
+<td align="center">yy 类似于 dd</td>
+<td align="center">复制当前光标整行</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>组合删除</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">x/X</td>
+<td align="center">删除光标下/前单个字符</td>
+</tr>
+<tr>
+<td align="center">dw(d=delete, w=word)</td>
+<td align="center">删除一单词(必须在词首)</td>
+</tr>
+<tr>
+<td align="center">d{hjkl}</td>
+<td align="center">删除到左下上右一个操作前的字符</td>
+</tr>
+<tr>
+<td align="center">d$=D</td>
+<td align="center">删除光标到行尾的字符</td>
+</tr>
+<tr>
+<td align="center">d^</td>
+<td align="center">删除光标到行首的字符</td>
+</tr>
+<tr>
+<td align="center">dd</td>
+<td align="center">删除当前整行</td>
+</tr>
+<tr>
+<td align="center">{n}dd</td>
+<td align="center">向下删除n行(包括当前行)</td>
+</tr>
+<tr>
+<td align="center">5dw</td>
+<td align="center">删除正向单词5次</td>
+</tr>
+<tr>
+<td align="center">3w</td>
+<td align="center">正向移动单词3次</td>
+</tr>
+<tr>
+<td align="center">D3w</td>
+<td align="center">正向删除3w动作</td>
+</tr>
+<tr>
+<td align="center">2d3w</td>
+<td align="center">正向删除3w动作2次</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="修改、查找和替换"><a href="#修改、查找和替换" class="headerlink" title="修改、查找和替换"></a>修改、查找和替换</h3><ol>
+<li><p><strong><code>插入</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Shift+i/A</td>
+<td align="center">插入模式并移动到行首/行尾</td>
+</tr>
+<tr>
+<td align="center">a/i</td>
+<td align="center">光标后/前插入</td>
+</tr>
+<tr>
+<td align="center">{n}O/o</td>
+<td align="center">行前/行后插入n次</td>
+</tr>
+<tr>
+<td align="center">{n}+i</td>
+<td align="center">插入模式重复n次</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>转换</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">~</td>
+<td align="center">单个字符大小写转换</td>
+</tr>
+<tr>
+<td align="center">g ~ w</td>
+<td align="center">单词大小写转换</td>
+</tr>
+<tr>
+<td align="center">g ~ $ / g ~ ~</td>
+<td align="center">行前/行后插入n次</td>
+</tr>
+<tr>
+<td align="center">gU/uw</td>
+<td align="center">单词转换成大/小写</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>查找</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">F/f{char}</td>
+<td align="center">反向/正向查找单个字符</td>
+</tr>
+<tr>
+<td align="center">t{char}</td>
+<td align="center">查找字符前一个字符</td>
+</tr>
+<tr>
+<td align="center">dt{char} / df{space}</td>
+<td align="center">删除光标到查找字符间字符</td>
+</tr>
+<tr>
+<td align="center">/{char}</td>
+<td align="center">命令行查找</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong><code>替换</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Shift + r/R</td>
+<td align="center">替换模式</td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td align="center">单个字符替换</td>
+</tr>
+<tr>
+<td align="center">cw</td>
+<td align="center">修改单个单词</td>
+</tr>
+<tr>
+<td align="center">c$ / C</td>
+<td align="center">修改光标之后行内内容</td>
+</tr>
+<tr>
+<td align="center">s/going/rolling/g</td>
+<td align="center">当前行所有going替换成rolling</td>
+</tr>
+<tr>
+<td align="center">%s/going/rolling/g</td>
+<td align="center">%匹配所有范围</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-02-18T09:01:27.781Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/835116a6.html" target="_blank" rel="external">https://zeffon.design/posts/835116a6.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://zeffon.design'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/" rel="tag">vim</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/835116a6.html&title=《vim的基本入门》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/835116a6.html&title=《vim的基本入门》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.design/posts/835116a6.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vim的基本入门》 — Zeffon's blog&url=https://zeffon.design/posts/835116a6.html&via=https://zeffon.design" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.design/posts/835116a6.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/179a1564.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：vimium的使用
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/2e8979ff.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：搭建GitLab私服">下一篇：搭建GitLab私服</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'd85bbfe498c1175c07cf',
+            clientSecret: '6a35923f79b134f0ba90cf021b3ffe0df87f2674',
+            repo: 'blog',
+            owner: 'ZeffonWu',
+            admin: ['ZeffonWu']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a>
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://zeffon.design">zeffon.cn</a>
+            粤A3-20190101
+        </span>
+        <br/>
+
+        <span class="license"><a  target="_blank" rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/835116a6.html&title=《vim的基本入门》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/835116a6.html&title=《vim的基本入门》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.design/posts/835116a6.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vim的基本入门》 — Zeffon's blog&url=https://zeffon.design/posts/835116a6.html&via=https://zeffon.design" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.design/posts/835116a6.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvElEQVR42u3ay47jIBAF0Pz/T6e3kaZDblEUnZEOqwg79sELRD0ej3g8X8a/M6/z1f8+JgYuLm6b+1yO13uS57ybSa6uDbi4uPe569evF/Du0fl8YsDFxf1+brJVJRsWLi7u/87NiXkUg4uL+83cJPipbm3rmfFYDRcXt8HtbDqnfo/kd3Fxcbe4z62RhzGdJOkvz8fFxb3CrW46pxIoyYLfLhsXF3eYmzdPJE0V1VRLuUUDFxf3OjcPS5LNbo/14fPh4uJe4eaZh/ye6mEofyYuLu5N7tn2iM4yCl8UFxd3mFs9ReTQJDlSLeLi4uJOc/MVdI4+/ZIMLi7uTW6Szliz+k0byREnSpvi4uIe4uaUfL56JCoEP7i4uBe5/cLJRPDzYcfFxcUd4/aPLHvc6nEHFxf3JvdUEaUT5GwGP7i4uGPc6cRHfsQpJGdxcXGHuXvFj+prBosouLi4A9y9Joy8AauaMK1uebi4uHPc6qbT6fxKFvbhKi4u7kXuRBHlUqyGi4v7p9z+yw4sCRcX98u41VrnepGbV3FxcS9yTyU39+4stGjg4uJe4eYJ07yA2kmRHMvv4uLi7nB/AMhslYzT4TvGAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>
