@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zeffon.design/"/>
-  <updated>2020-03-04T02:20:37.061Z</updated>
+  <updated>2020-03-04T02:26:46.874Z</updated>
   <id>https://zeffon.design/</id>
   
   <author>
@@ -17,24 +17,27 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>spring-data-jpa-method-naming-rules</title>
+    <title>spring data jpa 方法命名规则</title>
     <link href="https://zeffon.design/posts/14d38de7.html"/>
     <id>https://zeffon.design/posts/14d38de7.html</id>
-    <published>2020-03-03T16:00:00.000Z</published>
-    <updated>2020-03-04T02:20:37.061Z</updated>
+    <published>2020-03-04T01:54:32.000Z</published>
+    <updated>2020-03-04T02:26:46.874Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>记录在SpringBoot项目使用JPA访问数据库数据时，Repository持久层的方法命名规则</p><a id="more"></a><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Repository持久层的方法通过方法的命名规则会自动创建出对应的SQL语句的，因此使用JPA作为数据访问层时，我们可以通过编写对应的方法来获取到数据库的数据，<code>而不需要编写SQL语句</code>，相比于Mybatis，这样简化编码流程，提高了开发效率，但也是有<code>局限性</code>的。其无法应对太复杂的SQL语句，同时也会造成方法的命名太长而不优雅。但是编写简单的SQL时，的确非常有助于我们开发。</p><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><table><thead><tr><th align="left">关键字</th><th align="left">方法命名</th><th align="left">sql where字句</th></tr></thead><tbody><tr><td align="left">And</td><td align="left">findByNameAndPwd</td><td align="left">where name= ? and pwd =?</td></tr><tr><td align="left">Or</td><td align="left">findByNameOrSex</td><td align="left">where name= ? or sex=?</td></tr><tr><td align="left">Is,Equals</td><td align="left">findById,findByIdEquals</td><td align="left">where id= ?</td></tr><tr><td align="left">Between</td><td align="left">findByIdBetween</td><td align="left">where id between ? and ?</td></tr><tr><td align="left">LessThan</td><td align="left">findByIdLessThan</td><td align="left">where id &lt; ?</td></tr><tr><td align="left">LessThanEquals</td><td align="left">findByIdLessThanEquals</td><td align="left">where id &lt;= ?</td></tr><tr><td align="left">GreaterThan</td><td align="left">findByIdGreaterThan</td><td align="left">where id &gt; ?</td></tr><tr><td align="left">GreaterThanEquals</td><td align="left">findByIdGreaterThanEquals</td><td align="left">where id &gt; = ?</td></tr><tr><td align="left">After</td><td align="left">findByIdAfter</td><td align="left">where id &gt; ?</td></tr><tr><td align="left">Before</td><td align="left">findByIdBefore</td><td align="left">where id &lt; ?</td></tr><tr><td align="left">IsNull</td><td align="left">findByNameIsNull</td><td align="left">where name is null</td></tr><tr><td align="left">isNotNull,NotNull</td><td align="left">findByNameNotNull</td><td align="left">where name is not null</td></tr><tr><td align="left">Like</td><td align="left">findByNameLike</td><td align="left">where name like ?</td></tr><tr><td align="left">NotLike</td><td align="left">findByNameNotLike</td><td align="left">where name not like ?</td></tr><tr><td align="left">StartingWith</td><td align="left">findByNameStartingWith</td><td align="left">where name like ‘?%’</td></tr><tr><td align="left">EndingWith</td><td align="left">findByNameEndingWith</td><td align="left">where name like ‘%?’</td></tr><tr><td align="left">Containing</td><td align="left">findByNameContaining</td><td align="left">where name like ‘%?%’</td></tr><tr><td align="left">OrderBy</td><td align="left">findByIdOrderByXDesc</td><td align="left">where id=? order by x desc</td></tr><tr><td align="left">Not</td><td align="left">findByNameNot</td><td align="left">where name &lt;&gt; ?</td></tr><tr><td align="left">In</td><td align="left">findByIdIn(Collection&lt;?&gt; c)</td><td align="left">where id in (?)</td></tr><tr><td align="left">NotIn</td><td align="left">findByNameNot</td><td align="left">where name &lt;&gt; ?</td></tr><tr><td align="left">True</td><td align="left">findByAaaTue</td><td align="left">where aaa = true</td></tr><tr><td align="left">False</td><td align="left">findByAaaFalse</td><td align="left">where aaa = false</td></tr><tr><td align="left">IgnoreCase</td><td align="left">findByNameIgnoreCase</td><td align="left">where UPPER(name)=UPPER(?)</td></tr><tr><td align="left">top</td><td align="left">findTop100</td><td align="left">top 10/where ROWNUM &lt;=10</td></tr></tbody></table><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla
-      
+      &lt;p&gt;记录在SpringBoot项目使用JPA访问数据库数据时，Repository持久层的方法命名规则&lt;/p&gt;
     
     </summary>
     
     
+      <category term="Java" scheme="https://zeffon.design/categories/Java/"/>
+    
+    
+      <category term="springBoot" scheme="https://zeffon.design/tags/springBoot/"/>
+    
+      <category term="java" scheme="https://zeffon.design/tags/java/"/>
     
   </entry>
   
