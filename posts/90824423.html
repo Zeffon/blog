@@ -6,7 +6,7 @@
     
     
     
-    <title>Mysql并发访问问题 | Zeffon&#39;s blog | 个人博客</title>
+    <title>Mysql并发访问事务问题 | Zeffon&#39;s blog | 个人博客</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -41,13 +41,13 @@
     
     <meta name="description" content="前言Mysql事务并发访问导致的问题–更新丢失、脏读、不可重复读、幻读。Mysql数据库事务的四大特性–原子性、一致性、隔离性、持久性。而锁是数据库中的一个非常重要的概念，它主要用于多用户环境下保证数据库完整性和一致性。如果在多用户并发情况下，他们的事务同时对相同的数据进行操作，是会导致更新丢失、脏读、不可重复读、幻读的问题的。 更新丢失 Mysql所有事务隔离级别在数据库层面上均可避免更新丢失问">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql并发访问问题">
+<meta property="og:title" content="Mysql并发访问事务问题">
 <meta property="og:url" content="https://zeffon.design/posts/90824423.html">
 <meta property="og:site_name" content="Zeffon&#39;s blog">
 <meta property="og:description" content="前言Mysql事务并发访问导致的问题–更新丢失、脏读、不可重复读、幻读。Mysql数据库事务的四大特性–原子性、一致性、隔离性、持久性。而锁是数据库中的一个非常重要的概念，它主要用于多用户环境下保证数据库完整性和一致性。如果在多用户并发情况下，他们的事务同时对相同的数据进行操作，是会导致更新丢失、脏读、不可重复读、幻读的问题的。 更新丢失 Mysql所有事务隔离级别在数据库层面上均可避免更新丢失问">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-10-13T04:00:00.000Z">
-<meta property="article:modified_time" content="2020-02-18T09:01:27.776Z">
+<meta property="article:modified_time" content="2020-04-08T13:20:07.449Z">
 <meta property="article:author" content="Zeffon">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -146,7 +146,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Mysql并发访问问题</div>
+        <div class="flex-col header-title ellipsis">Mysql并发访问事务问题</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -194,7 +194,7 @@
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Mysql并发访问问题</h1>
+        <h1 class="post-card-title">Mysql并发访问事务问题</h1>
         <div class="post-meta">
             <i class="icon icon-lg icon-calendar-o"></i>
             发表于
@@ -227,7 +227,42 @@
 <li>如果在<code>A事务</code>完成之后，<code>B事务</code>才能进行更改，则可以避免该问题。</li>
 </ol>
 <p><strong>更新丢失Demo</strong>  </p>
-<p>|取款事务|存款事务|<br>| :—-:| :—-: | :—-: |<br>|开始事务|开始事务|<br>|查询转账余额为100元||<br>||查询转账余额为100元|<br>||存入20元，余额变为120元|<br>||提交事务|<br>|取出10元，余额改为90元||<br>|回滚事务，余额恢复为100元|更新丢失|</p>
+<table>
+<thead>
+<tr>
+<th align="center">取款事务</th>
+<th align="center">存款事务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">开始事务</td>
+<td align="center">开始事务</td>
+</tr>
+<tr>
+<td align="center">查询转账余额为100元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">查询转账余额为100元</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">存入20元，余额变为120元</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">提交事务</td>
+</tr>
+<tr>
+<td align="center">取出10元，余额改为90元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">回滚事务，余额恢复为100元</td>
+<td align="center">更新丢失</td>
+</tr>
+</tbody></table>
 <h3 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h3><ol>
 <li>READ-COMMITTED事务隔离级别以上可避免–<code>脏读</code>问题</li>
 <li>脏读就是指当一个事务正在访问数据，并且对数据进行了<code>修改</code>，而这种修改还<code>没有提交</code>到数据库中，这时，<code>另外</code>一个事务也访问这个数据，然后<code>使用</code>了这个数据。因为这个数据是<code>还没有提交</code>的数据，那么另外一个事务读到的这个数据是<code>脏数据</code>，依据脏数据所做的操作可能是不正确的。</li>
@@ -237,14 +272,84 @@
 <p>数据库默认的隔离级别是REPEATABLE-READ。为了演示脏读效果，需要先将数据库隔离级别设置成READ-UNCOMMITTED。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SQL"><figure class="iseeu highlight /sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @@tx_isolation;</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">read</span> uncommitted;</span><br></pre></td></tr></tbody></table></figure></div>
 
-<p>|A事务|B事务|<br>| :—-:| :—-: | :—-: |<br>|开始事务|开始事务|<br>|1账户余额1000元，转出100元||<br>|查询1账户剩900元||<br>||查询1账户剩900元|<br>|没有进行事务提交，而是事务回滚，余额恢复1000元||<br>||不知道A事务进行回滚，对1账户存入200元|<br>||提交事务|<br>||再次查询1账户余额1100|</p>
+<table>
+<thead>
+<tr>
+<th align="center">A事务</th>
+<th align="center">B事务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">开始事务</td>
+<td align="center">开始事务</td>
+</tr>
+<tr>
+<td align="center">1账户余额1000元，转出100元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">查询1账户剩900元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">查询1账户剩900元</td>
+</tr>
+<tr>
+<td align="center">没有进行事务提交，而是事务回滚，余额恢复1000元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">不知道A事务进行回滚，对1账户存入200元</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">提交事务</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">再次查询1账户余额1100</td>
+</tr>
+</tbody></table>
 <h3 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h3><ol>
 <li>REPEATABLE_READ事务隔离级别以上可避免–不可重复读问题</li>
 <li>不可重复读是指在一个事务内，<code>多次</code>读<code>同一</code>数据。在这个事务<code>还没有结束</code>时，另外一个事务也访问该<code>同一数据</code>。那么，在第一个事务中的<code>两次</code>读数据<code>之间</code>，由于第二个事务的<code>修改</code>，那么第一个事务两次读到的的数据可能是<code>不一样</code>的。</li>
 <li>如果在<code>B事务</code>确定最终<code>更改前</code>，<code>A事务</code>或者其它事务都不能<code>读取</code>更改的文档，则可以避免该问题。</li>
 </ol>
 <p><strong>不可重复读Demo</strong></p>
-<p>|A事务|B事务|<br>| :—-:| :—-: | :—-: |<br>|开始事务|开始事务|<br>|查询1账户余额1300元||<br>||对1账户存入300元|<br>||查询1账户剩1600元|<br>||进行事务提交|<br>|查询1账户余额1600元||</p>
+<table>
+<thead>
+<tr>
+<th align="center">A事务</th>
+<th align="center">B事务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">开始事务</td>
+<td align="center">开始事务</td>
+</tr>
+<tr>
+<td align="center">查询1账户余额1300元</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">对1账户存入300元</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">查询1账户剩1600元</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">进行事务提交</td>
+</tr>
+<tr>
+<td align="center">查询1账户余额1600元</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <ul>
 <li>数据库默认的隔离级别是REPEATABLE-READ。若将数据库隔离级别设置成REPEATABLE_READ，则<code>A事务第二次</code>查询余额还是1300元，不会是1600元。<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SQL"><figure class="iseeu highlight /sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @@tx_isolation;</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> repeatable <span class="keyword">read</span>;</span><br></pre></td></tr></tbody></table></figure></div>
 
@@ -257,7 +362,38 @@
 <li>幻觉读是指当事务不是<code>独立</code>执行时发生的一种现象，例如第一个事务对一个表中的数据进行了修改，这种修改涉及到表中的<code>全部数据行</code>。同时，第二个事务也修改这个表中的数据，这种修改是向表中<code>插入</code>一行新数据。那么，以后就会发生操作第一个事务的用户发现表中还有<code>没有修改</code>的数据行，就好象发生了幻觉一样。</li>
 </ol>
 <p><strong>幻读Demo</strong></p>
-<p>|A事务|B事务|<br>| :—-:| :—-: | :—-: |<br>|开始事务|开始事务|<br>|查询全部账号余额，当前有3个账号||<br>||新增4账号及其余额|<br>||进行事务提交|<br>|更新所有的账户余额||<br>|出现有四个账号幻读的现象||</p>
+<table>
+<thead>
+<tr>
+<th align="center">A事务</th>
+<th align="center">B事务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">开始事务</td>
+<td align="center">开始事务</td>
+</tr>
+<tr>
+<td align="center">查询全部账号余额，当前有3个账号</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">新增4账号及其余额</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">进行事务提交</td>
+</tr>
+<tr>
+<td align="center">更新所有的账户余额</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">出现有四个账号幻读的现象</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <ul>
 <li>数据库默认的隔离级别是REPEATABLE-READ。若将数据库隔离级别设置成SERIALIZABLE，则<code>B事务</code>新增账号4需要等待<code>A事务</code>操作完才能进行。  <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SQL"><figure class="iseeu highlight /sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @@tx_isolation;</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> <span class="keyword">serializable</span>;</span><br></pre></td></tr></tbody></table></figure></div>
 
@@ -333,7 +469,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2020-02-18T09:01:27.776Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+    最后更新：<time datetime="2020-04-08T13:20:07.449Z" itemprop="dateUpdated">2020-04-08 21:20:07</time>
 </span>
 
 
@@ -370,7 +506,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问问题》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问事务问题》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -380,7 +516,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问问题》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问事务问题》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -390,7 +526,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql并发访问问题》 — Zeffon's blog&url=https://zeffon.design/posts/90824423.html&via=https://zeffon.design" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql并发访问事务问题》 — Zeffon's blog&url=https://zeffon.design/posts/90824423.html&via=https://zeffon.design" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -533,7 +669,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问问题》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问事务问题》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -543,7 +679,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问问题》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/90824423.html&title=《Mysql并发访问事务问题》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -553,7 +689,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql并发访问问题》 — Zeffon's blog&url=https://zeffon.design/posts/90824423.html&via=https://zeffon.design" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql并发访问事务问题》 — Zeffon's blog&url=https://zeffon.design/posts/90824423.html&via=https://zeffon.design" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
