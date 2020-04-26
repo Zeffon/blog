@@ -6,13 +6,13 @@
     
     
     
-    <title>Redis缓存雪崩、穿透 | Zeffon&#39;s blog | 个人博客</title>
+    <title>Nginx基本认知 | Zeffon&#39;s blog | 个人博客</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
     
     
-    <meta name="keywords" content="redis">
+    <meta name="keywords" content="nginx">
     
     
 
@@ -39,22 +39,25 @@
 
 
     
-    <meta name="description" content="在使用redis作为缓存层时，有时候不好的程序设计会导致Redis缓存雪崩和穿透问题。">
+    <meta name="description" content="Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis缓存雪崩、穿透">
-<meta property="og:url" content="https://zeffon.design/posts/aacd080c.html">
+<meta property="og:title" content="Nginx基本认知">
+<meta property="og:url" content="https://zeffon.design/posts/5d519c47.html">
 <meta property="og:site_name" content="Zeffon&#39;s blog">
-<meta property="og:description" content="在使用redis作为缓存层时，有时候不好的程序设计会导致Redis缓存雪崩和穿透问题。">
+<meta property="og:description" content="Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zeffon.design/images/2020/04/20-aualanche-01.png">
-<meta property="og:image" content="https://zeffon.design/images/2020/04/20-aualanche-02.png">
-<meta property="og:image" content="https://zeffon.design/images/2020/04/20-aualanche-03.png">
-<meta property="article:published_time" content="2020-04-20T03:09:24.000Z">
-<meta property="article:modified_time" content="2020-04-17T03:44:14.320Z">
+<meta property="og:image" content="https://zeffon.design/images/2020/04/27-01-forward-proxy.png">
+<meta property="og:image" content="https://zeffon.design/images/2020/04/27-02-reverse-proxy.png">
+<meta property="og:image" content="https://zeffon.design/images/2020/04/27-03-process-model.png">
+<meta property="og:image" content="https://zeffon.design/images/2020/04/27-04-traditional-event-processing.png">
+<meta property="og:image" content="https://zeffon.design/images/2020/04/27-05-nginx-event-processing.png">
+<meta property="og:image" content="https://zeffon.design/images/2020/04/27-06-worker-seize.png">
+<meta property="article:published_time" content="2020-04-27T00:39:29.000Z">
+<meta property="article:modified_time" content="2020-04-26T16:44:52.734Z">
 <meta property="article:author" content="Zeffon">
-<meta property="article:tag" content="redis">
+<meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zeffon.design/images/2020/04/20-aualanche-01.png">
+<meta name="twitter:image" content="https://zeffon.design/images/2020/04/27-01-forward-proxy.png">
     
         <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
     
@@ -150,7 +153,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Redis缓存雪崩、穿透</div>
+        <div class="flex-col header-title ellipsis">Nginx基本认知</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -190,24 +193,24 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">2.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缓存雪崩"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">缓存雪崩</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缓存穿透"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">缓存穿透</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#区别"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">区别</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">1.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Nginx方向代理"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Nginx方向代理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#正向代理"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">正向代理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#反向代理"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">反向代理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#联系"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">联系</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Nginx进程模型"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Nginx进程模型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Nginx请求机制"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Nginx请求机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#传统服务器-同步阻塞"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">传统服务器-同步阻塞</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Nginx服务器-异步非阻塞"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">Nginx服务器-异步非阻塞</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Nginx-Worker抢占机制"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">Nginx Worker抢占机制</span></a></li></ol></li></ol></li></ol>
         </nav>
     </aside>
    
-<article id="post-redis-cache-avalanche-penetration"
+<article id="post-nginx-basic"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Redis缓存雪崩、穿透</h1>
+        <h1 class="post-card-title">Nginx基本认知</h1>
         <div class="post-meta">
             <i class="icon icon-lg icon-calendar-o"></i>
             发表于
-            <time class="post-time" title="2020-04-20 11:09:24" datetime="2020-04-20T03:09:24.000Z"  itemprop="datePublished">2020-04-20</time>
+            <time class="post-time" title="2020-04-27 08:39:29" datetime="2020-04-27T00:39:29.000Z"  itemprop="datePublished">2020-04-27</time>
 
             <br id="mybreak"/>
             
 	<i class="icon icon-lg icon-folder-o"></i>
-	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li></ul>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Web/">Web</a></li></ul>
 
 
             <i>·</i>
@@ -220,24 +223,40 @@
         </div>
         <div class="post-count-custom">
             <i class="icon icon-lg icon-comment-o"></i>
-            阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
+            阅读本文可能花费您&nbsp;<span class="post-count">3</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>在使用redis作为缓存层时，有时候不好的程序设计会导致Redis缓存雪崩和穿透问题。</p>
+            <p>Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。</p>
 <a id="more"></a>
 
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p><strong><code>雪崩</code></strong> ：Redis中有大量的key，会设置过期时间。如果过期时间有太多重合的，那么在某个时间点会有大量<code>key失效了</code>或是由于<code>Redis宕机</code>了<br>恰好这时候有很大很大的流量流入进来。那么这个时候所有的请求不会再<code>经过Redis缓存层</code>，而是都会直接打在数据库上，数据库可能会处理不过来导致<code>宕机崩溃</code>。</p>
-<p>原本是会经过缓冲层<br><img src="/images/2020/04/20-aualanche-01.png" width="70%" alt="雪崩"><br>由于缓存失效或者宕机<br><img src="/images/2020/04/20-aualanche-02.png" width="70%" alt="雪崩"><br>请求直接访问Mysql<br><img src="/images/2020/04/20-aualanche-03.png" width="70%" alt="雪崩"></p>
-<p><strong><code>预防方案</code></strong> ：</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="Nginx方向代理"><a href="#Nginx方向代理" class="headerlink" title="Nginx方向代理"></a>Nginx方向代理</h3><p>大多时候我们使用Nginx时，可能都会使用Nginx反向代理的功能。那么什么是反向代理呢？<br>在理解什么是Nginx反向代理时，我们先得知道什么是正向代理。</p>
+<h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>正向代理服务器是<code>客户端</code>请求<code>目标服务器</code>之间的一个代理服务器。<br>一般我们发送了一个请求后，它会先经过代理服务器，然后在经过代理服务器转发请求到<code>指定的目标服务器</code>，获得内容后将结果最终响应给客户端。<br><img src="/images/2020/04/27-01-forward-proxy.png" width="70%" alt="正向代理"></p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>反向代理：用户请求目标服务器，由代理服务器决定访问哪个ip目标服务器<br><img src="/images/2020/04/27-02-reverse-proxy.png" width="70%" alt="反向代理"></p>
+<h4 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h4><p>理解这两种代理的关键在于代理服务器所代理的对象是什么，正向代理代理的是<code>客户端</code>，我们需要在客户端进行一些代理的设置。<br>而反向代理代理的是<code>服务器</code>，作为客户端的我们是我们是不知道代理服务器具体访问哪个ip目标服务器的。</p>
+<h3 id="Nginx进程模型"><a href="#Nginx进程模型" class="headerlink" title="Nginx进程模型"></a>Nginx进程模型</h3><p>Nginx作为高性能的服务器，离不开良好进程模型的支持。<br>Nginx有Master主进程和Worker工作进程。对于每个Worker进程来说，它们都是独立的进程，互相之间不会影响。<br>Master进程通过发指令信号的形式通知Worker工作进程</p>
+<img src="/images/2020/04/27-03-process-model.png" width="70%" alt="进程模型">
+
+<ul>
+<li>Master进程主要用来管理Worker进程</li>
+</ul>
 <ol>
-<li>采用Key永不过期机制</li>
-<li>采用key过期时间错开(推荐)</li>
-<li>多缓存结合使用</li>
+<li>Master进程接收来自外界的信号</li>
+<li>Master进程向各Worker进程发送信号</li>
+<li>Master进程监控Worker进程的运行状态</li>
+<li>当Worker进程异常退出后，会自动重新启动新的Worker进程。</li>
 </ol>
-<h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p><strong><code>穿透</code></strong> ： 接受一个id，先从redis查询有没有对应值，没有再从数据中查询，查询结果进行判断，<code>有数据</code>才将其写进redis里。下次再查询就不要查询数据库了，而redis起了一个缓存的作用。但是这种情况只适合<code>id是存在数据库</code>。如果用户传入一个非法、数据库不存在的id，那么一直使用该id请求的话，程序就会一直访问数据库，这样无法缓存了，直接把缓存穿透了。</p>
-<p><strong><code>处理方案</code></strong> ：不管数据库查询的结果有没有数据，都将其进行缓存。把空的数据(空字符串、空对象、空数组、空列表)缓存起来。（就是针对一个不存在的key去为它设置一个空值，即使后面我们可能会使用这个不存在的key时，set时也会把之前的空值覆盖的）</p>
-<p><strong><code>布隆过滤器</code></strong> ： 可以迅速地判断一个元素是否在一个集合里，相当一种拦截器，是在redis前面进行拦截。以HashMap的Key-Value的形式可以在 O(1) 的时间复杂度内返回结果，效率奇高。但是存储容量占比高，数据量太多时会占据内存并且有1%误判率的缺点。</p>
-<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p><code>缓存穿透</code>是<code>单个key</code>的大量请求打在数据库上，<code>缓存雪崩</code>是<code>大量key</code>失效导致大量请求直接打在数据库</p>
+<ul>
+<li>我们可以在配置文件<code>nginx.conf</code>配置Worker进程的数量<br><code>worker_processes 2</code></li>
+</ul>
+<h3 id="Nginx请求机制"><a href="#Nginx请求机制" class="headerlink" title="Nginx请求机制"></a>Nginx请求机制</h3><p>对于Nginx为什么性能这么高，能达到这么高的并发,最主要的是有<code>Worker抢占机制</code>和<code>处理请求的模型是异步非阻塞</code>(多路复用器)</p>
+<h4 id="传统服务器-同步阻塞"><a href="#传统服务器-同步阻塞" class="headerlink" title="传统服务器-同步阻塞"></a>传统服务器-同步阻塞</h4><p>传统服务器中，客户端发起一个请求，如果处理这个请求的工作进程由于处理的时间比较长被阻塞住了，那么它将不会处理后续其它Client的请求。Master进程会fork出新的Worker2进程来处理。很显然这种方式是不好的，如果刚fork的Worker2进程也被阻塞的话，Master又只能fork出现Worker进程。在高并发情况，发生阻塞的话，服务器会开很多进程来处理，这对服务器资源开销是非常大的。这就是同步阻塞的弊端。这在高并发情况下，这无疑是一场灾难。</p>
+<img src="/images/2020/04/27-04-traditional-event-processing.png" width="70%" alt="传统服务器事件处理">
+
+<h4 id="Nginx服务器-异步非阻塞"><a href="#Nginx服务器-异步非阻塞" class="headerlink" title="Nginx服务器-异步非阻塞"></a>Nginx服务器-异步非阻塞</h4><p>Nginx服务器，客户端发起一个请求，即便处理这个请求的工作进程1被阻塞住了，是不会影响它处理其它客户端的请求的，这样就不需要fork新的Worker进程来处理其它客户端的请求。这是异步非阻塞的好处。</p>
+<img src="/images/2020/04/27-05-nginx-event-processing.png" width="70%" alt="Nginx服务器事件处理">
+
+<h4 id="Nginx-Worker抢占机制"><a href="#Nginx-Worker抢占机制" class="headerlink" title="Nginx Worker抢占机制"></a>Nginx Worker抢占机制</h4><p>当一个请求过来时，会有一个accept_mutex 互斥锁。Worker进程会抢占这个锁，抢到后才能处理相对应客户端的请求，假设Worker1抢到这个锁后会建立关系，Worker1就会处理这个请求，将这个请求进行解析、处理、响应，而Worker2和Worker3没抢到则不需操作。</p>
+<img src="/images/2020/04/27-06-worker-seize.png" width="70%" alt="Nginx服务器事件处理">
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -263,12 +282,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2020-04-17T03:44:14.320Z" itemprop="dateUpdated">2020-04-17 11:44:14</time>
+    最后更新：<time datetime="2020-04-26T16:44:52.734Z" itemprop="dateUpdated">2020-04-27 00:44:52</time>
 </span>
 
 
         
-        原文链接：<a href="/posts/aacd080c.html" target="_blank" rel="external">https://zeffon.design/posts/aacd080c.html</a>
+        原文链接：<a href="/posts/5d519c47.html" target="_blank" rel="external">https://zeffon.design/posts/5d519c47.html</a>
         
     </div>
     <footer>
@@ -290,7 +309,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li></ul>
 
 
             
@@ -300,7 +319,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/aacd080c.html&title=《Redis缓存雪崩、穿透》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -310,22 +329,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/aacd080c.html&title=《Redis缓存雪崩、穿透》 — Zeffon's blog&source=在使用redis作为缓存层时，有时候不好的程序设计会导致Redis缓存雪崩和穿透问题。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&source=Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.design/posts/aacd080c.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.design/posts/5d519c47.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Redis缓存雪崩、穿透》 — Zeffon's blog&url=https://zeffon.design/posts/aacd080c.html&via=https://zeffon.design" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx基本认知》 — Zeffon's blog&url=https://zeffon.design/posts/5d519c47.html&via=https://zeffon.design" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.design/posts/aacd080c.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.design/posts/5d519c47.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -345,21 +364,13 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/posts/5d519c47.html" id="post-prev" class="post-nav-link">
-        <h4 class="title" >
-          上一篇：Nginx基本认知
-        </h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/posts/f2ed05e0.html" id="post-next" class="post-nav-link">
-        <h4 class="title" data-hover="下一篇：Jpa返回自定义对象">下一篇：Jpa返回自定义对象</h4>
+      <a href="/posts/aacd080c.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Redis缓存雪崩、穿透">下一篇：Redis缓存雪崩、穿透</h4>
       </a>
     </div>
   
@@ -463,7 +474,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/aacd080c.html&title=《Redis缓存雪崩、穿透》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.design/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&pic=https://zeffon.design/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -473,22 +484,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/aacd080c.html&title=《Redis缓存雪崩、穿透》 — Zeffon's blog&source=在使用redis作为缓存层时，有时候不好的程序设计会导致Redis缓存雪崩和穿透问题。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.design/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&source=Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.design/posts/aacd080c.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.design/posts/5d519c47.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Redis缓存雪崩、穿透》 — Zeffon's blog&url=https://zeffon.design/posts/aacd080c.html&via=https://zeffon.design" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx基本认知》 — Zeffon's blog&url=https://zeffon.design/posts/5d519c47.html&via=https://zeffon.design" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.design/posts/aacd080c.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.design/posts/5d519c47.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -499,7 +510,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p class="wechatshare">扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABv0lEQVR42u3aQW7EIAwF0Nz/0um2UhX6jYFJq8cqGmXgkYVlY64rHve3Mf79Ho6f/712DFxc3DY3WeDpl3z+5DnZJC4u7kluvkw1tnTmx8XF/SvcPFlJwhYuLu5/4ubJUFJK4eLivpObIKoJzdwml9VquLi4De7ao4255y3nu7i4uFPcuziq7ZaklVJYHRcX9wg3Dyj9FKRaID2+iYuLu5nbD2RzpU710yxLcXBxcWNu3iAZo6szlI9acHFxX8DtJEB58VM4iMHFxT3CHYebfOFkk3OJVFSr4eLibuB2Wq3VZKVV/ODi4h7nVgPZeDP5lYukfPoFjYuLu4Gbh6RqmTTedvVj4eLinuEmoae//NxHeWyy4uLibuYmcS5H77uocVWXx8XFXcSNXi1etMqbrIWZcXFxD3LzqxX9dsiCWg0XF/dD3LmSpnrZq3zhAxcXdzP3Lo7Jg4wdzVRcXNxt3Hz0J+0UQuV1cXFx29y5K1n9A9M8UOLi4n6KO9cWrYaqZbUaLi7ui7nJhYz8KmehYsPFxX0ZN0pE4gBXLpxwcXEPcucOSfO0plrkRE1WXFzcbdy1x51zz/3GDC4u7iLuF7onKfiyG2GEAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxUlEQVR42u3aQY7DIAwF0N7/0p0DVKHfdmAyo8eqilJ4ZGEZm9crHu9gJG9+zvnaMXBxccfcOWK98Oc8V7+jmXFxcQ9y82XyxSbzXz7HxcV9JLeXrFxtDxcX939wk3+tUx9cXNy/wu2lKWtiNQ26+ayGi4s74OZVyn2/t9R3cXFxW9x3cayTj/Wb6+fR6ri4uEe41aJGLwFKyiLJuri4uCe561LF+nmvuVL9NNE+cHFxb+LmxKTQ2QtnhesduLi4R7jVifJ40js+FS5n4OLibubmJY/oWFJMeqqhExcX9wx3ksRUw9xtZzVcXNzN3GqzpHe5Kr+cEcVdXFzcbdz1AvNQ1QtqlxvDxcX9JW5v4V4QLJdocXFxj3B75YxJ+SM//OTtGVxc3B3cSZMj/1f+5b6kRLi4uA/gTtoeSUGkWrTFxcU9z80XmLddm+/g4uJu5r6LI2+QVAujhTMZLi7uZm4+7rpU0TsIlTeDi4s75ibBK093eu2Z5LiFi4t7nlstblaLHVvOari4uI/hJg3XJCw2G7G4uLgP5lY3Vr4DciXExcU9yO2FnmpJJZ/zS5MVFxd3M7dX7pyURPPWy6i+i4uL2+H+ADMmw0KBYTQjAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

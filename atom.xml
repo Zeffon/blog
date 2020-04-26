@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zeffon.design/"/>
-  <updated>2020-04-17T03:44:14.320Z</updated>
+  <updated>2020-04-26T16:44:52.734Z</updated>
   <id>https://zeffon.design/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx基本认知</title>
+    <link href="https://zeffon.design/posts/5d519c47.html"/>
+    <id>https://zeffon.design/posts/5d519c47.html</id>
+    <published>2020-04-27T00:39:29.000Z</published>
+    <updated>2020-04-26T16:44:52.734Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。</p><a id="more"></a><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="Nginx方向代理"><a href="#Nginx方向代理" class="headerlink" title="Nginx方向代理"></a>Nginx方向代理</h3><p>大多时候我们使用Nginx时，可能都会使用Nginx反向代理的功能。那么什么是反向代理呢？<br>在理解什么是Nginx反向代理时，我们先得知道什么是正向代理。</p><h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>正向代理服务器是<code>客户端</code>请求<code>目标服务器</code>之间的一个代理服务器。<br>一般我们发送了一个请求后，它会先经过代理服务器，然后在经过代理服务器转发请求到<code>指定的目标服务器</code>，获得内容后将结果最终响应给客户端。<br><img src="/images/2020/04/27-01-forward-proxy.png" width="70%" alt="正向代理"></p><h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>反向代理：用户请求目标服务器，由代理服务器决定访问哪个ip目标服务器<br><img src="/images/2020/04/27-02-reverse-proxy.png" width="70%" alt="反向代理"></p><h4 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h4><p>理解这两种代理的关键在于代理服务器所代理的对象是什么，正向代理代理的是<code>客户端</code>，我们需要在客户端进行一些代理的设置。<br>而反向代理代理的是<code>服务器</code>，作为客户端的我们是我们是不知道代理服务器具体访问哪个ip目标服务器的。</p><h3 id="Nginx进程模型"><a href="#Nginx进程模型" class="headerlink" title="Nginx进程模型"></a>Nginx进程模型</h3><p>Nginx作为高性能的服务器，离不开良好进程模型的支持。<br>Nginx有Master主进程和Worker工作进程。对于每个Worker进程来说，它们都是独立的进程，互相之间不会影响。<br>Master进程通过发指令信号的形式通知Worker工作进程</p><img src="/images/2020/04/27-03-process-model.png" width="70%" alt="进程模型"><ul><li>Master进程主要用来管理Worker进程</li></ul><ol><li>Master进程接收来自外界的信号</li><li>Master进程向各Worker进程发送信号</li><li>Master进程监控Worker进程的运行状态</li><li>当Worker进程异常退出后，会自动重新启动新的Worker进程。</li></ol><ul><li>我们可以在配置文件<code>nginx.conf</code>配置Worker进程的数量<br><code>worker_processes 2</code></li></ul><h3 id="Nginx请求机制"><a href="#Nginx请求机制" class="headerlink" title="Nginx请求机制"></a>Nginx请求机制</h3><p>对于Nginx为什么性能这么高，能达到这么高的并发,最主要的是有<code>Worker抢占机制</code>和<code>处理请求的模型是异步非阻塞</code>(多路复用器)</p><h4 id="传统服务器-同步阻塞"><a href="#传统服务器-同步阻塞" class="headerlink" title="传统服务器-同步阻塞"></a>传统服务器-同步阻塞</h4><p>传统服务器中，客户端发起一个请求，如果处理这个请求的工作进程由于处理的时间比较长被阻塞住了，那么它将不会处理后续其它Client的请求。Master进程会fork出新的Worker2进程来处理。很显然这种方式是不好的，如果刚fork的Worker2进程也被阻塞的话，Master又只能fork出现Worker进程。在高并发情况，发生阻塞的话，服务器会开很多进程来处理，这对服务器资源开销是非常大的。这就是同步阻塞的弊端。这在高并发情况下，这无疑是一场灾难。</p><img src="/images/2020/04/27-04-traditional-event-processing.png" width="70%" alt="传统服务器事件处理"><h4 id="Nginx服务器-异步非阻塞"><a href="#Nginx服务器-异步非阻塞" class="headerlink" title="Nginx服务器-异步非阻塞"></a>Nginx服务器-异步非阻塞</h4><p>Nginx服务器，客户端发起一个请求，即便处理这个请求的工作进程1被阻塞住了，是不会影响它处理其它客户端的请求的，这样就不需要fork新的Worker进程来处理其它客户端的请求。这是异步非阻塞的好处。</p><img src="/images/2020/04/27-05-nginx-event-processing.png" width="70%" alt="Nginx服务器事件处理"><h4 id="Nginx-Worker抢占机制"><a href="#Nginx-Worker抢占机制" class="headerlink" title="Nginx Worker抢占机制"></a>Nginx Worker抢占机制</h4><p>当一个请求过来时，会有一个accept_mutex 互斥锁。Worker进程会抢占这个锁，抢到后才能处理相对应客户端的请求，假设Worker1抢到这个锁后会建立关系，Worker1就会处理这个请求，将这个请求进行解析、处理、响应，而Worker2和Worker3没抢到则不需操作。</p><img src="/images/2020/04/27-06-worker-seize.png" width="70%" alt="Nginx服务器事件处理"><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Web" scheme="https://zeffon.design/categories/Web/"/>
+    
+    
+      <category term="nginx" scheme="https://zeffon.design/tags/nginx/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis缓存雪崩、穿透</title>
