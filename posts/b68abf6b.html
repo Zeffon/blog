@@ -42,7 +42,7 @@
     <meta name="description" content="前言Flask 是一个web框架，而非web server，直接用Flask拉起的web服务仅限于开发环境使用，生产环境不够稳定，也无法承受大量请求的并发。基于Flask开发API项目是，部署时用uwsgi和Nginx，是一个很好的选择。 环境搭建Python3环境由于CentOS7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。所以我们要额外">
 <meta property="og:type" content="article">
 <meta property="og:title" content="flask项目在centos7部署流程">
-<meta property="og:url" content="https://zeffon.cn/posts/b68abf6b.html">
+<meta property="og:url" content="http://zeffon.cn/posts/b68abf6b.html">
 <meta property="og:site_name" content="Zeffon&#39;s blog">
 <meta property="og:description" content="前言Flask 是一个web框架，而非web server，直接用Flask拉起的web服务仅限于开发环境使用，生产环境不够稳定，也无法承受大量请求的并发。基于Flask开发API项目是，部署时用uwsgi和Nginx，是一个很好的选择。 环境搭建Python3环境由于CentOS7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。所以我们要额外">
 <meta property="og:locale" content="zh_CN">
@@ -334,11 +334,11 @@
 
 
         
-        原文链接：<a href="/posts/b68abf6b.html" target="_blank" rel="external">https://zeffon.cn/posts/b68abf6b.html</a>
+        原文链接：<a href="/posts/b68abf6b.html" target="_blank" rel="external">http://zeffon.cn/posts/b68abf6b.html</a>
         
     </div>
     <footer>
-        <div onclick="location.href='https://zeffon.cn'">
+        <div onclick="location.href='http://zeffon.cn'">
             <img src="/img/avatar.png" alt="Zeffon">
             <a>Zeffon</a>
         </div>
@@ -366,7 +366,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&pic=https://zeffon.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&pic=http://zeffon.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -376,22 +376,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.cn/posts/b68abf6b.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://zeffon.cn/posts/b68abf6b.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《flask项目在centos7部署流程》 — Zeffon's blog&url=https://zeffon.cn/posts/b68abf6b.html&via=https://zeffon.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《flask项目在centos7部署流程》 — Zeffon's blog&url=http://zeffon.cn/posts/b68abf6b.html&via=http://zeffon.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.cn/posts/b68abf6b.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://zeffon.cn/posts/b68abf6b.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -443,11 +443,11 @@
     <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script>
         var gitalk = new Gitalk({
-            clientID: 'd85bbfe498c1175c07cf',
-            clientSecret: '6a35923f79b134f0ba90cf021b3ffe0df87f2674',
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'ed47bbbaf970da0f0879bc33851e7baae67e8d8e',
             repo: 'blog',
-            owner: 'ZeffonWu',
-            admin: ['ZeffonWu']
+            owner: 'Zeffon',
+            admin: ['Zeffon']
         });
         gitalk.render('gitalk-container');
     </script>
@@ -466,7 +466,7 @@
         <span class="power">
             <i class="icon icon-lg icon-copyright"></i>
             2019 - 2020
-            <a href="https://zeffon.cn">zeffon.cn</a>
+            <a href="http://zeffon.cn">zeffon.cn</a>
             粤A3-20190101
         </span>
         <br/>
@@ -529,7 +529,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&pic=https://zeffon.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&pic=http://zeffon.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -539,22 +539,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://zeffon.cn/posts/b68abf6b.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://zeffon.cn/posts/b68abf6b.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《flask项目在centos7部署流程》 — Zeffon's blog&url=https://zeffon.cn/posts/b68abf6b.html&via=https://zeffon.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《flask项目在centos7部署流程》 — Zeffon's blog&url=http://zeffon.cn/posts/b68abf6b.html&via=http://zeffon.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://zeffon.cn/posts/b68abf6b.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://zeffon.cn/posts/b68abf6b.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -565,7 +565,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p class="wechatshare">扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxElEQVR42u3awW7DIBAE0Pz/T7vXVpXtGQg4rR6nKErw8wUts/t6xev4tb5/f/bLs2/O/vu2hYuLO809LleCOAO1rx3tiYuLu5F7tnX7+fpoS/a5seHi4v5ZblLW4OLi/iduXqwk5Q4uLu4nc5PLzzU0AbWHIC4u7lPcPKVc93lJvouLizvEPcqVlz55c6V4Oi4u7hZufqC0jZbrHcaei4uLu5/bDliMXZxmRj1wcXH3cMfCjpmjaiwW+VGR4eLiLubmEWc7WpGUPm3YiouLu5+bj1i1YUebfEYvjIuLu4ybBBxjQxJjAxnR5QcXF3cLdyq+LEe72sj15q6Gi4v7EDd5wNgAVh2v4OLibuG2ZUo7sNUOZwze1XBxcZdx8+Bjdau1+BcuLu4y7kxLNSlNZkKWwTkyXFzcBdyxYYh3DXPcHIK4uLgbuWMlSP6Y+f1xcXH3cI9ytXFGe2Wqu6+4uLgLuPNlR9sUGQtk65fBxcWd5rZxZ9v8mGnT4uLiPsttG6jtHSs/QQfzXVxc3I/h5mFr3pqdSmVwcXEf4s78ayblwMXF3c9NDqD5JkoevEZNVlxc3GXc9ihpA5Fkh3xPXFzcxdwvc9t7ilVpyOIAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvUlEQVR42u3aQW4DIQwF0Nz/0tNtpbTTbwPOVHqsIqSBRxYWNn694nF9G+8z7/Pvv+9X2zxwcXGXudftSHD3rPsD5wZcXNx5brJZHmfyIJgbcHFxn89Ntq8GMlxc3P/OTa4pe9fHxcWd5ybJTxWa1DQO5mq4uLgL3GpKc+L3kfouLi5ui3sVRy+E9YqkP6yMi4s7ws0DSvVS8tsBqoEMFxd3nnu/6Eoqkj/E5gkSLi7uDLf3fJJvX31YLf9NuLi4x7h56tKbT2YKjzG4uLiHudVQlWyTh7Z8R1xc3M9yqyXO9aMWrlm4uLgj3F5ASYqnScLTWwEXF/c0N09UkhMn31YLplHyg4uLu5WbL51cO1aaNpbiLi4u7jFutWyxfrxqIoSLizvJ7TVGJN/m6VBUMMXFxf0Qd6myEoN6K+Di4s5ze01U99eaQhpTvYXh4uIe417FUQ18ecCKrlm4uLgj3JXnjV2pUV6ExcXFneT2glevIaPa8PFH8oOLi3uYO/mwuhRAcXFxH8ytJkXV1KtcNcHFxX0Adxc6bwHBxcWd51ZbJ/OGid4BNuRquLi4e+qTr97HK61ayV64uLiD3C+FrOwLD80UigAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
