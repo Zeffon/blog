@@ -6,13 +6,13 @@
     
     
     
-    <title>nginx.conf中server模块location | Zeffon&#39;s blog | 个人博客</title>
+    <title>win10批量修改文件名 | Zeffon&#39;s blog | 个人博客</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
     
     
-    <meta name="keywords" content="nginx">
+    <meta name="keywords" content="杂记">
     
     
 
@@ -39,18 +39,20 @@
 
 
     
-    <meta name="description" content="nginx.conf配置中，http指令块中的server模块的location是主要匹配客户端发送过来url的">
+    <meta name="description" content="记录在win10系统下批量修改文件名的方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx.conf中server模块location">
-<meta property="og:url" content="https://www.zeffon.cn/posts/f0100941.html">
+<meta property="og:title" content="win10批量修改文件名">
+<meta property="og:url" content="https://www.zeffon.cn/posts/e12a97ac.html">
 <meta property="og:site_name" content="Zeffon&#39;s blog">
-<meta property="og:description" content="nginx.conf配置中，http指令块中的server模块的location是主要匹配客户端发送过来url的">
+<meta property="og:description" content="记录在win10系统下批量修改文件名的方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-05-11T08:29:04.000Z">
-<meta property="article:modified_time" content="2020-05-11T09:22:21.181Z">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/06/21-rename.xls.png">
+<meta property="article:published_time" content="2020-06-21T13:31:39.000Z">
+<meta property="article:modified_time" content="2020-06-21T13:56:27.082Z">
 <meta property="article:author" content="Zeffon">
-<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="杂记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.zeffon.cn/images/2020/06/21-rename.xls.png">
     
         <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
     
@@ -146,7 +148,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">nginx.conf中server模块location</div>
+        <div class="flex-col header-title ellipsis">win10批量修改文件名</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -186,24 +188,24 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">1.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nginx服务器匹配"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">nginx服务器匹配</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#单个location"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">单个location</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#多个location"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">多个location</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#null"><span class="post-toc-number">1.2.</span> <span class="post-toc-text"></span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#location匹配规则"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">location匹配规则</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">1.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#生成rename-xls文件"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">生成rename.xls文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定制rename-xls"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">定制rename.xls</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#执行bat批量文件"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">执行bat批量文件</span></a></li></ol></li></ol>
         </nav>
     </aside>
    
-<article id="post-nginx-conf-server-location"
+<article id="post-win10-batch-modify-filename"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">nginx.conf中server模块location</h1>
+        <h1 class="post-card-title">win10批量修改文件名</h1>
         <div class="post-meta">
             <i class="icon icon-lg icon-calendar-o"></i>
             发表于
-            <time class="post-time" title="2020-05-11 16:29:04" datetime="2020-05-11T08:29:04.000Z"  itemprop="datePublished">2020-05-11</time>
+            <time class="post-time" title="2020-06-21 21:31:39" datetime="2020-06-21T13:31:39.000Z"  itemprop="datePublished">2020-06-21</time>
 
             <br id="mybreak"/>
             
 	<i class="icon icon-lg icon-folder-o"></i>
-	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Web/">Web</a></li></ul>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Note/">Note</a></li></ul>
 
 
             <i>·</i>
@@ -216,31 +218,24 @@
         </div>
         <div class="post-count-custom">
             <i class="icon icon-lg icon-comment-o"></i>
-            阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
+            阅读本文可能花费您&nbsp;<span class="post-count">1</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>nginx.conf配置中，http指令块中的server模块的location是主要匹配客户端发送过来url的</p>
+            <p>记录在win10系统下批量修改文件名的方法</p>
 <a id="more"></a>
 
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="nginx服务器匹配"><a href="#nginx服务器匹配" class="headerlink" title="nginx服务器匹配"></a>nginx服务器匹配</h3><h4 id="单个location"><a href="#单个location" class="headerlink" title="单个location"></a>单个location</h4><p>当我们访问 <code>localhost:88</code> 将会被转到 <code>/home/html</code> 目录下 主页是index.html<br>例如我们访问 <code>localhost:88/img/a.png</code> 会访问到服务器 <code>/home/nginx/img/a.png</code></p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen 88;</span><br><span class="line">    server_name localhost;</span><br><span class="line"></span><br><span class="line">    location / {</span><br><span class="line">        root /home/nginx;</span><br><span class="line">        index index.html;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="生成rename-xls文件"><a href="#生成rename-xls文件" class="headerlink" title="生成rename.xls文件"></a>生成rename.xls文件</h3><p>使用win键+R cmd指令打开控制台（别关掉 ~）</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ chcp 65001 <span class="comment"># 先切换为编码，防止后续出现乱码</span></span><br><span class="line">$ <span class="built_in">cd</span> 需要修改文件的目录</span><br><span class="line">$ dir /b&gt;rename.xls <span class="comment"># 会在目录生成rename.xls文件</span></span><br></pre></td></tr></tbody></table></figure></div>
 
-<h4 id="多个location"><a href="#多个location" class="headerlink" title="多个location"></a>多个location</h4><p>如果访问 <code>localhost:88/img</code> 匹配到 <code>img</code> 这样会将 <code>/img</code> 拼接到 <code>/home/demo</code> 的后面，这时候就会访问到服务器<code>/home/demo/img</code>目录下<br>例如我们访问 <code>localhost:88/img/a.png</code> 会访问到服务器 <code>/home/demo/img/a.png</code></p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen 88;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    location / {</span><br><span class="line">        root   /home;</span><br><span class="line">        index   index.html;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    location /img {</span><br><span class="line">        root   /home/demo;</span><br><span class="line">        index   index.html;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>采用别名alias，这样可以自定义url上的参数<br>访问 <code>localhost:88/demo/a.png</code> 匹配 <code>demo</code> 会将demo拼接在 <code>/hemo</code> 后面，访问到服务器<code>/home/demo/a.png</code><br>访问 <code>localhost:88/static/a.png</code> 识别出别名alias 会将 <code>static</code> 替换 <code>/home/demo</code>，也访问到服务器<code>/home/demo/a.png</code><br>所以<code>localhost:88/demo/a.png</code> 和 <code>localhost:88/static/a.png</code> 两者可以达到同样的效果，也可以同时使用</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen 88;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    location / {</span><br><span class="line">        root   /home;</span><br><span class="line">        index   index.html;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    location /demo {</span><br><span class="line">        root   /home;</span><br><span class="line">        index   index.html;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    location /static {</span><br><span class="line">        alias   /home/demo;</span><br><span class="line">        index   index.html;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
-
-<h3 id="location匹配规则"><a href="#location匹配规则" class="headerlink" title="location匹配规则"></a>location匹配规则</h3><ol>
-<li><p>空格 ：默认匹配，普通匹配<br>location / {<br> root /home;<br>}</p>
-</li>
-<li><p>= ：精确匹配<br>location = /demo/img/a.png {<br> root /home;<br>}</p>
-</li>
-<li><p>~* ：匹配正则表达式，不区分大小写<br>#符合图片的显示<br>location ~* .(GIF|jpg|png|jpeg) {<br> root /home;<br>}</p>
-</li>
-<li><p>~ ：匹配正则表达式，区分大小写<br>#GIF必须大写才能匹配到<br>location ~ .(GIF|jpg|png|jpeg) {<br> root /home;<br>}</p>
-</li>
-<li><p>^~ ：以某个字符路径开头<br>location ^~ /demo/img {<br> root /home;<br>}</p>
+<h3 id="定制rename-xls"><a href="#定制rename-xls" class="headerlink" title="定制rename.xls"></a>定制rename.xls</h3><p>生成的rename.xls如图所示<br>第一列是<strong><code>固定为ren指令</code></strong>   第二列是<strong><code>原文件名</code></strong>   第三列是<strong><code>新文件名</code></strong><br><img src="/images/2020/06/21-rename.xls.png" width="70%" alt="rename.xls"></p>
+<blockquote>
+<p>可以利用替换(Ctrl+h)的方式来实现批量修改文件名</p>
+</blockquote>
+<h3 id="执行bat批量文件"><a href="#执行bat批量文件" class="headerlink" title="执行bat批量文件"></a>执行bat批量文件</h3><ol>
+<li>将上面xls文件(除开第一行)的内容复制</li>
+<li>在之前的目录中新建文件ren.txt</li>
+<li>在ren.txt文件中进行粘贴</li>
+<li>修改ren.txt的扩展名为bat即ren.bat文件<br>在控制台执行<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ .\ren.bat</span><br></pre></td></tr></tbody></table></figure></div>
 </li>
 </ol>
 <script>
@@ -268,12 +263,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2020-05-11T09:22:21.181Z" itemprop="dateUpdated">2020-05-11 17:22:21</time>
+    最后更新：<time datetime="2020-06-21T13:56:27.082Z" itemprop="dateUpdated">2020-06-21 21:56:27</time>
 </span>
 
 
         
-        原文链接：<a href="/posts/f0100941.html" target="_blank" rel="external">https://www.zeffon.cn/posts/f0100941.html</a>
+        原文链接：<a href="/posts/e12a97ac.html" target="_blank" rel="external">https://www.zeffon.cn/posts/e12a97ac.html</a>
         
     </div>
     <footer>
@@ -295,7 +290,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li></ul>
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%82%E8%AE%B0/" rel="tag">杂记</a></li></ul>
 
 
             
@@ -305,7 +300,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/f0100941.html&title=《nginx.conf中server模块location》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/e12a97ac.html&title=《win10批量修改文件名》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -315,22 +310,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/f0100941.html&title=《nginx.conf中server模块location》 — Zeffon's blog&source=nginx.conf配置中，http指令块中的server模块的location是主要匹配客户端发送过来url的" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/e12a97ac.html&title=《win10批量修改文件名》 — Zeffon's blog&source=记录在win10系统下批量修改文件名的方法" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/f0100941.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/e12a97ac.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《nginx.conf中server模块location》 — Zeffon's blog&url=https://www.zeffon.cn/posts/f0100941.html&via=https://www.zeffon.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《win10批量修改文件名》 — Zeffon's blog&url=https://www.zeffon.cn/posts/e12a97ac.html&via=https://www.zeffon.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/f0100941.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/e12a97ac.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -350,21 +345,13 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/posts/e12a97ac.html" id="post-prev" class="post-nav-link">
-        <h4 class="title" >
-          上一篇：win10批量修改文件名
-        </h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/posts/7a42ed0e.html" id="post-next" class="post-nav-link">
-        <h4 class="title" data-hover="下一篇：nginx.conf配置文件">下一篇：nginx.conf配置文件</h4>
+      <a href="/posts/f0100941.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：nginx.conf中server模块location">下一篇：nginx.conf中server模块location</h4>
       </a>
     </div>
   
@@ -468,7 +455,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/f0100941.html&title=《nginx.conf中server模块location》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/e12a97ac.html&title=《win10批量修改文件名》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -478,22 +465,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/f0100941.html&title=《nginx.conf中server模块location》 — Zeffon's blog&source=nginx.conf配置中，http指令块中的server模块的location是主要匹配客户端发送过来url的" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/e12a97ac.html&title=《win10批量修改文件名》 — Zeffon's blog&source=记录在win10系统下批量修改文件名的方法" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/f0100941.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/e12a97ac.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《nginx.conf中server模块location》 — Zeffon's blog&url=https://www.zeffon.cn/posts/f0100941.html&via=https://www.zeffon.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《win10批量修改文件名》 — Zeffon's blog&url=https://www.zeffon.cn/posts/e12a97ac.html&via=https://www.zeffon.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/f0100941.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/e12a97ac.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -504,7 +491,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p class="wechatshare">扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvUlEQVR42u3aQXIDIQwEQP//084DXLsZSUaxU83JlcTQ5EAhDY9HPJ7BSP7ydc7HiYGLizvm9hD5wq/zXH1ONomLi7vJ7S1zv5nLJYM5L3+Oi4v7wdx7SjIbLi7uf+LmlPuZcXFxP5+bFD95jyIvbw7Wari4uANu74Ly3s9H+ru4uLgt7rM4qgfZfXOkvDouLu4KNz9Q5kFp3kj9ZV1cXNwVbrWYSY6qyfOLQvGDi4t7gDsPQauHWvWqdHkjw8XFPcbN25pJCzV/zjV68IGLi3uYmyw/j12rTZDLfwEuLu6fcidRaC8ujR5w4OLirnB7UWtyQekdXnkMg4uLe5rbi0irMerkW7i4uPvcSfFTjUur7ZLL+XFxcde5vevI/LuF5gsuLu5hbvLMoveyIy+HcgkuLu4mtzpddbG8ExPVari4uCvcPPyotjl6bdloN7i4uAe4z+LIS5fk0lM+5nBxcVe474pXe8dTtbjCxcXd5J5rcebxbV5i4eLibnKriOo1pRfHFn6Ni4v7AdxqyFpujOLi4n4hN9lGmZIIcXFxF7mTePW+8THfHi4u7j53EnzmF5pCefOu/i4uLm6H+wN+DcNCov07gQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvklEQVR42u3aQW7DMAwEwP7/0+m1QFp7V7TloBidjMQyRxdCpPT1FY/X2/j5+/Gb77P+mnvZwMXFHXOTAEn44+8nz1EUXFzcjdxJmDrk4XdObLi4uB/JjT4aLwwXF/d/cJPAyfJwcXE/n5sUP3mPon3zlloNFxd3wL22tbH2fEt/FxcXd4n7KsfxApL0NIqOi4u7hZsnlONNz7wtksfFxcW9mzu/SLHWOmkLqqiDi4uLexF3rQhZa5KutVcW8y4uLu6Am5c07cZlfqT6yzMuLu4W7iTptElw0nzBxcV9ittuXNY2K/lRzcksXFzc27j5lqINuVaHncTFxcXdyF0rVOaLzLc1uLi4+7n5McZkA5Q3UKK8i4uLexu3bVi0FyZyVtF2wcXFfYibN0OvWkzRmsHFxX2UO0e3i4kKMFxc3I3ctmFRtDPKcTILFxf3Zu5a2TO53zFKc7i4uFu4bXJZu4qRt1DbuLi4uPdx2xZnm+baDdPJXFxc3I3c+kijrLHapmr9Ny4u7qPcPDG1F7OKig0XF/fDuO1R67zxcfEWBxcXN+ZeW9K0ZVKSOnFxcXdy21QyPwKZXMXAxcW9mfsNAgIz0iF3ydIAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

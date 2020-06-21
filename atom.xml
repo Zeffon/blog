@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.zeffon.cn/"/>
-  <updated>2020-05-11T09:22:21.181Z</updated>
+  <updated>2020-06-21T13:56:27.082Z</updated>
   <id>https://www.zeffon.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>win10批量修改文件名</title>
+    <link href="https://www.zeffon.cn/posts/e12a97ac.html"/>
+    <id>https://www.zeffon.cn/posts/e12a97ac.html</id>
+    <published>2020-06-21T13:31:39.000Z</published>
+    <updated>2020-06-21T13:56:27.082Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>记录在win10系统下批量修改文件名的方法</p><a id="more"></a><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="生成rename-xls文件"><a href="#生成rename-xls文件" class="headerlink" title="生成rename.xls文件"></a>生成rename.xls文件</h3><p>使用win键+R cmd指令打开控制台（别关掉 ~）</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ chcp 65001 <span class="comment"># 先切换为编码，防止后续出现乱码</span></span><br><span class="line">$ <span class="built_in">cd</span> 需要修改文件的目录</span><br><span class="line">$ dir /b&gt;rename.xls <span class="comment"># 会在目录生成rename.xls文件</span></span><br></pre></td></tr></tbody></table></figure></div><h3 id="定制rename-xls"><a href="#定制rename-xls" class="headerlink" title="定制rename.xls"></a>定制rename.xls</h3><p>生成的rename.xls如图所示<br>第一列是<strong><code>固定为ren指令</code></strong>   第二列是<strong><code>原文件名</code></strong>   第三列是<strong><code>新文件名</code></strong><br><img src="/images/2020/06/21-rename.xls.png" width="70%" alt="rename.xls"></p><blockquote><p>可以利用替换(Ctrl+h)的方式来实现批量修改文件名</p></blockquote><h3 id="执行bat批量文件"><a href="#执行bat批量文件" class="headerlink" title="执行bat批量文件"></a>执行bat批量文件</h3><ol><li>将上面xls文件(除开第一行)的内容复制</li><li>在之前的目录中新建文件ren.txt</li><li>在ren.txt文件中进行粘贴</li><li>修改ren.txt的扩展名为bat即ren.bat文件<br>在控制台执行<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ .\ren.bat</span><br></pre></td></tr></tbody></table></figure></div></li></ol><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;记录在win10系统下批量修改文件名的方法&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="https://www.zeffon.cn/categories/Note/"/>
+    
+    
+      <category term="杂记" scheme="https://www.zeffon.cn/tags/%E6%9D%82%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>nginx.conf中server模块location</title>
