@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>hexo-add-music | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="杂记">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="欢乐的时光怎么能少了音乐相伴呢，所以在文章中添加音乐也是一件值得享受的事，而且在Hexo添加音乐也是很方便。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo-add-music">
+<meta property="og:url" content="https://www.zeffon.cn/2019/12/16/hexo-add-music/index.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="欢乐的时光怎么能少了音乐相伴呢，所以在文章中添加音乐也是一件值得享受的事，而且在Hexo添加音乐也是很方便。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zeffon.cn/images/2019/12/16-hexo-add-music-01.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2019/12/16-hexo-add-music-02.png">
+<meta property="article:published_time" content="2019-12-16T01:01:31.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:01:27.789Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="杂记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.zeffon.cn/images/2019/12/16-hexo-add-music-01.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">hexo-add-music</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">2.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#首先先看看效果"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">首先先看看效果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装步骤"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">安装步骤</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#音乐模板说明"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">音乐模板说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#歌曲id和歌单id获取"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">歌曲id和歌单id获取</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-hexo-add-music"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">hexo-add-music</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-12-16 09:01:31" datetime="2019-12-16T01:01:31.000Z"  itemprop="datePublished">2019-12-16</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Note/">Note</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>欢乐的时光怎么能少了音乐相伴呢，所以在文章中添加音乐也是一件值得享受的事，而且在Hexo添加音乐也是很方便。</p>
+<a id="more"></a>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>MetingJS 是基于Meting API 的 APlayer 衍生播放器，引入 MetingJS 后，播放器将支持对于 QQ音乐、网易云音乐、虾米、酷狗、百度等平台的音乐播放。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在Hexo添加音乐很简单，首先先下载相关的插件，在配置开启插件开关，然后在需要添加音乐的文章中添加相关的代码就行了。</p>
+<h3 id="首先先看看效果"><a href="#首先先看看效果" class="headerlink" title="首先先看看效果"></a>首先先看看效果</h3><ol>
+<li><p>单首歌曲模式</p>
+
+    <div id="aplayer-ndehkUtM" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="1363948882" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+</li>
+<li><p>歌单模式</p>
+
+    <div id="aplayer-cWdCNlNv" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="801641548" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"></div>
+
+
+</li>
+</ol>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ol>
+<li><p>安装hexo-tag-aplayer插件</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-tag-aplayer --save</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>在Hexo根配置文件_config.yml中设置开关</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="YML"><figure class="iseeu highlight /yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">aplayer:</span></span><br><span class="line">  <span class="attr">meting:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>直接在文中添加音乐模板<br>比如上面单首歌曲模式</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JS"><figure class="iseeu highlight /js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% meting <span class="string">"1363948882"</span> <span class="string">"netease"</span> <span class="string">"song"</span> <span class="string">"theme:#555"</span> <span class="string">"mutex:true"</span> <span class="string">"listmaxheight:340px"</span> <span class="string">"preload:auto"</span> %}</span><br></pre></td></tr></tbody></table></figure></div>
+<p>歌单模式</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JS"><figure class="iseeu highlight /js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% meting <span class="string">"801641548"</span> <span class="string">"netease"</span> <span class="string">"playlist"</span> <span class="string">"theme:#555"</span> <span class="string">"mutex:true"</span> <span class="string">"listmaxheight:340px"</span> <span class="string">"preload:auto"</span> %}</span><br></pre></td></tr></tbody></table></figure></div>
+
+</li>
+</ol>
+<blockquote>
+<p>如果无法在网页显示出音乐模板，可能是因为刚刚下载插件，没有进行重新编译</p>
+</blockquote>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></tbody></table></figure></div>
+
+<h3 id="音乐模板说明"><a href="#音乐模板说明" class="headerlink" title="音乐模板说明"></a>音乐模板说明</h3><table>
+<thead>
+<tr>
+<th align="center">选项</th>
+<th align="center">默认值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">id</td>
+<td align="center">必须值</td>
+<td align="left">歌曲 id / 播放列表 id / 相册 id / 搜索关键字</td>
+</tr>
+<tr>
+<td align="center">server</td>
+<td align="center">必须值</td>
+<td align="left">音乐平台: netease, tencent, kugou, xiami, baidu</td>
+</tr>
+<tr>
+<td align="center">type</td>
+<td align="center">必须值</td>
+<td align="left">song, playlist, album, search, artist</td>
+</tr>
+<tr>
+<td align="center">fixed</td>
+<td align="center">false</td>
+<td align="left">开启固定模式</td>
+</tr>
+<tr>
+<td align="center">mini</td>
+<td align="center">false</td>
+<td align="left">开启迷你模式</td>
+</tr>
+<tr>
+<td align="center">loop</td>
+<td align="center">all</td>
+<td align="left">列表循环模式：all, one,none</td>
+</tr>
+<tr>
+<td align="center">order</td>
+<td align="center">list</td>
+<td align="left">列表播放模式： list, random</td>
+</tr>
+<tr>
+<td align="center">volume</td>
+<td align="center">0.7</td>
+<td align="left">播放器音量</td>
+</tr>
+<tr>
+<td align="center">lrctype</td>
+<td align="center">0</td>
+<td align="left">歌词格式类型</td>
+</tr>
+<tr>
+<td align="center">listfolded</td>
+<td align="center">false</td>
+<td align="left">指定音乐播放列表是否折叠</td>
+</tr>
+<tr>
+<td align="center">storagename</td>
+<td align="center">metingjs</td>
+<td align="left">LocalStorage 中存储播放器设定的键名</td>
+</tr>
+<tr>
+<td align="center">autoplay</td>
+<td align="center">true</td>
+<td align="left">自动播放，移动端浏览器暂时不支持此功能</td>
+</tr>
+<tr>
+<td align="center">mutex</td>
+<td align="center">true</td>
+<td align="left">该选项开启时，如果同页面有其他 aplayer 播放，该播放器会暂停</td>
+</tr>
+<tr>
+<td align="center">listmaxheight</td>
+<td align="center">340px</td>
+<td align="left">播放列表的最大长度</td>
+</tr>
+<tr>
+<td align="center">preload</td>
+<td align="center">auto</td>
+<td align="left">音乐文件预载入模式，可选项： none, metadata, auto</td>
+</tr>
+<tr>
+<td align="center">theme</td>
+<td align="center">#ad7a86</td>
+<td align="left">播放器风格色彩设置</td>
+</tr>
+</tbody></table>
+<h3 id="歌曲id和歌单id获取"><a href="#歌曲id和歌单id获取" class="headerlink" title="歌曲id和歌单id获取"></a>歌曲id和歌单id获取</h3><p>比如获取网易云音乐平台</p>
+<ol>
+<li><p>获取歌曲id</p>
+<img src="/images/2019/12/16-hexo-add-music-01.png" width="70%" alt="歌曲id">
+</li>
+<li><p>获取歌单id</p>
+<img src="/images/2019/12/16-hexo-add-music-02.png" width="70%" alt="歌单id">
+</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-02-18T09:01:27.789Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/2019/12/16/hexo-add-music/" target="_blank" rel="external">https://www.zeffon.cn/2019/12/16/hexo-add-music/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%82%E8%AE%B0/" rel="tag">杂记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/2019/12/16/hexo-add-music/&title=《hexo-add-music》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/2019/12/16/hexo-add-music/&title=《hexo-add-music》 — Zeffon's blog&source=欢乐的时光怎么能少了音乐相伴呢，所以在文章中添加音乐也是一件值得享受的事，而且在Hexo添加音乐也是很方便。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/2019/12/16/hexo-add-music/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《hexo-add-music》 — Zeffon's blog&url=https://www.zeffon.cn/2019/12/16/hexo-add-music/&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/2019/12/16/hexo-add-music/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/01/01/java-binary-tree-traversal/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：二叉树的遍历方式
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/12/14/hexo-build-blog/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Hexo搭建blog">下一篇：Hexo搭建blog</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/2019/12/16/hexo-add-music/&title=《hexo-add-music》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/2019/12/16/hexo-add-music/&title=《hexo-add-music》 — Zeffon's blog&source=欢乐的时光怎么能少了音乐相伴呢，所以在文章中添加音乐也是一件值得享受的事，而且在Hexo添加音乐也是很方便。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/2019/12/16/hexo-add-music/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《hexo-add-music》 — Zeffon's blog&url=https://www.zeffon.cn/2019/12/16/hexo-add-music/&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/2019/12/16/hexo-add-music/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3a0Y7DIAxE0fz/T9PXlVbQmXGQirk8Ve0m8elKLrZ5HnmNyfr76ewvZ3dbX/vsWDBgwDiWMZZrHZwbrv4sPTYYMGDcw8jS4v9rlYSrZE49NhgwYMDIXs9g6+euky8MGDBgVBKuDtM3gjBgwICRFbHr4PRumNIr21iLw4AB40BGpbDc/XrLfAMGDBhHMYa53O2ani5HYcGAAaM3I9vYrbeG67u5I1JjowkDBoymDLdZr7f+3SSbjRC0j2HAgHE2Q2nNuy05Nx27R9Ck/wkMGDAaMSolqxuiWwYbAwAYMGC0ZijBuQ19/Z2sGDZgMGDAaMpwxwNKWnRDd4thGDBg3MDYd2Aia89lXwEMGDC6MvSmf31IUE/HX0aYMGDAaMpwB5l6ktVDdwvp6bUwYMBozXCLWHdLV2+f6YkYBgwYvRnuMNLt5GVfkD3ghAEDRjuGcotKiNnpCHvjCAMGjGsYeqOtfgij3mibDgZgwIDRjqGnP30AmR0U078sAwADBoxGDL2MzFr2WVLess+FAQPG4Qy9Ke8WwPo7Lx+2gAEDRlOGvh3Ugw4PTLgtORgwYDRlDHMpY4DsDpVqFAYMGL0ZWZpzb6oD6sMGGDBgdGVkh7TcRr/LfqFrCAMGjHaMF441CBvH+i+AVIvDgAHjeka21asfvPgChgEDBgxzzKk31Col9Mu/GzBgwPh5ht7Kf+GR5atgwIBxGyNr7iupNhsz6CNPGDBgXMD4ADjkslBh5SrIAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>

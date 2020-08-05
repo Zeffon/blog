@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Java常见的模型转换方法 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="java">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="前文在进行不同领域对象转换时,原对象和目标对象相同属性的类型不一样,所以对象转换时一些需要考虑的问题。我在进行不同领域对象转换，一直都是用BeanUtils.copyProperties()搭配Set()使用的。听了张老师讲解之后，才知道方法如此之多。 转化方法我们的原对象OrderDTO的内容如下： 123456789101112131415161718192021222324252627282">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java常见的模型转换方法">
+<meta property="og:url" content="https://www.zeffon.cn/2019/10/15/java-model-convert-method/index.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="前文在进行不同领域对象转换时,原对象和目标对象相同属性的类型不一样,所以对象转换时一些需要考虑的问题。我在进行不同领域对象转换，一直都是用BeanUtils.copyProperties()搭配Set()使用的。听了张老师讲解之后，才知道方法如此之多。 转化方法我们的原对象OrderDTO的内容如下： 123456789101112131415161718192021222324252627282">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-15T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:01:27.776Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java常见的模型转换方法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前文"><span class="post-toc-number">1.</span> <span class="post-toc-text">前文</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#转化方法"><span class="post-toc-number">2.</span> <span class="post-toc-text">转化方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第1种：Get-Set操作。"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">第1种：Get&#x2F;Set操作。</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第2种：FastJson"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">第2种：FastJson</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第3种：Apache工具包PropertyUtils工具类"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">第3种：Apache工具包PropertyUtils工具类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第4种：Apache工具包BeanUtils工具类"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">第4种：Apache工具包BeanUtils工具类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第5种：Spring封装BeanUtils工具类"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">第5种：Spring封装BeanUtils工具类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第6种：BeanCopier"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">第6种：BeanCopier</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第7种：Dozer框架"><span class="post-toc-number">2.7.</span> <span class="post-toc-text">第7种：Dozer框架</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第八种：MapStruct框架："><span class="post-toc-number">2.8.</span> <span class="post-toc-text">第八种：MapStruct框架：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第九种：Orika框架："><span class="post-toc-number">2.9.</span> <span class="post-toc-text">第九种：Orika框架：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第十种：ModelMapper框架："><span class="post-toc-number">2.10.</span> <span class="post-toc-text">第十种：ModelMapper框架：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结"><span class="post-toc-number">2.11.</span> <span class="post-toc-text">总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#文献参考"><span class="post-toc-number">3.</span> <span class="post-toc-text">文献参考</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-java-model-convert-method"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java常见的模型转换方法</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-10-15 12:00:00" datetime="2019-10-15T04:00:00.000Z"  itemprop="datePublished">2019-10-15</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">9</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前文"><a href="#前文" class="headerlink" title="前文"></a>前文</h2><p>在进行不同领域对象转换时,原对象和目标对象相同属性的类型不一样,所以对象转换时一些需要考虑的问题。<br>我在进行不同领域对象转换，一直都是用BeanUtils.copyProperties()搭配Set()使用的。听了张老师讲解之后，才知道方法如此之多。</p>
+<h2 id="转化方法"><a href="#转化方法" class="headerlink" title="转化方法"></a>转化方法</h2><p><code>我们的原对象OrderDTO的内容如下：</code></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">	<span class="attr">"orderDate"</span>:<span class="number">1570558718699</span>,</span><br><span class="line">	<span class="attr">"orderId"</span>:<span class="number">201909090001</span>,</span><br><span class="line">	<span class="attr">"orderStatus"</span>:<span class="string">"CREATED"</span>,</span><br><span class="line">	<span class="attr">"orderedProducts"</span>:[</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"price"</span>:<span class="number">799.990000000000009094947017729282379150390625</span>,</span><br><span class="line">			<span class="attr">"productId"</span>:<span class="number">1</span>,</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"吉他"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		},</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"price"</span>:<span class="number">30</span>,</span><br><span class="line">			<span class="attr">"productId"</span>:<span class="number">2</span>,</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"变调夹"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		}</span><br><span class="line">	],</span><br><span class="line">	<span class="attr">"paymentType"</span>:<span class="string">"CASH"</span>,</span><br><span class="line">	<span class="attr">"shopInfo"</span>:{</span><br><span class="line">		<span class="attr">"shopId"</span>:<span class="number">20000101</span>,</span><br><span class="line">		<span class="attr">"shopName"</span>:<span class="string">"慕课商铺"</span></span><br><span class="line">	},</span><br><span class="line">	<span class="attr">"totalMoney"</span>:<span class="number">829.990000000000009094947017729282379150390625</span>,</span><br><span class="line">	<span class="attr">"userInfo"</span>:{</span><br><span class="line">		<span class="attr">"userId"</span>:<span class="number">20100001</span>,</span><br><span class="line">		<span class="attr">"userLevel"</span>:<span class="number">2147483647</span>,</span><br><span class="line">		<span class="attr">"userName"</span>:<span class="string">"张小喜"</span></span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><code>期望转换后得到的目标对象OrderVO如下：</code></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">	<span class="attr">"orderDate"</span>:<span class="string">"2019-10-09 15:49:24.619"</span>,</span><br><span class="line">	<span class="attr">"orderStatus"</span>:<span class="string">"CREATED"</span>,</span><br><span class="line">	<span class="attr">"orderedProducts"</span>:[</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"吉他"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		},</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"变调夹"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		}</span><br><span class="line">	],</span><br><span class="line">	<span class="attr">"paymentType"</span>:<span class="string">"CASH"</span>,</span><br><span class="line">	<span class="attr">"shopName"</span>:<span class="string">"慕课商铺"</span>,</span><br><span class="line">	<span class="attr">"totalMoney"</span>:<span class="string">"829.99"</span>,</span><br><span class="line">	<span class="attr">"userName"</span>:<span class="string">"张小喜"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<h3 id="第1种：Get-Set操作。"><a href="#第1种：Get-Set操作。" class="headerlink" title="第1种：Get/Set操作。"></a>第1种：Get/Set操作。</h3><p>Get/Set直接对对象<br>优点：直观、简单、处理速度快；<br>缺点:属性过多时，比较浪费表情，而且代码不简洁  </p>
+<h3 id="第2种：FastJson"><a href="#第2种：FastJson" class="headerlink" title="第2种：FastJson"></a>第2种：FastJson</h3><p>利用序列化和反序列化，这里我们采用先使用FastJson的toJSONString的方法将原对象序列化为字符串，再使用parseObject方法将字符串反序列化为目标对象。<br>缺点：属性转化后不符合预期的，属性名也不一致问题</p>
+<p><strong>使用方式：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JSON.toJSONString将对象序列化成字符串，JSON.parseObject将字符串反序列化为OderVO对象</span></span><br><span class="line">orderVO = JSON.parseObject(JSON.toJSONString(orderDTO), OrderVO<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>结果：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标对象</span></span><br><span class="line">{</span><br><span class="line">	<span class="attr">"orderDate"</span>:<span class="string">"1570558718699"</span>,</span><br><span class="line">	<span class="attr">"orderId"</span>:<span class="number">201909090001</span>,</span><br><span class="line">	<span class="attr">"orderStatus"</span>:<span class="string">"CREATED"</span>,</span><br><span class="line">	<span class="attr">"orderedProducts"</span>:[</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"吉他"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		},</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"变调夹"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		}</span><br><span class="line">	],</span><br><span class="line">	<span class="attr">"paymentType"</span>:<span class="string">"CASH"</span>,</span><br><span class="line">	<span class="attr">"totalMoney"</span>:<span class="string">"829.990000000000009094947017729282379150390625"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>可以看到</strong></p>
+<ol>
+<li>日期不符合我们的要求</li>
+<li>金额也有问题</li>
+<li>最严重的是，当属性名不一样时，不复制</li>
+</ol>
+<h3 id="第3种：Apache工具包PropertyUtils工具类"><a href="#第3种：Apache工具包PropertyUtils工具类" class="headerlink" title="第3种：Apache工具包PropertyUtils工具类"></a>第3种：Apache工具包PropertyUtils工具类</h3><p>缺点：属性类型不一样会报错，不能部分属性复制，得到的目标对象部分属性成功、部分失败</p>
+<p>使用方式：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PropertyUtils.copyProperties(orderVO, orderDTO);</span><br></pre></td></tr></tbody></table></figure></div>
+<p>转换过程中报错</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalArgumentException: Cannot invoke com.imooc.demo.OrderVO.setTotalMoney on bean class 'class com.imooc.demo.OrderVO' - argument type mismatch - had objects of type "java.math.BigDecimal" but expected signature "java.lang.String"</span><br></pre></td></tr></tbody></table></figure>
+<p>结果：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标对象</span></span><br><span class="line">{</span><br><span class="line">	<span class="attr">"orderId"</span>:<span class="number">201909090001</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+<p>结论：  </p>
+<ol>
+<li>属性类型不一样时报错  </li>
+<li>不能部分属性复制  </li>
+<li>得到的目标对象部分属性成功(这点很要命，部分成功，部分失败！)  </li>
+</ol>
+<h3 id="第4种：Apache工具包BeanUtils工具类"><a href="#第4种：Apache工具包BeanUtils工具类" class="headerlink" title="第4种：Apache工具包BeanUtils工具类"></a>第4种：Apache工具包BeanUtils工具类</h3><p>缺点：属性转化后不符合预期的，属性名也不一致问题</p>
+<p><strong>使用方式：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BeanUtils.copyProperties(orderVO, orderDTO);</span><br></pre></td></tr></tbody></table></figure></div>
+<p><strong>结果：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标对象</span></span><br><span class="line">{</span><br><span class="line">	<span class="attr">"orderDate"</span>:<span class="string">"Wed Oct 09 02:36:25 CST 2019"</span>,</span><br><span class="line">	<span class="attr">"orderId"</span>:<span class="number">201909090001</span>,</span><br><span class="line">	<span class="attr">"orderStatus"</span>:<span class="string">"CREATED"</span>,</span><br><span class="line">	<span class="attr">"orderedProducts"</span>:[</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"price"</span>:<span class="number">799.990000000000009094947017729282379150390625</span>,</span><br><span class="line">			<span class="attr">"productId"</span>:<span class="number">1</span>,</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"吉他"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		},</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"price"</span>:<span class="number">30</span>,</span><br><span class="line">			<span class="attr">"productId"</span>:<span class="number">2</span>,</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"变调夹"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		}</span><br><span class="line">	],</span><br><span class="line">	<span class="attr">"paymentType"</span>:<span class="string">"CASH"</span>,</span><br><span class="line">	<span class="attr">"totalMoney"</span>:<span class="string">"829.990000000000009094947017729282379150390625"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+<p><strong>结论：</strong></p>
+<ol>
+<li>日期不符合要求</li>
+<li>属性名不一样时不复制</li>
+<li>目标对象中的商品集合变成了DTO的对象，这是因为List的泛型被擦除了，而且是浅拷贝，所以造成这种现象。</li>
+</ol>
+<h3 id="第5种：Spring封装BeanUtils工具类"><a href="#第5种：Spring封装BeanUtils工具类" class="headerlink" title="第5种：Spring封装BeanUtils工具类"></a>第5种：Spring封装BeanUtils工具类</h3><p>缺点：会出现属性丢失</p>
+<p><strong>使用方式：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 对象属性转换，忽略orderedProducts字段 */</span></span><br><span class="line">BeanUtils.copyProperties(orderDTO, orderVO, <span class="string">"orderedProducts"</span>);</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>结果：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 目标对象 */</span></span><br><span class="line">{</span><br><span class="line">	<span class="string">"orderId"</span>:<span class="number">201909090001</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>结论：</strong></p>
+<ol>
+<li>可以忽略部分属性</li>
+<li>属性类型不同，不能转换</li>
+<li>属性名称不同，不能转换</li>
+</ol>
+<blockquote>
+<p>apache的<code>BeanUtils</code>和spring的<code>BeanUtils</code>中拷贝方法的原理都是先用jdk中 <code>java.beans.Introspector</code>类的<code>getBeanInfo()</code>方法获取对象的属性信息及属性get/set方法，接着使用反射（<code>Method</code>的<code>invoke(Object obj, Object... args)</code>）方法进行赋值。  </p>
+</blockquote>
+<h3 id="第6种：BeanCopier"><a href="#第6种：BeanCopier" class="headerlink" title="第6种：BeanCopier"></a>第6种：BeanCopier</h3><p>cglib工具包的<code>BeanCopier</code>采用了不同的方法：它不是利用反射对属性进行赋值，而是直接使用ASM的<code>MethodVisitor</code>直接编写各属性的<code>get/set</code>方法生成class文件，然后进行执行。</p>
+<p>优点：字节码技术，速度快，自定义地处理的属性，其他未处理的属性就不行，提供自己自定义转换逻辑的方式<br>缺点：转换逻辑自己写，比较复杂，繁琐；属性名称相同，类型不同，不会拷贝（原始类型和包装类型也被视为类型不同） </p>
+<p><strong>使用方式：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造转换器对象，最后的参数表示是否需要自定义转换器</span></span><br><span class="line">BeanCopier beanCopier = BeanCopier.create(orderDTO.getClass(), orderVO.getClass(), <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换对象，自定义转换器处理特殊字段</span></span><br><span class="line">beanCopier.copy(orderDTO, orderVO, (value, target, context) -&gt; {</span><br><span class="line">    <span class="comment">// 原始数据value是Date类型，目标类型target是String</span></span><br><span class="line">    <span class="keyword">if</span> (value <span class="keyword">instanceof</span> Date) {</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"String"</span>.equals(target.getSimpleName())) {</span><br><span class="line">            SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss.SSS"</span>);</span><br><span class="line">            <span class="keyword">return</span> sdf.format(value);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">	<span class="comment">// 未匹配上的字段，原值返回</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>报错</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.ClassCastException: com.imooc.demo.OrderStatus cannot be cast to java.lang.String</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>结果：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标对象</span></span><br><span class="line">{</span><br><span class="line">	<span class="string">"orderDate"</span>:<span class="string">"2019-10-09 03:07:13.768"</span>,</span><br><span class="line">	<span class="string">"orderId"</span>:<span class="number">201909090001</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>结论：</strong></p>
+<ol>
+<li>字节码技术，速度快</li>
+<li>提供自己自定义转换逻辑的方式</li>
+<li>转换逻辑自己写，比较复杂，繁琐</li>
+<li>属性名称相同，类型不同，不会拷贝（原始类型和包装类型也被视为类型不同）</li>
+</ol>
+<h3 id="第7种：Dozer框架"><a href="#第7种：Dozer框架" class="headerlink" title="第7种：Dozer框架"></a>第7种：Dozer框架</h3><p>使用以上类库虽然可以不用手动编写<code>get/set</code>方法，但是他们都不能对<code>不同名称</code>的对象属性进行映射。在定制化的属性映射方面做得比较好的有Dozer，Dozer支持简单属性映射、复杂类型<code>映射</code>、<code>双向映射</code>、<code>隐式映射</code>以及<code>递归映射</code>。可使用<code>xml</code>或者<code>注解</code>进行映射的配置，支持<code>自动类型</code>转换，使用方便。但<code>Dozer底层</code>是使用reflect包下Field类的set(Object obj, Object value)方法进行属性赋值，执行速度上不是那么理想。</p>
+<p><strong>使用方式：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建转换器对象，强烈建议创建全局唯一的，避免不必要的开销</span></span><br><span class="line">DozerBeanMapper mapper = <span class="keyword">new</span> DozerBeanMapper();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载映射文件</span></span><br><span class="line">mapper.addMapping(TransferTest.class.getResourceAsStream("/mapping.xml"));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换</span></span><br><span class="line">orderVO = mapper.map(orderDTO, OrderVO<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>结果：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JSON"><figure class="iseeu highlight /json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 目标对象</span></span><br><span class="line">{</span><br><span class="line">	<span class="attr">"orderDate"</span>:<span class="string">"2019-10-09 15:49:24.619"</span>,</span><br><span class="line">	<span class="attr">"orderStatus"</span>:<span class="string">"CREATED"</span>,</span><br><span class="line">	<span class="attr">"orderedProducts"</span>:[</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"吉他"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		},</span><br><span class="line">		{</span><br><span class="line">			<span class="attr">"productName"</span>:<span class="string">"变调夹"</span>,</span><br><span class="line">			<span class="attr">"quantity"</span>:<span class="number">1</span></span><br><span class="line">		}</span><br><span class="line">	],</span><br><span class="line">	<span class="attr">"paymentType"</span>:<span class="string">"CASH"</span>,</span><br><span class="line">	<span class="attr">"shopName"</span>:<span class="string">"慕课商铺"</span>,</span><br><span class="line">	<span class="attr">"totalMoney"</span>:<span class="string">"829.99"</span>,</span><br><span class="line">	<span class="attr">"userName"</span>:<span class="string">"张小喜"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>配置的字段映射文件：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="XML"><figure class="iseeu highlight /xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mappings</span> <span class="attr">xmlns</span>=<span class="string">"http://dozer.sourceforge.net"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://dozer.sourceforge.net</span></span></span><br><span class="line"><span class="tag"><span class="string">  http://dozer.sourceforge.net/schema/beanmapping.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 一组类映射关系 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mapping</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 类A和类B --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">class-a</span>&gt;</span>com.imooc.demo.OrderDTO<span class="tag">&lt;/<span class="name">class-a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">class-b</span>&gt;</span>com.imooc.demo.OrderVO<span class="tag">&lt;/<span class="name">class-b</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 一组需要映射的特殊属性 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">field</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span>&gt;</span>shopInfo.shopName<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">b</span>&gt;</span>shopName<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">field</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 将嵌套对象中的某个属性值映射到目标对象的指定属性上 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">field</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span>&gt;</span>userInfo.userName<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">b</span>&gt;</span>userName<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">field</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 将Date对象映射成指定格式的日期字符串 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">field</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span>&gt;</span>orderDate<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">b</span> <span class="attr">date-format</span>=<span class="string">"yyyy-MM-dd HH:mm:ss.SSS"</span>&gt;</span>orderDate<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">field</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 自定义属性转化器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">field</span> <span class="attr">custom-converter</span>=<span class="string">"com.imooc.demo.DozerCustomConverter"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span>&gt;</span>totalMoney<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">b</span>&gt;</span>totalMoney<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">field</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 忽略指定属性 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">field-exclude</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span>&gt;</span>orderId<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">b</span>&gt;</span>orderId<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">field-exclude</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mappings</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>自定义转换器：</strong></p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DozerCustomConverter</span> <span class="keyword">implements</span> <span class="title">CustomConverter</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">convert</span><span class="params">(Object destination, Object source, Class&lt;?&gt; destClass, Class&lt;?&gt; sourceClass)</span> </span>{</span><br><span class="line">        <span class="comment">// 如果原始属性为BigDecimal类型</span></span><br><span class="line">        <span class="keyword">if</span> (source <span class="keyword">instanceof</span> BigDecimal) {</span><br><span class="line">            <span class="comment">// 目标属性为String类型</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="string">"String"</span>.equals(destClass.getSimpleName())) {</span><br><span class="line">                <span class="keyword">return</span> String.valueOf(((BigDecimal) source).doubleValue());</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> destination;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><strong>结论：</strong></p>
+<ol>
+<li>支持多种数据类型自动转换（双向的）</li>
+<li>支持不同属性名之间转换</li>
+<li>支持三种映射配置方式（注解方式，API方式，XML方式）</li>
+<li>支持配置忽略部分属性</li>
+<li>支持自定义属性转换器</li>
+<li>嵌套对象深拷贝</li>
+</ol>
+<h3 id="第八种：MapStruct框架："><a href="#第八种：MapStruct框架：" class="headerlink" title="第八种：MapStruct框架："></a>第八种：MapStruct框架：</h3><p>基于JSR269的Java注解处理器，通过注解配置映射关系，在编译时自动生成接口实现类。类似于Lombok的原理一样。</p>
+<h3 id="第九种：Orika框架："><a href="#第九种：Orika框架：" class="headerlink" title="第九种：Orika框架："></a>第九种：Orika框架：</h3><p>支持在代码中注册字段映射，通过javassist类库生成Bean映射的字节码，之后直接加载执行生成的字节码文件。</p>
+<h3 id="第十种：ModelMapper框架："><a href="#第十种：ModelMapper框架：" class="headerlink" title="第十种：ModelMapper框架："></a>第十种：ModelMapper框架：</h3><p>基于反射原理进行赋值或者直接对成员变量赋值。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<p>介绍的这些转换方法中，在性能上基本遵循：手动赋值 &gt; cglib    &gt; 反射 &gt; Dozer &gt; 序列化。</p>
+</blockquote>
+<p>在实际项目中，需要综合使用上述方法进行模型转换。<br>比如较低层的DO，因为涉及到的嵌套对象少，改动也少，所以可以使用BeanUtils直接转。<br>如果是速度、稳定优先的系统，还是简单粗暴地使用Set、Get实现吧。</p>
+<h2 id="文献参考"><a href="#文献参考" class="headerlink" title="文献参考"></a>文献参考</h2><ul>
+<li>本篇学习于慕课网-张小喜老师<a href="http://www.imooc.com/article/293314" target="_blank" rel="noopener">手记</a></li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-02-18T09:01:27.776Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/2019/10/15/java-model-convert-method/" target="_blank" rel="external">https://www.zeffon.cn/2019/10/15/java-model-convert-method/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/&title=《Java常见的模型转换方法》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/&title=《Java常见的模型转换方法》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/2019/10/15/java-model-convert-method/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java常见的模型转换方法》 — Zeffon's blog&url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/10/16/mac-and-win-nvm/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：nvm的使用
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/10/13/mysql-concurrent-access-problem/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Mysql并发访问事务问题">下一篇：Mysql并发访问事务问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/&title=《Java常见的模型转换方法》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/&title=《Java常见的模型转换方法》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/2019/10/15/java-model-convert-method/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java常见的模型转换方法》 — Zeffon's blog&url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/2019/10/15/java-model-convert-method/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aO3LDMAwFQN//0kmbmYzkB4AuDK0qTyJZXBYwPny94uvnz3X/3//X1f1Xn6+eOnBhYGB8LSNZRL64+6fyd5U3CAMD4wGMXli8/+oEn7/3zZoxMDAw4nvu8XmiiYGBgTFnnKqb843AwMDAqBaWyWuqQbZaBmNgYDyHMSksP/35I/MNDAyMr2JMGve9krU3BH2zKgwMjNWMPMDlqV6Suk2evbwTAwNjKSN/oNcOywecCe/yLxgYGI9h5KletdSsppLV4QQGBsZzGHlzLUn7ckAe3KPfBAwMjHWMHJYPGnNSvh3lQI+BgbGOkZSaSYI4HyGM8BgYGEsZpxZdDaOn2naXRSwGBsYiRi/hu0f2wms+EngzicXAwHgAY5Jr9Y5/5UVslCBiYGCsY8xbZkmaeOoQWPOwBQYGxgpGkhT20se83J0MRzEwMHYzqse5Jscm8sWdOlOBgYGxlZGkcb1APBlClNkYGBjrGEkrv1eyFhK4eBMvkRgYGI9hVL8ob8+d6owVmm4YGBjrGJPCtXcso7ncajcOAwNjEaPa4q8WnPnRsV76iIGBsZXRK0QnBzLyRluBioGBsZpRHRbOj3BVE8G8CYiBgbGbcSrI9vYsD7jNriEGBsYiRjXwJezJYYtyVw0DAwMjDnx58Vk95FGYb2BgYDyeMR9YzoPs4d8NDAyML2H0Ur1qKVsNvvn9GBgYuxmTvKvaJpuTRkNNDAyM72P8Ah7u2xlD4ZTdAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>
