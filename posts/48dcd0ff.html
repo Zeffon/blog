@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://www.zeffon.cn/images/2020/08/04-01-create-midway.png">
 <meta property="og:image" content="https://www.zeffon.cn/images/2020/08/04-02-create-midway.png">
 <meta property="article:published_time" content="2020-08-04T15:56:08.000Z">
-<meta property="article:modified_time" content="2020-08-05T02:16:26.942Z">
+<meta property="article:modified_time" content="2020-08-05T02:18:43.682Z">
 <meta property="article:author" content="Zeffon">
 <meta property="article:tag" content="云开发">
 <meta name="twitter:card" content="summary">
@@ -189,7 +189,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">2.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#npm安装midwayjs"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">npm安装midwayjs</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建项目"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">创建项目</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">2.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装MidwayJS"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">安装MidwayJS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建项目"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">创建项目</span></a></li></ol></li></ol>
         </nav>
     </aside>
    
@@ -226,10 +226,10 @@
 <a id="more"></a>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在<a href="https://github.com/midwayjs/midway" target="_blank" rel="noopener">官方Github</a>中有详细的介绍，具体可以观看文档。<br>以下为个人看法：<br>从一个简单的Demo中，可以看出MidwayJS核心思想是Java的IoC，而且很多写法采用了类的写法。至于为什么是这样做。这中设计主要是为了更好维护代码的原因。软件开发不光是要开发好的软件，更重要的是能开发更好维护的代码来。而软件工程的初衷便是当时推出来解决该问题的。<br>前端代码维护工作量其实是很大的，主要是开发过后一段时间后，再来维护项目时。你可能会发现这代码一脸懵逼（我是经常这样的…不知道大家是否这样）<br>来Vue来举例子吧：如果你是用它来开发大项目，假设你没有将模块细分的话，你可能会在一个文件写上几百上千行的代码。可想而知这代码的后期维护工作是<strong>挺痛苦的</strong>（前端大佬就是喜欢竖屏的原因估计就在这样）。<br>Vue 2.X的版本采用的是<code>Options api</code>(选项式)风格(<strong>跟微信小程序一样的</strong>)，单文件代码会分布得很零散，维护工作量可想而知。这也是很多大项目采用的<code>React</code>来开发，主要是React的写法就像写Java代码那般，利于好维护。<br>而Vue 3.0版本采用的是<code>composition api</code>组合式，单文件代码层次会分明不再像以前那般零零散散，也不再需要显示地实例化对象。这种改变使得Vue变得更函数式编程了。详细变化可以看<strong>尤大</strong>的<a href="https://composition-api.vuejs.org/zh/" target="_blank" rel="noopener">Vue组合式API</a><br>个人觉得今后前端的开发风格会向服务端的开发风格转变，这也是前端发展趋势所在。</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="npm安装midwayjs"><a href="#npm安装midwayjs" class="headerlink" title="npm安装midwayjs"></a>npm安装midwayjs</h3><ol>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="安装MidwayJS"><a href="#安装MidwayJS" class="headerlink" title="安装MidwayJS"></a>安装MidwayJS</h3><ol>
 <li><p>首先的话需要下载node，版本的话别太旧就行了。</p>
 </li>
-<li><p>全局安装midwayjs</p>
+<li><p>全局安装MidwayJS</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i @midwayjs/faas-cli -g</span><br></pre></td></tr></tbody></table></figure></div>
 <blockquote>
 <p>可能会因为网络问题报错，可以将npm设置淘宝源<br>npm config set registry <a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p>
@@ -277,7 +277,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2020-08-05T02:16:26.942Z" itemprop="dateUpdated">2020-08-05 10:16:26</time>
+    最后更新：<time datetime="2020-08-05T02:18:43.682Z" itemprop="dateUpdated">2020-08-05 10:18:43</time>
 </span>
 
 
