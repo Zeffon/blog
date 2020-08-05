@@ -6,7 +6,7 @@
     
     
     
-    <title>阿里的云开发技术Day02 | Zeffon&#39;s blog | 个人博客</title>
+    <title>阿里的云开发技术Day03 | Zeffon&#39;s blog | 个人博客</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -39,21 +39,23 @@
 
 
     
-    <meta name="description" content="MidwayJS是一个Typescript编写的NodeJS web 框架，早在阿里2013年时便提出了。由于Java既做服务端获取数据，又做前端数据渲染。这样对服务端不太好于维护。对此，采用NodeJS来渲染前端的数据。MidwayJS就是负责该项任务。">
+    <meta name="description" content="记录阿里的云开发技术活动的第三天">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿里的云开发技术Day02">
-<meta property="og:url" content="https://www.zeffon.cn/posts/48dcd0ff.html">
+<meta property="og:title" content="阿里的云开发技术Day03">
+<meta property="og:url" content="https://www.zeffon.cn/posts/ee6b1b7d.html">
 <meta property="og:site_name" content="Zeffon&#39;s blog">
-<meta property="og:description" content="MidwayJS是一个Typescript编写的NodeJS web 框架，早在阿里2013年时便提出了。由于Java既做服务端获取数据，又做前端数据渲染。这样对服务端不太好于维护。对此，采用NodeJS来渲染前端的数据。MidwayJS就是负责该项任务。">
+<meta property="og:description" content="记录阿里的云开发技术活动的第三天">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.zeffon.cn/images/2020/08/04-01-create-midway.png">
-<meta property="og:image" content="https://www.zeffon.cn/images/2020/08/04-02-create-midway.png">
-<meta property="article:published_time" content="2020-08-04T15:56:08.000Z">
-<meta property="article:modified_time" content="2020-08-05T14:45:33.494Z">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-01-create-application.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-02-deploy-application.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-03-run-application.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-04-run-application.png">
+<meta property="article:published_time" content="2020-08-05T14:44:05.000Z">
+<meta property="article:modified_time" content="2020-08-05T16:22:10.602Z">
 <meta property="article:author" content="Zeffon">
 <meta property="article:tag" content="serverless">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.zeffon.cn/images/2020/08/04-01-create-midway.png">
+<meta name="twitter:image" content="https://www.zeffon.cn/images/2020/08/05-01-create-application.png">
     
         <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
     
@@ -149,7 +151,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">阿里的云开发技术Day02</div>
+        <div class="flex-col header-title ellipsis">阿里的云开发技术Day03</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -189,19 +191,19 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">2.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装MidwayJS"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">安装MidwayJS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建项目"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">创建项目</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">2.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建应用"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">创建应用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#运行项目"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">运行项目</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#部署项目"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">部署项目</span></a></li></ol></li></ol>
         </nav>
     </aside>
    
-<article id="post-aliyun-serverless-day02"
+<article id="post-aliyun-serverless-day03"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">阿里的云开发技术Day02</h1>
+        <h1 class="post-card-title">阿里的云开发技术Day03</h1>
         <div class="post-meta">
             <i class="icon icon-lg icon-calendar-o"></i>
             发表于
-            <time class="post-time" title="2020-08-04 23:56:08" datetime="2020-08-04T15:56:08.000Z"  itemprop="datePublished">2020-08-04</time>
+            <time class="post-time" title="2020-08-05 22:44:05" datetime="2020-08-05T14:44:05.000Z"  itemprop="datePublished">2020-08-05</time>
 
             <br id="mybreak"/>
             
@@ -219,38 +221,41 @@
         </div>
         <div class="post-count-custom">
             <i class="icon icon-lg icon-comment-o"></i>
-            阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
+            阅读本文可能花费您&nbsp;<span class="post-count">1</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><a href="https://github.com/midwayjs/midway" target="_blank" rel="noopener">MidwayJS</a>是一个<code>Typescript</code>编写的NodeJS web 框架，早在阿里2013年时便提出了。由于Java既做服务端获取数据，又做前端数据渲染。这样对服务端不太好于维护。对此，采用NodeJS来渲染前端的数据。MidwayJS就是负责该项任务。</p>
+            <p>记录阿里的云开发技术活动的第三天</p>
 <a id="more"></a>
 
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在<a href="https://github.com/midwayjs/midway" target="_blank" rel="noopener">官方Github</a>中有详细的介绍，具体可以观看文档。<br>以下为个人看法：<br>从一个简单的Demo中，可以看出MidwayJS核心思想是Java的IoC，而且很多写法采用了类的写法。至于为什么是这样做。这中设计主要是为了更好维护代码的原因。软件开发不光是要开发好的软件，更重要的是能开发更好维护的代码来。而软件工程的初衷便是当时推出来解决该问题的。<br>前端代码维护工作量其实是很大的，主要是开发过后一段时间后，再来维护项目时。你可能会发现这代码一脸懵逼（我是经常这样的…不知道大家是否这样）<br>来Vue来举例子吧：如果你是用它来开发大项目，假设你没有将模块细分的话，你可能会在一个文件写上几百上千行的代码。可想而知这代码的后期维护工作是<strong>挺痛苦的</strong>（前端大佬就是喜欢竖屏的原因估计就在这样）。<br>Vue 2.X的版本采用的是<code>Options api</code>(选项式)风格(<strong>跟微信小程序一样的</strong>)，单文件代码会分布得很零散，维护工作量可想而知。这也是很多大项目采用的<code>React</code>来开发，主要是React的写法就像写Java代码那般，利于好维护。<br>而Vue 3.0版本采用的是<code>composition api</code>组合式，单文件代码层次会分明不再像以前那般零零散散，也不再需要显示地实例化对象。这种改变使得Vue变得更函数式编程了。详细变化可以看<strong>尤大</strong>的<a href="https://composition-api.vuejs.org/zh/" target="_blank" rel="noopener">Vue组合式API</a><br>个人觉得今后前端的开发风格会向服务端的开发风格转变，这也是前端发展趋势所在。</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="安装MidwayJS"><a href="#安装MidwayJS" class="headerlink" title="安装MidwayJS"></a>安装MidwayJS</h3><ol>
-<li><p>首先的话需要下载node，版本的话别太旧就行了。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h3><ol>
+<li><p>新建应用 -&gt; 技术场景 -&gt; WEB -&gt; Midway Serverless 一体化解决方案(For NodeJS10)<br>随意填写应用相关的信息进行创建</p>
+<img src="/images/2020/08/05-01-create-application.png" width="70%" alt="create-application">
 </li>
-<li><p>全局安装MidwayJS</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i @midwayjs/faas-cli -g</span><br></pre></td></tr></tbody></table></figure></div>
+<li><p>点击开发部署，进入<code>Cloud IDE</code></p>
+</li>
+</ol>
+<h3 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h3><ol>
+<li><p>首先查看README.md，根据提示需要先安装依赖</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>编辑<code>src/apis/index.ts</code>文件，这个是index路由，当然你也可以新建不同的路由</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TS"><figure class="iseeu highlight /ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { Provide, Func } <span class="keyword">from</span> <span class="string">'@midwayjs/decorator'</span></span><br><span class="line"><span class="meta">@Provide</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> IndexService {</span><br><span class="line">  <span class="meta">@Func</span>(<span class="string">'index.handler'</span>)</span><br><span class="line">  <span class="keyword">async</span> handler() {</span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">      message: <span class="string">'Hello Midway Serverless! Your Name'</span>,</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
 <blockquote>
-<p>可能会因为网络问题报错，可以将npm设置淘宝源<br>npm config set registry <a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p>
+<p>记得要保存该文件 <code>Ctrl + s</code></p>
 </blockquote>
 </li>
 </ol>
-<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><ol>
-<li><p>midwayjs通过 <strong><code>f</code></strong>的指令来操作的</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ f create <span class="comment"># 创建项目</span></span><br></pre></td></tr></tbody></table></figure></div>
+<h3 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h3><p>没必要去执行<code>npm run dev</code>，因为是在云端环境，就算运行了我们使用本地的地址也访问不了，所以就直接部署了。</p>
+<ol>
+<li><p>在左侧第一个位置选择日常部署即可</p>
+<img src="/images/2020/08/05-02-deploy-application.png" width="70%" alt="create-application">
 </li>
-<li><p>选择faas-standard(回车)，填写项目名再回车，这时候就已经生成脚手架了</p>
-<img src="/images/2020/08/04-01-create-midway.png" width="70%" alt="create-midway">
+<li><p>点开输出台的网址，会显示以下内容</p>
+<img src="/images/2020/08/05-03-run-application.png" width="70%" alt="create-application">
 </li>
-<li><p>进了项目目录，安装需要的依赖</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd ./serverless</span><br><span class="line">$ npm install</span><br></pre></td></tr></tbody></table></figure></div>
+<li><p>加上<code>/api/index</code>路由访问修改的index.ts文件</p>
+<img src="/images/2020/08/05-04-run-application.png" width="70%" alt="create-application">
 </li>
-<li><p>运行项目</p>
-<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ f invoke -p</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">$ f invoke -f index</span><br></pre></td></tr></tbody></table></figure></div>
-</li>
-<li><p>运行效果如图：</p>
-<img src="/images/2020/08/04-02-create-midway.png" width="70%" alt="create-midway"></li>
 </ol>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -277,12 +282,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2020-08-05T14:45:33.494Z" itemprop="dateUpdated">2020-08-05 22:45:33</time>
+    最后更新：<time datetime="2020-08-05T16:22:10.602Z" itemprop="dateUpdated">2020-08-06 00:22:10</time>
 </span>
 
 
         
-        原文链接：<a href="/posts/48dcd0ff.html" target="_blank" rel="external">https://www.zeffon.cn/posts/48dcd0ff.html</a>
+        原文链接：<a href="/posts/ee6b1b7d.html" target="_blank" rel="external">https://www.zeffon.cn/posts/ee6b1b7d.html</a>
         
     </div>
     <footer>
@@ -314,7 +319,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/48dcd0ff.html&title=《阿里的云开发技术Day02》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -324,22 +329,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/48dcd0ff.html&title=《阿里的云开发技术Day02》 — Zeffon's blog&source=MidwayJS是一个Typescript编写的NodeJS web 框架，早在阿里2013年时便提出了。由于Java既做服务端获取数据，又做前端数据渲染..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&source=记录阿里的云开发技术活动的第三天" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/48dcd0ff.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/ee6b1b7d.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《阿里的云开发技术Day02》 — Zeffon's blog&url=https://www.zeffon.cn/posts/48dcd0ff.html&via=https://www.zeffon.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《阿里的云开发技术Day03》 — Zeffon's blog&url=https://www.zeffon.cn/posts/ee6b1b7d.html&via=https://www.zeffon.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/48dcd0ff.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/ee6b1b7d.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -359,21 +364,13 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/posts/ee6b1b7d.html" id="post-prev" class="post-nav-link">
-        <h4 class="title" >
-          上一篇：阿里的云开发技术Day03
-        </h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/posts/d1d58145.html" id="post-next" class="post-nav-link">
-        <h4 class="title" data-hover="下一篇：阿里的云开发技术Day01">下一篇：阿里的云开发技术Day01</h4>
+      <a href="/posts/48dcd0ff.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：阿里的云开发技术Day02">下一篇：阿里的云开发技术Day02</h4>
       </a>
     </div>
   
@@ -477,7 +474,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/48dcd0ff.html&title=《阿里的云开发技术Day02》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -487,22 +484,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/48dcd0ff.html&title=《阿里的云开发技术Day02》 — Zeffon's blog&source=MidwayJS是一个Typescript编写的NodeJS web 框架，早在阿里2013年时便提出了。由于Java既做服务端获取数据，又做前端数据渲染..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&source=记录阿里的云开发技术活动的第三天" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/48dcd0ff.html" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/ee6b1b7d.html" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《阿里的云开发技术Day02》 — Zeffon's blog&url=https://www.zeffon.cn/posts/48dcd0ff.html&via=https://www.zeffon.cn" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《阿里的云开发技术Day03》 — Zeffon's blog&url=https://www.zeffon.cn/posts/ee6b1b7d.html&via=https://www.zeffon.cn" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/48dcd0ff.html" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/ee6b1b7d.html" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -513,7 +510,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p class="wechatshare">扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwUlEQVR42u3aS27DMAwFQN//0u42QGD3UbSYtBitCsewRl0Q4uc44nW+rNcn92++r/c3jx0LFxe3zU02WNv4/pD337/aCxcXd5J7tdnVO1dPqiEvfwcXF/ebuck2edjCxcX9T9z8134qhYuL+ylukvz0U508uXogV8PFxW1w8yrlvr+31HdxcXGXuGdx3R8gCVKt3XFxcUe4eUDptFLWEqTLN3FxcTdzq+EpP0YeyAr/Glxc3BFucuFYI+ZP8usOLi7uJDfZsprMPDuQgYuLO8/NByk6DY9O8QUXF/dT3Dz52dEurSZduLi4+7hrgw55uKkGr1++jIuLO8Ld0S5NjreWROHi4s5w+6lIDl0rl5SnRXBxcdvczjUlP0BeMC2MdeLi4m7mJg2MtXJndWoiCpS4uLiD3H7js3+YQq6Gi4s7yM0vIuVtit8pxEJcXNxHuWdxJb3OalgshDlcXNwRbidIda5HebVm8TC4uLhtbnUworpxXopNSie4uLiT3LUWaTKwVcjD8lwNFxf3y7jVZGZxXgwXF/cPcqst0k7ho3XFwcXFbXCfGsDKQ1WeYuHi4s5zH+jTFjfojGLg4uJu5v4AXq3iMZm9UBAAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAB1klEQVR42u3aQYrDMAwF0N7/0h3oaiDT+MuKnQy8rEpb4mcvhCzp9Yqf9+f5/fn4zfHX4/PtnRc/uLi4bW6ywPli59zzVaqbxMXF3cmtBq/kn/kRJG/GxcV9JjdfJg92uLi4/52bpDLnt5VkM7i4uM/hXnU5Sbax6a6Gi4vb4M4VTK/9vLy+i4uLe1FXIm+EVIPOe+rBxcXdw03aJHn6kmwgSaEGYQ4XF3cjN294nCOSd3YOBRcXdzW3Uwbtpyx5kfSPjAwXF3cZt1M2zVOTuQA3ODJcXNzF3DxsJdzOwFaSPOHi4q7mJslEEmiqTZHCWc7hcHFxG9xqwbRfGK2+HxcX9y5uXuzIxzLyBCgvv+Li4j6HmwSvyXZpgMbFxd3PrbY5OyMX1Ybu184PLi7uYm4SsPoFlOqox+AIcHFxF3Pzy0m5PxMEpmTsAxcX9y5udYHq5afaym01WXFxcS/idgYj8jJHchEqV3BxcXEXcKsBpdoI6bdhJtuuuLi4bW4SvKrDl9WmS2FEAxcXdyO3mo4kF565y095jgwXF/dW7lwhtTrMMdgeLi7ug7nVgks+wjVYCxcXdyM3T2KqbZLO1ahVFsHFxW1w5wqm1WZMfrnCxcW9lfsDu61sw9l81koAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
