@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Markdown基础 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="杂记">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="基础语法Markdown是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。 1.段落与换行 段落的前后必须是空行空行指的是行内什么都没有，或者只有空白符（空格或制表符，相邻两行文本，如果中间没有空行会显示在一行中（换行符被转换为空格） 如果需要在段落内加入换行（&lt;br&gt;）可以在前一行的末尾加入至少两个空格，然后换行写其它的文字 Markdown 中的多数区块都需要在两个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown基础">
+<meta property="og:url" content="https://www.zeffon.cn/posts/b1c1e088.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="基础语法Markdown是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。 1.段落与换行 段落的前后必须是空行空行指的是行内什么都没有，或者只有空白符（空格或制表符，相邻两行文本，如果中间没有空行会显示在一行中（换行符被转换为空格） 如果需要在段落内加入换行（&lt;br&gt;）可以在前一行的末尾加入至少两个空格，然后换行写其它的文字 Markdown 中的多数区块都需要在两个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3">
+<meta property="og:image" content="https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3">
+<meta property="og:image" content="https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3">
+<meta property="article:published_time" content="2019-09-04T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:01:27.766Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="杂记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Markdown基础</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基础语法"><span class="post-toc-number">1.</span> <span class="post-toc-text">基础语法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-段落与换行"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.段落与换行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-标题"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2.标题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-列表"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">4.列表</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-代码"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">5.代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-分隔线"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">6.分隔线</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#7-超链接"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">7.超链接</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8-图片"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">8.图片</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#9-强调"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">9.强调</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#10-字符转义"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">10.字符转义</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#扩展语法"><span class="post-toc-number">2.</span> <span class="post-toc-text">扩展语法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-删除线"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.删除线</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-代码块和语法高亮"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.代码块和语法高亮</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-表格"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">3.表格</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-Task-List"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">4.Task List</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#格式转换"><span class="post-toc-number">3.</span> <span class="post-toc-text">格式转换</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-HTML"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">1.HTML</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-PDF"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2.PDF</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Word"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">3.Word</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">4.</span> <span class="post-toc-text">参考文献</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-markdown-base"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Markdown基础</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-09-04 12:00:00" datetime="2019-09-04T04:00:00.000Z"  itemprop="datePublished">2019-09-04</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Note/">Note</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">12</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p>Markdown是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。</p>
+<h3 id="1-段落与换行"><a href="#1-段落与换行" class="headerlink" title="1.段落与换行"></a>1.段落与换行</h3><ol>
+<li>段落的前后必须是空行<br><code>空行</code>指的是行内什么都没有，或者只有空白符（空格或制表符，相邻两行文本，如果中间没有空行会显示在一行中（换行符被转换为空格）</li>
+<li>如果需要在段落内加入换行（<code>&lt;br&gt;</code>）<br>可以在前一行的末尾加入至少两个空格，然后换行写其它的文字</li>
+<li>Markdown 中的多数区块都需要在两个空行之间。</li>
+</ol>
+<h3 id="2-标题"><a href="#2-标题" class="headerlink" title="2.标题"></a>2.标题</h3><p>1. Setext 形式  </p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">H1</span><br><span class="line">====</span><br><span class="line"></span><br><span class="line">H2</span><br><span class="line">----</span><br></pre></td></tr></tbody></table></figure></div>
+<blockquote>
+<p><code>=</code> 和 <code>-</code> 的数量是没有限制的。通常的做法是使其和标题文本的长度相同，这样看起来比较舒服。或者可以像我一样，用四个 <code>-</code> 或 <code>=</code>。<br>Setext 形式只支持 <code>h1</code> 和 <code>h2</code> 两种标题。</p>
+</blockquote>
+<p>2. atx 形式<br>① 可以用对称的 <code>#</code> 包括文本：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">####H4####</span></span><br><span class="line"></span><br><span class="line"><span class="section">#####H5#####</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>② 也可以只在左边使用 <code>#</code>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">####H4</span></span><br><span class="line"></span><br><span class="line"><span class="section">#####H5</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>③ 成对的 <code>#</code> 左侧和只在左边使用的 <code>#</code> 左侧都不可以有任何空白，但其内侧可以使用空白。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> ###左侧使用了空格###</span><br><span class="line"></span><br><span class="line"><span class="section">#### 内侧使用了空格</span></span><br><span class="line"><span class="code">```  </span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">&gt;在这一点上，可能各种 Markdown 的实现会有不同的结果，不过仍然需要我们遵守语法规则。</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">### 3.引用</span></span><br><span class="line"><span class="code">1\. 引用内容  </span></span><br><span class="line"><span class="code">在段落或其他内容前使用 `&gt;` 符号，就可以将这段内容标记为 '引用' 的内容（`&lt;blockquote&gt;`）：</span></span><br><span class="line"><span class="code">```markdown</span></span><br><span class="line"><span class="code">&gt;引用内容</span></span><br></pre></td></tr></tbody></table></figure></div>
+<blockquote>
+<p>引用内容</p>
+</blockquote>
+<p>2. 多行引用</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;多行引用</span><br><span class="line">&gt;可以在每行前加 <span class="code">`&gt;`</span></span><br></pre></td></tr></tbody></table></figure></div>
+<blockquote>
+<p>多行引用<br>可以在每行前加 <code>&gt;</code>  </p>
+</blockquote>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;如果仅在第一行使用 <span class="code">`&gt;`</span>，</span><br><span class="line">后面相邻的行即使省略 <span class="code">`&gt;`</span>，也会变成引用内容</span><br></pre></td></tr></tbody></table></figure></div>
+
+<blockquote>
+<p>如果仅在第一行使用 <code>&gt;</code>，<br>后面相邻的行即使省略 <code>&gt;</code>，也会变成引用内容</p>
+</blockquote>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;如果引用内容需要换行，  </span><br><span class="line">&gt;可以在行尾添加两个空格</span><br><span class="line">&gt;</span><br><span class="line">&gt;或者在引用内容中加一个空行</span><br></pre></td></tr></tbody></table></figure></div>
+
+<blockquote>
+<p>如果引用内容需要换行，<br>可以在行尾添加两个空格  </p>
+<p>或者在引用内容中加一个空行  </p>
+</blockquote>
+<p>3. 嵌套引用</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;也可以在引用中</span><br><span class="line">&gt;&gt;使用嵌套的引用</span><br></pre></td></tr></tbody></table></figure></div>
+<blockquote>
+<p>也可以在引用中  </p>
+<blockquote>
+<p>使用嵌套的引用  </p>
+</blockquote>
+</blockquote>
+<p>4. 其他 Markdown</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;在引用中可以使用使用其他任何 <span class="emphasis">*Markdown*</span> 语法</span><br></pre></td></tr></tbody></table></figure></div>
+<blockquote>
+<p>在引用中可以使用使用其他任何 <em>Markdown</em> 语法</p>
+</blockquote>
+<h3 id="4-列表"><a href="#4-列表" class="headerlink" title="4.列表"></a>4.列表</h3><p>1. 无序列表</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>可以使用 <span class="code">`*`</span> 作为标记</span><br><span class="line"><span class="bullet">+ </span>也可以使用 <span class="code">`+`</span></span><br><span class="line"><span class="bullet">- </span>或者 <span class="code">`-`</span></span><br></pre></td></tr></tbody></table></figure></div>
+<ul>
+<li>可以使用 <code>*</code> 作为标记</li>
+</ul>
+<ul>
+<li>也可以使用 <code>+</code></li>
+</ul>
+<ul>
+<li>或者 <code>-</code></li>
+</ul>
+<p>2. 有序列表  </p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MD"><figure class="iseeu highlight /md"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>有序列表以数字和 <span class="code">`.`</span> 开始；  </span><br><span class="line"><span class="bullet">3. </span>数字的序列并不会影响生成的列表序列；  </span><br><span class="line"><span class="bullet">4. </span>但仍然推荐按照自然顺序（1.2.3...）编写。</span><br></pre></td></tr></tbody></table></figure></div>
+
+<ol>
+<li>有序列表以数字和 <code>.</code> 开始；</li>
+<li>数字的序列并不会影响生成的列表序列；</li>
+<li>但仍然推荐按照自然顺序（1.2.3…）编写。</li>
+</ol>
+<p>3. 嵌套的列表</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>第一层</span><br><span class="line"><span class="bullet">+ </span>1-1</span><br><span class="line"><span class="bullet">+ </span>1-2</span><br><span class="line"><span class="bullet">2. </span>无序列表和有序列表可以随意相互嵌套</span><br><span class="line"><span class="bullet">1. </span>2-1</span><br><span class="line"><span class="bullet">2. </span>2-2</span><br></pre></td></tr></tbody></table></figure></div>
+<ol>
+<li>第一层</li>
+</ol>
+<ul>
+<li>1-1</li>
+<li>1-2</li>
+</ul>
+<ol start="2">
+<li>无序列表和有序列表可以随意相互嵌套</li>
+<li>2-1</li>
+<li>2-2</li>
+</ol>
+<p>4. 语法和用法</p>
+<ol>
+<li>无序列表项的开始是：符号 空格；</li>
+<li>有序列表项的开始是：数字 <code>.</code> 空格；</li>
+<li>空格至少为一个，多个空格将被解析为一个；</li>
+<li>如果仅需要在行前显示数字和 <code>.</code>：</li>
+</ol>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5\. 可以使用：数字\. 来取消显示为列表</span><br></pre></td></tr></tbody></table></figure></div>
+<p>5. 可以使用：数字\. 来取消显示为列表</p>
+<blockquote>
+<p><code>\*</code> 的语法专门用来显示 Markdown 语法中使用的特殊字符，参考<code>字符转义</code></p>
+</blockquote>
+<h3 id="5-代码"><a href="#5-代码" class="headerlink" title="5.代码"></a>5.代码</h3><p>1. 代码块 - 可以使用缩进来插入代码块:  </p>
+<pre><code>&lt;html&gt; // Tab开头
+    &lt;title&gt;Markdown&lt;/title&gt;
+&lt;/html&gt; // 四个空格开头
+
+代码块前后需要有至少一个空行，且每行代码前需要有至少一个 Tab 或四个空格；</code></pre><p>2. 行内代码<br>也可以通过 ``，插入行内代码（` 是 <code>Tab</code> 键上边、数字 <code>1</code> 键左侧的那个按键）：<br>例如 <code>&lt;title&gt;Markdown&lt;/title&gt;</code></p>
+<p>3. 转换规则<br>代码块中的文本（包括 Markdown 语法）都会显示为原始内容，而特殊字符会被转换为 HTML <a href="https://zh.wikipedia.org/wiki/XML%E4%B8%8EHTML%E5%AD%97%E7%AC%A6%E5%AE%9E%E4%BD%93%E5%BC%95%E7%94%A8%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">字符实体</a>。</p>
+<h3 id="6-分隔线"><a href="#6-分隔线" class="headerlink" title="6.分隔线"></a>6.分隔线</h3><p>1. 可以在一行中使用三个或更多的 <code>*</code>、<code>-</code> 或 <code>_</code> 来添加分隔线（<code>&lt;hr&gt;</code>）：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">***</span></span><br><span class="line">------</span><br><span class="line"><span class="emphasis">___</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<hr>
+<hr>
+<hr>
+<p>2. 多个字符之间可以有空格（空白符），但不能有其他字符：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span><span class="emphasis">* *</span></span><br><span class="line"><span class="bullet">- </span>- -</span><br></pre></td></tr></tbody></table></figure></div>
+
+<hr>
+<hr>
+<h3 id="7-超链接"><a href="#7-超链接" class="headerlink" title="7.超链接"></a>7.超链接</h3><p>1. 行内式</p>
+<p>格式为 <code>[link text](URL 'title text')</code>。</p>
+<p>① 普通链接：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">Google</span>](<span class="link">http://www.google.com/</span>)</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><a href="http://www.google.com/" target="_blank" rel="noopener">Google</a></p>
+<p>② 指向本地文件的链接：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">icon.png</span>](<span class="link">./images/icon.png</span>)</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><a href="./images/icon.png">icon.png</a></p>
+<p>③ 包含 ‘title’ 的链接:</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">Google</span>](<span class="link">http://www.google.com/ "Google"</span>)</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><a href="http://www.google.com/" target="_blank" rel="noopener" title="Google">Google</a></p>
+<blockquote>
+<p>title 使用 ‘ 或 “ 都是可以的。</p>
+</blockquote>
+<p>2. 参考式</p>
+<p>参考式链接的写法相当于行内式拆分成两部分，并通过一个 <em>识别符</em> 来连接两部分。参考式能尽量保持文章结构的简单，也方便统一管理 URL。</p>
+<p>① 首先，定义链接：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">Google</span>][<span class="symbol">link</span>]</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><a href="http://www.google.com/" target="_blank" rel="noopener" title="Google">Google</a></p>
+<p>第二个方括号内为链接独有的 <em>识别符*，可以是字母、数字、空白或标点符号。识别符是 *不区分大小写</em> 的；</p>
+<p>② 然后定义链接内容：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">link</span>]: <span class="link">http://www.google.com/ "Google"</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>其格式为：<code>[识别符]: URL 'title'</code>。</p>
+<blockquote>
+<p>其中，URL可以使用 &lt;&gt; 包括起来，title 可以使用 “”、’’、() 包括（考虑到兼容性，建议使用引号），title 部分也可以换行来写；</p>
+</blockquote>
+<blockquote>
+<p>链接内容的定义可以放在同一个文件的 <em>任意位置</em>；</p>
+</blockquote>
+<p>③ 也可以省略 <em>识别符</em>，使用链接文本作为 <em>识别符</em>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">Google</span>][<span class="symbol"></span>]</span><br><span class="line">[<span class="symbol">Google</span>]: <span class="link">http://www.google.com/ "Google"</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>[Google][]<br>[Google]: <a href="http://www.google.com/" target="_blank" rel="noopener">http://www.google.com/</a> “Google”</p>
+<blockquote>
+<p>参考式相对于行内式有一个明显的优点，就是可以在多个不同的位置引用同一个 URL。</p>
+</blockquote>
+<p>3. 自动链接</p>
+<p>使用 <code>&lt;&gt;</code> 包括的 URL 或邮箱地址会被自动转换为超链接：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">http:</span>//<span class="attr">www.google.com</span>/&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">123@email.com</span>&gt;</span></span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><a href="http://www.google.com/" target="_blank" rel="noopener">http://www.google.com/</a></p>
+<p><a href="mailto:123@email.com">123@email.com</a></p>
+<p>该方式适合行内较短的链接，会使用 URL 作为链接文字。邮箱地址会自动编码，以逃避抓取机器人。</p>
+<h3 id="8-图片"><a href="#8-图片" class="headerlink" title="8.图片"></a>8.图片</h3><p>插入图片的语法和插入超链接的语法基本一致，只是在最前面多一个 <code>!</code>。也分为行内式和参考式两种。</p>
+<p>1. 行内式</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">GitHub</span>](<span class="link">https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3 "GitHub,Social Coding"</span>)</span><br></pre></td></tr></tbody></table></figure></div>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3" alt="GitHub" title="GitHub,Social">
+                </div>
+                <div class="image-caption">GitHub,Social</div>
+            </figure>
+
+<p>方括号中的部分是图片的替代文本，括号中的 ‘title’ 部分和链接一样，是可选的。</p>
+<p>2. 参考式</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">GitHub</span>][<span class="symbol">github</span>]</span><br><span class="line"></span><br><span class="line">[<span class="symbol">github</span>]: <span class="link">https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3 "GitHub,Social Coding"</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p><img src="https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3" alt="GitHub" title="GitHub,Social Coding"></p>
+<p>3. 指定图片的显示大小</p>
+<p>Markdown 不支持指定图片的显示大小，不过可以通过直接插入<code>&lt;img /&gt;</code>标签来指定相关属性：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="HTML"><figure class="iseeu highlight /html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3"</span> <span class="attr">alt</span>=<span class="string">"GitHub"</span> <span class="attr">title</span>=<span class="string">"GitHub,Social Coding"</span> <span class="attr">width</span>=<span class="string">"50"</span> <span class="attr">height</span>=<span class="string">"50"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<img src="https://avatars3.githubusercontent.com/u/33784785?s=100&amp;v=3" alt="GitHub" title="GitHub,Social Coding" width="50" height="50">
+
+
+<h3 id="9-强调"><a href="#9-强调" class="headerlink" title="9.强调"></a>9.强调</h3><p>1. 使用 <code>* *</code> 或 <code>_ _</code> 包括的文本会被转换为 <code>&lt;em&gt;&lt;/em&gt;</code> ，通常表现为斜体：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是用来 <span class="emphasis">*演示*</span> 的 <span class="emphasis">_文本_</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>这是用来 <em>演示</em> 的 <em>文本</em></p>
+<p>2. 使用 <code>** **</code> 或 <code>__ __</code> 包括的文本会被转换为 <code>&lt;strong&gt;&lt;/strong&gt;</code>，通常表现为加粗：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是用来 <span class="strong">**演示**</span> 的 <span class="strong">__文本__</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>这是用来 <strong>演示</strong> 的 <strong>文本</strong></p>
+<p>3. 用来包括文本的 <code>*</code> 或 <code>_</code> 内侧不能有空白，否则 <code>*</code> 和 <code>_</code> 将不会被转换（不同的实现会有不同的表现）：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是用来 <span class="emphasis">* 演示*</span> 的 <span class="emphasis">_文本 _</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>这是用来 * 演示* 的 _文本 _</p>
+<p>4. 如果需要在文本中显示成对的 <code>*</code> 或 <code>_</code>，可以在符号前加入 <code>\</code> 即可：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是用来 \<span class="emphasis">*演示\*</span> 的 \<span class="emphasis">_文本\_</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>这是用来 *演示* 的 _文本_</p>
+<p>5. <code>*</code>、<code>**</code>、<code>_</code> 和 <code>__</code> 都必须 <em>成对使用</em> 。</p>
+<h3 id="10-字符转义"><a href="#10-字符转义" class="headerlink" title="10.字符转义"></a>10.字符转义</h3><p><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="noopener" title="Markdown: Syntax">Markdown 标准</a> 本身所包含的功能有限，所以产生了许多第三方的扩展语法，如 <a href="https://help.github.com/articles/github-flavored-markdown/" target="_blank" rel="noopener">GitHub Flavored Markdown</a>。<br>这里只介绍众多扩展语法中的一部分内容，它们在不同平台或工具的支持程度不同，请参考具体平台或工具的文档和说明来使用。</p>
+<ol>
+<li><a href="strikethrougn.md">删除线</a></li>
+<li><a href="code-blocks-and-highlighting.md">代码块和语法高亮</a></li>
+<li><a href="table.md">表格</a></li>
+<li><a href="task-list.md">Task List</a></li>
+</ol>
+<ul>
+<li>CommonMark<br><a href="http://commonmark.org/" target="_blank" rel="noopener">CommonMark</a> 试图将碎片化的 Markdown 实现和扩展进行标准化，提供统一的 <a href="http://spec.commonmark.org/" target="_blank" rel="noopener">规范</a> 及不同语言的 <a href="http://code.commonmark.org/" target="_blank" rel="noopener">实现</a> 。</li>
+</ul>
+<h2 id="扩展语法"><a href="#扩展语法" class="headerlink" title="扩展语法"></a>扩展语法</h2><h3 id="1-删除线"><a href="#1-删除线" class="headerlink" title="1.删除线"></a>1.删除线</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这就是 ~~删除线~~</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>这就是 <del>删除线</del></p>
+<h3 id="2-代码块和语法高亮"><a href="#2-代码块和语法高亮" class="headerlink" title="2.代码块和语法高亮"></a>2.代码块和语法高亮</h3><p>1. 代码块<br>与原来使用缩进来添加代码块的语法不同，这里使用 ``` ``` 来包含多行代码：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;code here&lt;/p&gt;</span><br></pre></td></tr></tbody></table></figure></div>
+
+<blockquote>
+<p>三个 ``` 要独占一行。  </p>
+</blockquote>
+<p>2. 代码高亮</p>
+<p>在上面的代码块语法基础上，在第一组 ``` 之后添加代码的语言，如 ‘javascript’ 或 ‘js’，即可将代码标记为 <code>JavaScript</code>：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JS"><figure class="iseeu highlight /js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'window loaded'</span>);</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure></div>
+
+<h3 id="3-表格"><a href="#3-表格" class="headerlink" title="3.表格"></a>3.表格</h3><p>1. 单元格和表头</p>
+<p>使用 <code>|</code> 来分隔不同的单元格，使用 <code>-</code> 来分隔表头和其他行：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name | age</span><br><span class="line">---- | ---</span><br><span class="line">Zhangsan | 13</span><br><span class="line">Lisi | 14</span><br></pre></td></tr></tbody></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>age</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Zhangsan</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Lisi</td>
+<td>14</td>
+</tr>
+</tbody></table>
+<p>为了美观，可以使用空格对齐不同行的单元格，并在左右两侧都使用 <code>|</code> 来标记单元格边界：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|    name    | age |</span><br><span class="line">| ---------- | --- |</span><br><span class="line">| zhangsan   |  13 |</span><br><span class="line">| Listsi     |  14 |</span><br></pre></td></tr></tbody></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>age</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>zhangsan</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Listsi</td>
+<td>14</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>为了使 Markdown 更清晰，<code>|</code> 和 <code>-</code> 两侧需要至少有一个空格（最左侧和最右侧的 <code>|</code> 外就不需要了）。</p>
+</blockquote>
+<p>2. 对齐</p>
+<p>在表头下方的分隔线标记中加入 <code>:</code>，即可标记下方单元格内容的对齐方式：</p>
+<ul>
+<li><code>:---</code> 代表左对齐</li>
+<li><code>:--:</code> 代表居中对齐</li>
+<li><code>---:</code> 代表右对齐</li>
+</ul>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| left | center | right |</span><br><span class="line">| :--- | :----: | ----: |</span><br><span class="line">| aaaa | bbbbbb | ccccc |</span><br><span class="line">| a    | b      | c     |</span><br></pre></td></tr></tbody></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th align="left">left</th>
+<th align="center">center</th>
+<th align="right">right</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">aaaa</td>
+<td align="center">bbbbbb</td>
+<td align="right">ccccc</td>
+</tr>
+<tr>
+<td align="left">a</td>
+<td align="center">b</td>
+<td align="right">c</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>如果不使用对齐标记，单元格中的内容默认左对齐；表头单元格中的内容会一直居中对齐（不同的实现可能会有不同表现）。</p>
+</blockquote>
+<p>3. 插入其他内容</p>
+<p>表格中可以插入其他 Markdown 中的行内标记：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|    project   |             blog                |</span><br><span class="line">| ------------ | ------------------------------- |</span><br><span class="line">| <span class="emphasis">_ZeffonWu_</span>   | [<span class="string">ZeffonWu</span>](<span class="link">https://github.com/ZeffonWu</span>) |</span><br><span class="line">| <span class="strong">__Blog__</span>     | [<span class="string">Blog</span>](<span class="link">https://github.com/ZeffonWu/ZeffonWu.github.io</span>)  |</span><br></pre></td></tr></tbody></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>project</th>
+<th>blog</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>ZeffonWu</em></td>
+<td><a href="https://github.com/ZeffonWu" target="_blank" rel="noopener">ZeffonWu</a></td>
+</tr>
+<tr>
+<td><strong>Blog</strong></td>
+<td><a href="https://github.com/ZeffonWu/ZeffonWu.github.io" target="_blank" rel="noopener">Blog</a></td>
+</tr>
+</tbody></table>
+<h3 id="4-Task-List"><a href="#4-Task-List" class="headerlink" title="4.Task List"></a>4.Task List</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="MARKDOWN"><figure class="iseeu highlight /markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>[ ] Eat</span><br><span class="line"><span class="bullet">- </span>[x] Code</span><br><span class="line"><span class="bullet">  - </span>[x] HTML</span><br><span class="line"><span class="bullet">  - </span>[x] CSS</span><br><span class="line"><span class="bullet">  - </span>[x] JavaScript</span><br><span class="line"><span class="bullet">- </span>[ ] Sleep</span><br></pre></td></tr></tbody></table></figure></div>
+
+<ul>
+<li><input disabled="" type="checkbox"> Eat</li>
+<li><input checked="" disabled="" type="checkbox"> Code<ul>
+<li><input checked="" disabled="" type="checkbox"> HTML</li>
+<li><input checked="" disabled="" type="checkbox"> CSS</li>
+<li><input checked="" disabled="" type="checkbox"> JavaScript</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> Sleep</li>
+</ul>
+<h2 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h2><h3 id="1-HTML"><a href="#1-HTML" class="headerlink" title="1.HTML"></a>1.HTML</h3><p>1. MdCharm</p>
+<p>选择 ‘File’, ‘Export to…’，勾选 ‘HTML’, 点击 ‘Browser…’ 选择导出目录并输入导出的文件名，点击 ‘OK’，即可将当前的 Markdown 文档转换为 HTML 文档。</p>
+<p>如果不满意 HTML 文档的样式，可以在设置中自定义 CSS。</p>
+<p>2. Pandoc</p>
+<p>参考 <a href="http://pandoc.org/installing.html" target="_blank" rel="noopener">Installing</a> 安装 Pandoc。</p>
+<p>打开命令行，进入文档所在目录：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /path/to/file/</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>执行下面的命令，将 Markdown 转换为 HTML：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc -o hello.html hello.md</span><br></pre></td></tr></tbody></table></figure></div>
+
+<blockquote>
+<p>默认的转换，只是将 Markdown 内容转换为 HTML 标签，所以只能看到浏览器的默认样式。</p>
+</blockquote>
+<p>可以执行下面的命令，为导出的 HTML 添加自定义样式：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc -o hello.html -c style.css hello.md</span><br></pre></td></tr></tbody></table></figure></div>
+
+<blockquote>
+<p><code>style.css</code> 仍然是以 <code>&lt;link&gt;</code> 的方式关联到 HTML 文档中的，所以在发布的时候需要将 CSS 一同发布出去。</p>
+</blockquote>
+<h3 id="2-PDF"><a href="#2-PDF" class="headerlink" title="2.PDF"></a>2.PDF</h3><p>1. MdCharm</p>
+<p>与导出 HTML 文档类似，选择 ‘File’, ‘Export to…’，勾选 ‘PDF’, 点击 ‘Browser…’ 选择导出目录并输入导出的文件名，点击 ‘OK’，即可将当前的 Markdown 文档转换为 PDF 文档。</p>
+<p>如果不满意 PDF 文档的样式，可以在设置中自定义 CSS。</p>
+<p>1. Pandoc</p>
+<p>使用 Pandoc 导出 PDF 文档，需要先安装某个 LaTeX 引擎（参考 <a href="http://pandoc.org/README.html#creating-a-pdf" target="_blank" rel="noopener">Creating a PDF</a>）。然后执行命令：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc -o hello.pdf hello.md</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>当然，也可以通过 <code>-c style.css</code> 来指定样式文件。</p>
+<p>1. Chrome</p>
+<p>在将 Markdown <a href="html.md">转换为 HTML 文档</a> 之后，可以通过 <a href="https://www.google.com/chrome/" target="_blank" rel="noopener">Chrome 浏览器</a> 打开它。选择 ‘打印’（Ctrl+P），然后更改 ‘目标打印机’ 为 ‘另存为 PDF’，再进行一些设置后，即可保存为 PDF 文档。</p>
+<h3 id="3-Word"><a href="#3-Word" class="headerlink" title="3.Word"></a>3.Word</h3><p>1. 复制粘贴<br>在导出为 HTML 文档之后，可以（在浏览器中）手动复制 HTML 页面的内容，然后粘贴到 Word 文档中，保存即可。</p>
+<p>1. Pandoc<br>执行下面的命令，即可将 Markdown 文档转换为 Word 文档：</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandoc -o hello.docx hello.md</span><br></pre></td></tr></tbody></table></figure></div>
+
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>Github-LearnShare-<a href="https://github.com/LearnShare/Learning-Markdown" target="_blank" rel="noopener">Learning-Markdown</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-02-18T09:01:27.766Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/b1c1e088.html" target="_blank" rel="external">https://www.zeffon.cn/posts/b1c1e088.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%82%E8%AE%B0/" rel="tag">杂记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/b1c1e088.html&title=《Markdown基础》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/b1c1e088.html&title=《Markdown基础》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/b1c1e088.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Markdown基础》 — Zeffon's blog&url=https://www.zeffon.cn/posts/b1c1e088.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/b1c1e088.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/95456b61.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：二叉堆和优先队列
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/4fd121ef.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：集合和映射">下一篇：集合和映射</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/b1c1e088.html&title=《Markdown基础》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/b1c1e088.html&title=《Markdown基础》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/b1c1e088.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Markdown基础》 — Zeffon's blog&url=https://www.zeffon.cn/posts/b1c1e088.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/b1c1e088.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvElEQVR42u3aQY7DIAwF0N7/0pntSFXKNw5WKz1WVUXgJQvL2Lxe8bjexv//P/++W+F9zmMDFxe3zb0+jpzSf73olXBxcQe5dxGjuvTdzHz9hQ0XF/eLuUlQ25uJi4v7W9x8gySE4eLifj83T1buKJ0VjpzVcHFxG9y8Snnu95H6Li4u7hb3Ko4kTdlbIXoWFxd3hNtppSSUvAiSl1ZxcXFPc5PmR34UqYa8assWFxd3hptskxdSyxsX0x1cXNwZbrJN3lDpX8tYfAhcXNxBbs7KGyGdMLeIuLi4uIe5T13QzJ/dC5e4uLiT3LxgMXMOW5RUcHFxx7l7iUinvVoNqbi4uDPcfmF0b+PNQIaLizvI7RRJFzc7gsCXrLD5JXBxcdvcPJBVKxXVQFmo5eDi4h7jVtuo1ZLH3vWOQv8HFxd3kLt3dNlMUPIUBxcX9zB3Lwx1QNUWbNRKwcXFfZRb3aZwcSoul+TpDi4u7iQ3D15586MTqha74OLiDnI76Ui1lbKXDOHi4v4W99w1rIcvZuHi4h7jVuf0RyuQ4eLiNrj54SdvuFZfqRDIcHFxD3P7fdp+8fSplXFxcdvcPy3uSOdWkw0CAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>

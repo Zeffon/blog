@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Systemctl的使用 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="linux">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="前言Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。该篇学习于阮老师的Systemd 入门教程：命令篇和余泽楠的CentOS 7 Systemd 入门 Systemd 概述Systemd 就是为了解决这些问题而诞生的。它的设计目标是，为系统的启动和管理提供一套完整的解决方案。根据 Linux 惯例，字母d是守护进程（daemon）的缩写。 Systemd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Systemctl的使用">
+<meta property="og:url" content="https://www.zeffon.cn/posts/58aae0db.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="前言Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。该篇学习于阮老师的Systemd 入门教程：命令篇和余泽楠的CentOS 7 Systemd 入门 Systemd 概述Systemd 就是为了解决这些问题而诞生的。它的设计目标是，为系统的启动和管理提供一套完整的解决方案。根据 Linux 惯例，字母d是守护进程（daemon）的缩写。 Systemd">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-02T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:01:27.764Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Systemctl的使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Systemd-概述"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Systemd 概述</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Systemd-优缺点"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Systemd 优缺点</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#systemctl-命令"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">systemctl 命令</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#服务的管理"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">服务的管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Unit"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Unit</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考文献</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-how-use-systemd"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Systemctl的使用</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-09-02 12:00:00" datetime="2019-09-02T04:00:00.000Z"  itemprop="datePublished">2019-09-02</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">3</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。<br>该篇学习于阮老师的<a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html" target="_blank" rel="noopener">Systemd 入门教程：命令篇</a>和余泽楠的<a href="https://zhuanlan.zhihu.com/p/29217941" target="_blank" rel="noopener">CentOS 7 Systemd 入门</a></p>
+<h3 id="Systemd-概述"><a href="#Systemd-概述" class="headerlink" title="Systemd 概述"></a>Systemd 概述</h3><p>Systemd 就是为了解决这些问题而诞生的。它的设计目标是，为系统的启动和管理提供一套完整的解决方案。根据 Linux 惯例，字母d是守护进程（daemon）的缩写。 Systemd 这个名字的含义，就是它要守护整个系统。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl --version</span><br><span class="line">systemd 219</span><br><span class="line">+PAM +AUDIT +SELINUX +IMA -APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 -SECCOMP +BLKID +ELFUTILS +KMOD +IDN</span><br></pre></td></tr></tbody></table></figure></div>
+<h3 id="Systemd-优缺点"><a href="#Systemd-优缺点" class="headerlink" title="Systemd 优缺点"></a>Systemd 优缺点</h3><p>Systemd 的<code>优点</code>是功能强大，使用方便，而<code>缺点</code>是体系庞大，非常复杂。事实上，现在还有很多人反对使用 <code>Systemd</code>，理由就是它过于复杂，与操作系统的其他部分强耦合，违反<code>keep simple, keep stupid</code>的Unix 哲学。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>Systemd 并不是一个命令，而是一组命令，涉及到系统管理的方方面面。</p>
+<h3 id="systemctl-命令"><a href="#systemctl-命令" class="headerlink" title="systemctl 命令"></a>systemctl 命令</h3><p><code>systemctl</code> 是 Systemd 的主命令，用于管理系统。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重启系统</span></span><br><span class="line">$ sudo systemctl reboot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭系统，切断电源</span></span><br><span class="line">$ sudo systemctl poweroff</span><br><span class="line"></span><br><span class="line"><span class="comment"># CPU停止工作</span></span><br><span class="line">$ sudo systemctl halt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暂停系统</span></span><br><span class="line">$ sudo systemctl <span class="built_in">suspend</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 让系统进入冬眠状态</span></span><br><span class="line">$ sudo systemctl hibernate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 让系统进入交互式休眠状态</span></span><br><span class="line">$ sudo systemctl hybrid-sleep</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动进入救援状态（单用户状态）</span></span><br><span class="line">$ sudo systemctl rescue</span><br></pre></td></tr></tbody></table></figure></div>
+
+<h3 id="服务的管理"><a href="#服务的管理" class="headerlink" title="服务的管理"></a>服务的管理</h3><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">$ systemctl start &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">$ systemctl stop &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line">$ systemctl restart &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新读取配置文件(如果该服务不能重启，但又必须使用新的配置，这条命令会很有用)</span></span><br><span class="line">$ systemctl reload &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使服务开机自启动</span></span><br><span class="line">$ systemctl <span class="built_in">enable</span> &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使服务不要开机自启动</span></span><br><span class="line">$ systemctl <span class="built_in">disable</span> &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用服务(这可以防止服务被其他服务间接启动，也无法通过 start 或 restart 命令来启动服务)</span></span><br><span class="line">$ systemctl mask &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用服务(仅针对于已禁用的服务)</span></span><br><span class="line">$ systemctl unmask &lt;服务项名称&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新读取所有服务项(修改、添加、删除服务项之后需要执行以下命令)</span></span><br><span class="line">$ systemctl daemon-reload</span><br></pre></td></tr></tbody></table></figure></div>
+
+<h3 id="Unit"><a href="#Unit" class="headerlink" title="Unit"></a>Unit</h3><p>Systemd 可以管理所有系统资源。不同的资源统称为 Unit（单位）。</p>
+<ol>
+<li><p>Unit 一共分成12种。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Service unit：系统服务</span><br><span class="line">Target unit：多个 Unit 构成的一个组</span><br><span class="line">Device Unit：硬件设备</span><br><span class="line">Mount Unit：文件系统的挂载点</span><br><span class="line">Automount Unit：自动挂载点</span><br><span class="line">Path Unit：文件或路径</span><br><span class="line">Scope Unit：不是由 Systemd 启动的外部进程</span><br><span class="line">Slice Unit：进程组</span><br><span class="line">Snapshot Unit：Systemd 快照，可以切回某个快照</span><br><span class="line">Socket Unit：进程间通信的 socket</span><br><span class="line">Swap Unit：swap 文件</span><br><span class="line">Timer Unit：定时器</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p><code>systemctl list-units</code>命令可以查看当前系统的所有 Unit  </p>
+ <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出正在运行的 Unit</span></span><br><span class="line">$ systemctl list-units</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有Unit，包括没有找到配置文件的或者启动失败的</span></span><br><span class="line">$ systemctl list-units --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有没有运行的 Unit</span></span><br><span class="line">$ systemctl list-units --all --state=inactive</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有加载失败的 Unit</span></span><br><span class="line">$ systemctl list-units --failed</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有正在运行的、类型为 service 的 Unit</span></span><br><span class="line">$ systemctl list-units --<span class="built_in">type</span>=service</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li><p>除了 <code>status</code> 命令，<code>systemctl</code> 还提供了三个查询状态的简单方法，主要供脚本内部的判断语句使用。</p>
+ <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示某个 Unit 是否正在运行</span></span><br><span class="line">$ systemctl is-active application.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示某个 Unit 是否处于启动失败状态</span></span><br><span class="line">$ systemctl is-failed application.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示某个 Unit 服务是否建立了启动链接</span></span><br><span class="line">$ systemctl is-enabled application.service</span><br></pre></td></tr></tbody></table></figure></div>
+
+
+</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html" target="_blank" rel="noopener">Systemd 入门教程：命令篇</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29217941" target="_blank" rel="noopener">CentOS 7 Systemd 入门</a></li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-02-18T09:01:27.764Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/58aae0db.html" target="_blank" rel="external">https://www.zeffon.cn/posts/58aae0db.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/58aae0db.html&title=《Systemctl的使用》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/58aae0db.html&title=《Systemctl的使用》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/58aae0db.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Systemctl的使用》 — Zeffon's blog&url=https://www.zeffon.cn/posts/58aae0db.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/58aae0db.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/4fd121ef.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：集合和映射
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/b68abf6b.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：flask项目在centos7部署流程">下一篇：flask项目在centos7部署流程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/58aae0db.html&title=《Systemctl的使用》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/58aae0db.html&title=《Systemctl的使用》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/58aae0db.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Systemctl的使用》 — Zeffon's blog&url=https://www.zeffon.cn/posts/58aae0db.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/58aae0db.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABy0lEQVR42u3aS27DMAxFUe9/0+60QGr5PjJi3OBqFBixdTQhxM9x4HX+Wuvn53K9vnvsWHLlym1zyQaERQ65/k0OKVeu3Enu1WZX/+mEMPL9y+dy5cp9JHcd4PgX5MqV+01c8tY6sZErV+5/4ZLkh1cqeHqzMVeTK1duNxNBVcp9v7fUd+XKlVvinuGqFU/Jc7S7XLlyR7g8oBB0pywSNHflypU7zu2UP1Ic+fJNFUeuXLnbuB165//pdUeuXLkz3LTE2S+Dttq6cuXKHeG2rhelkmsaX1HclStX7lu5PKDwy02tXYrKr3Llyv0QNx2r4heX2pDHTSCTK1fuILdzgHWQSpuvf+RqcuXKHeHyQQpOSa9BQSCTK1fuZi4hpoMXfJCr1jmVK1fuPDcNUrXAR1ovKJDJlSt3M7c1tQE2442Zm8AnV67cQW5ayiRNl1qb9uYtuXLlbuae4VoXL9LiaRzm5MqVO8JNg0st4eGHTJs0cuXK3cdNgxe/1vBSLEnA5MqVO89NW6QcFORhPFeTK1fug7k8tAUDWLXTyJUr9wHcdKyqU/h4wxVHrly5JW5nMIKnN2niJFeu3E9xO43P9Hm6fau+K1eu3Ar3B49yw0Ip76rFAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>

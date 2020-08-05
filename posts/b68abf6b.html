@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>flask项目在centos7部署流程 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="python,nginx">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="前言Flask 是一个web框架，而非web server，直接用Flask拉起的web服务仅限于开发环境使用，生产环境不够稳定，也无法承受大量请求的并发。基于Flask开发API项目是，部署时用uwsgi和Nginx，是一个很好的选择。 环境搭建Python3环境由于CentOS7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。所以我们要额外">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask项目在centos7部署流程">
+<meta property="og:url" content="https://www.zeffon.cn/posts/b68abf6b.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="前言Flask 是一个web框架，而非web server，直接用Flask拉起的web服务仅限于开发环境使用，生产环境不够稳定，也无法承受大量请求的并发。基于Flask开发API项目是，部署时用uwsgi和Nginx，是一个很好的选择。 环境搭建Python3环境由于CentOS7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。所以我们要额外">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-01T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:01:27.764Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">flask项目在centos7部署流程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境搭建"><span class="post-toc-number">2.</span> <span class="post-toc-text">环境搭建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Python3环境"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Python3环境</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装Python3的方法"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">安装Python3的方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#pipenv创建虚拟环境"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">pipenv创建虚拟环境</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Nginx配置"><span class="post-toc-number">3.</span> <span class="post-toc-text">Nginx配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Nginx下载"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Nginx下载</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nginx部署项目"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">nginx部署项目</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志切割"><span class="post-toc-number">4.</span> <span class="post-toc-text">日志切割</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#uwsgi日志按天切割"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">uwsgi日志按天切割</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-how-deploy-flask"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">flask项目在centos7部署流程</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-09-01 12:00:00" datetime="2019-09-01T04:00:00.000Z"  itemprop="datePublished">2019-09-01</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Python/">Python</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">7</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Flask 是一个web框架，而非web server，直接用Flask拉起的web服务仅限于开发环境使用，生产环境不够稳定，也无法承受大量请求的并发。基于Flask开发API项目是，部署时用uwsgi和Nginx，是一个很好的选择。</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="Python3环境"><a href="#Python3环境" class="headerlink" title="Python3环境"></a>Python3环境</h3><p>由于CentOS7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。所以我们要额外安装Python3，而且系统一般允许多个版本的python同时存在</p>
+<ul>
+<li>我们先来查看python安装位置，一般是位于/usr/bin/python目录下。 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">which</span> python</span><br><span class="line">&gt;&gt; /usr/bin/python</span><br></pre></td></tr></tbody></table></figure></div>
+
+</li>
+</ul>
+<h3 id="安装Python3的方法"><a href="#安装Python3的方法" class="headerlink" title="安装Python3的方法"></a>安装Python3的方法</h3><ol>
+<li>安装依赖包（切记安装）<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yum -y groupinstall <span class="string">"Development tools"</span></span><br><span class="line">$ yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li>下载Python3安装包<br>大家可根据自己需求下载不同版本的Python3，我下载的是Python3.6.2<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://www.python.org/ftp/python/3.6.2/Python-3.6.2.tar.xz</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li>新建python3存放目录<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /usr/<span class="built_in">local</span>/python3</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li>安装Python3<br>解压压缩包，进入解压目录，指定安装目录，安装Python3。<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tar -xvJf  Python-3.6.2.tar.xz</span><br><span class="line">$ <span class="built_in">cd</span> Python-3.6.2</span><br><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/python3</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></tbody></table></figure></div>
+安装Python3时，会自动安装pip。假如没有，需要自己手动安装。<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum -y install python-pip</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li>创建软链接<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s /usr/<span class="built_in">local</span>/python3/bin/python3 /usr/bin/python3</span><br><span class="line">$ ln -s /usr/<span class="built_in">local</span>/python3/bin/pip3 /usr/bin/pip3</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li>安装完成，输入python3测试<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python3</span><br><span class="line">Python 3.6.2 (default, Mar  3 2019, 17:47:45)</span><br><span class="line">[GCC 4.8.5 20150623 (Red Hat 4.8.5-36)] on linux</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> or <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></tbody></table></figure></div>
+
+</li>
+</ol>
+<h3 id="pipenv创建虚拟环境"><a href="#pipenv创建虚拟环境" class="headerlink" title="pipenv创建虚拟环境"></a>pipenv创建虚拟环境</h3><p>pipenv是一个可以在同一计算机中隔离多个python版本的工具。有时，两个不同的项目可能需要不同版本的python，如 python2.7 / python3.6 ，但是如果都装到一起，经常会导致问题。pipenv能够用于创建独立的Python虚拟环境，多个Python相互独立，互不影响。<br>pipenv这个软件包可以让我们管理虚拟环境变得更加简单。不用再跑到某个目录下通过pipenv来创建虚拟环境，并且激活的时候也要跑到具体的目录下去激活。</p>
+<ol>
+<li><p>使用pip安装包前，先更新pip。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install --upgrade pip</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li><p>安装pipenv</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install pipenv</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li><p>在项目目录进行虚拟环境搭建<br>项目上传到服务器（推荐使用git的方式）<br>进入项目目录，创建该项目的虚拟环境</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv install <span class="comment"># 需要进入项目的根目录</span></span><br></pre></td></tr></tbody></table></figure></div>
+<blockquote>
+<p><code>注意</code> 如果报：<code>Pipenv: Command Not Found</code> 的错误用 <code>$sudo pip install pipenv</code> 重新安装pipenv  </p>
+</blockquote>
+</li>
+<li><p>安装uwsig<br>用pip安装 uwsgi库</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install uwsgi</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li><p>激活虚拟环境并在项目下新建一个uwsgi.ini配置文件</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv shell   <span class="comment"># 激活虚拟环境</span></span><br><span class="line">$ touch uwsgi.ini  <span class="comment"># 新建文件</span></span><br><span class="line">$ vi uwsgi.ini   <span class="comment"># 写入内容</span></span><br></pre></td></tr></tbody></table></figure></div>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">chdir = /home/flask/lesson # manage.py文件所在目录</span><br><span class="line">callable = app # 为你的项目实例命名，flask项目需要这一句 </span><br><span class="line">wsgi-file= lesson.py # flask文件名 运行文件</span><br><span class="line">processes = 4 # 进程数</span><br><span class="line">threads = 2 # 线程数</span><br><span class="line">master = true # 开启一个master进程监控项目运行</span><br><span class="line">socket = 127.0.0.1:5000 # uwsgi的端口。要与项目运行的端口一致</span><br><span class="line"># daemonize = /home/flask/lesson/logs/lesson.log</span><br><span class="line">daemonize = /tmp/flask/lesson.log # 日志输出目录</span><br><span class="line">touch-logreopen = /tmp/flask/.touchforlogrotate # 该文件变动时重新指定新的输出流到daemonize</span><br><span class="line">pidfile = uwsgi.pid</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>启动项目</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv shell  <span class="comment"># 进入项目虚拟环境</span></span><br><span class="line">$ uwsgi uwsgi.ini <span class="comment"># 启动命令（在lesson目录下）</span></span><br><span class="line">$ ps -ef | grep uwsgi  <span class="comment"># 查看进程是否启动成功</span></span><br></pre></td></tr></tbody></table></figure></div></li>
+<li><p>打开页面地址  服务器ip:5000 ，看看没有显示</p>
+</li>
+</ol>
+<h2 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h2><h3 id="Nginx下载"><a href="#Nginx下载" class="headerlink" title="Nginx下载"></a>Nginx下载</h3><p>Nginx 不在默认的 yum 源中，可以使用 epel 或者官网的 yum 源，本例使用官网的 yum 源。</p>
+<ol>
+<li><p>添加nginx的yum源</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm</span><br></pre></td></tr></tbody></table></figure></div>
+<p>安装完 yum 源之后，可以查看一下。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum repolist</span><br><span class="line">Loaded plugins: fastestmirror, langpacks</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.aliyun.com</span><br><span class="line"> * extras: mirrors.aliyun.com</span><br><span class="line"> * updates: mirrors.aliyun.com</span><br><span class="line">repo id                          repo name                          status</span><br><span class="line">base/7/x86_64                    CentOS-7 - Base                    9,911</span><br><span class="line">extras/7/x86_64                  CentOS-7 - Extras                    368</span><br><span class="line">nginx/x86_64                     nginx repo                           108</span><br><span class="line">updates/7/x86_64                 CentOS-7 - Updates                 1,041</span><br><span class="line">repolist: 11,428</span><br></pre></td></tr></tbody></table></figure></div>
+<p>可以发现 nginx repo 已经安装到本机了。</p>
+</li>
+<li><p>yum 安装 Nginx</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install nginx</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>配置 Nginx 服务</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl <span class="built_in">enable</span> nginx <span class="comment"># 设置开机启动(两次)</span></span><br><span class="line">$ sudo systemctl start nginx <span class="comment"># 启动服务</span></span><br><span class="line">$ sudo systemctl stop nginx <span class="comment"># 停止服务</span></span><br><span class="line">$ sudo systemctl reload nginx <span class="comment"># 重新加载</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+</li>
+</ol>
+<h3 id="nginx部署项目"><a href="#nginx部署项目" class="headerlink" title="nginx部署项目"></a>nginx部署项目</h3><ol>
+<li><p>进入nginx目录</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /etc/nginx</span><br></pre></td></tr></tbody></table></figure></div></li>
+<li><p>在conf.d中创建lesson.conf</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> conf.d/</span><br><span class="line">$ vi lesson.conf</span><br></pre></td></tr></tbody></table></figure></div>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;# listen 80;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;listen 443;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;ssl on;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;server_name thxycn.xin;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;# 证书.pem的存放地址</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;ssl_certificate /etc/nginx/cert/a.pem;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;# 证书.key的存放地址</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;ssl_certificate_key /etc/nginx/cert/a.key;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;ssl_session_timeout 5m;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;ssl_prefer_server_ciphers on;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;# 项目根目录&nbsp;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;root /home/flask/lesson;</span><br><span class="line">&nbsp;   # charset koi8-r;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;# access_log /var/log/nginx/lesson.log main;</span><br><span class="line">	location / {</span><br><span class="line">&nbsp;&nbsp;&nbsp;     include uwsgi_params;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;    uwsgi_pass 127.0.0.1:5000;</span><br><span class="line">        root /usr/share/nginx/html;</span><br><span class="line">        index index.html index.htm;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">server {</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;listen 80;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;server_name thxycn.xin;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;rewrite ^/(.*) https://$server_name$request_uri? permanent;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>重启Nginx</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start nginx <span class="comment"># 启动服务</span></span><br></pre></td></tr></tbody></table></figure></div>
+
+</li>
+</ol>
+<h2 id="日志切割"><a href="#日志切割" class="headerlink" title="日志切割"></a>日志切割</h2><h3 id="uwsgi日志按天切割"><a href="#uwsgi日志按天切割" class="headerlink" title="uwsgi日志按天切割"></a>uwsgi日志按天切割</h3><ol>
+<li><p>指定touch-logreope文件<br>在[uwsgi.ini]文件中</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">daemonize = /tmp/flask/lesson.log # 日志输出目录</span><br><span class="line">touch-logreopen = /tmp/flask/.touchforlogrotate # 该文件变动时重新指定新的输出流到daemonize</span><br></pre></td></tr></tbody></table></figure></div>
+<p>这里把uwsgi的日志放在了/tmp/flask/下，这里有个trick，既touch-logreopen参数监控的文件就是后面要定时执行的shell脚本本身。可以精简一个空白文件。</p>
+</li>
+<li><p>创建一个自动sh脚本<code>touchforlogrotate.sh</code>放在日志目录<code>/tmp/flask/</code>下</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#获取当前目录</span><br><span class="line">DIR=`echo $(cd "$(dirname "$0")"; pwd)`</span><br><span class="line">sourcelogfile="${DIR}/lesson.log"</span><br><span class="line">touchfile="${DIR}/.touchforlogrotate"</span><br><span class="line">DATE=`date -d "yesterday" +"%Y%m%d"`</span><br><span class="line">#重命名后的文件</span><br><span class="line">destlogpath="${DIR}/lesson-${DATE}.log"</span><br><span class="line">mv $sourcelogfile $destlogpath</span><br><span class="line"># 更新文件时间戳</span><br><span class="line">touch $touchfile</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>crontab定时调用</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 0 * * * sh /tmp/flask/touchforlogrotate.sh</span><br></pre></td></tr></tbody></table></figure></div>
+<p>重启uwsgi，每天0时自动执行时，会把昨天的lesson-${DATE}.log对应到昨天日期的log文件。随着最后脚本touch了自己，今天又是全新的lesson-${DATE}.log。至此，就可以实现简单的日志按日期分片啦。</p>
+</li>
+<li><p>重启项目</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pipenv shell  <span class="comment"># 先进入项目根目录，再进入项目虚拟环境</span></span><br><span class="line">$ uwsgi uwsgi.ini <span class="comment"># 启动命令（在lesson目录下）</span></span><br><span class="line">$ ps -ef | grep uwsgi  <span class="comment"># 查看进程是否启动成功</span></span><br></pre></td></tr></tbody></table></figure></div></li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-02-18T09:01:27.764Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/b68abf6b.html" target="_blank" rel="external">https://www.zeffon.cn/posts/b68abf6b.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/b68abf6b.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《flask项目在centos7部署流程》 — Zeffon's blog&url=https://www.zeffon.cn/posts/b68abf6b.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/b68abf6b.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/58aae0db.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：Systemctl的使用
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/ee6021d7.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Java非线性结构 - 树">下一篇：Java非线性结构 - 树</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/b68abf6b.html&title=《flask项目在centos7部署流程》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/b68abf6b.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《flask项目在centos7部署流程》 — Zeffon's blog&url=https://www.zeffon.cn/posts/b68abf6b.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/b68abf6b.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABv0lEQVR42u3aQW4DIQwF0Nz/0ukB2kb/24FG1WM1iibwmIWFjR+PeDyDkbz5fc7HiYGLi7vmtojZzN+Js03i4uLe5P62WPJOHuZm8+Pi4n4+Nw9q+Qy4uLj/g5sfa9qjDy4u7udwk+Tntynyf+2LKbi4uHe4eYHj3POR+i4uLu6I+yxHW/R8feipV8fFxb3CzQNKnq7koXC2Li4u7mnu6+CyT3tm7RdFCMPFxT3AfY1IwlCymRmx/sa4uLhv5SYLzJbZXJxExylcXNwr3E2DRZ7w5AErkuDi4h7gzlKazS/txopYi4uLu+a2yUlbAN1c0hQFU1xc3GPcHJqnK3niFBVtcXFxL3JnBYt9mWMYyHBxcQ9zZylQTpm1bryhsouLi7vmzlqm8qNMkg4VJRVcXNyL3OGtS9me1X6CH8IZLi7uRW77vD/KzC5ucXFxT3Of5chTl7a8Em0MFxf3CrcNLnlDVVLgyEuu9WZwcXHX3DZ4bd6cpUy4uLh/xX1XUlRfl25yNVxc3I/hJsXNWWNWkbHh4uJ+PLfu9diUUHFxcS9y88aI5LDSXskUByZcXNwr3M3F56bBYtaKgYuLe5j7BXY37AsRTFp3AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>

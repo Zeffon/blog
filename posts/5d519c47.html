@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Nginx基本认知 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="nginx">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx基本认知">
+<meta property="og:url" content="https://www.zeffon.cn/posts/5d519c47.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/04/27-01-forward-proxy.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/04/27-02-reverse-proxy.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/04/27-03-process-model.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/04/27-04-traditional-event-processing.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/04/27-05-nginx-event-processing.png">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/04/27-06-worker-seize.png">
+<meta property="article:published_time" content="2020-04-27T00:39:29.000Z">
+<meta property="article:modified_time" content="2020-04-26T16:44:52.734Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.zeffon.cn/images/2020/04/27-01-forward-proxy.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Nginx基本认知</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">1.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Nginx方向代理"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Nginx方向代理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#正向代理"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">正向代理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#反向代理"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">反向代理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#联系"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">联系</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Nginx进程模型"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Nginx进程模型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Nginx请求机制"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Nginx请求机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#传统服务器-同步阻塞"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">传统服务器-同步阻塞</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Nginx服务器-异步非阻塞"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">Nginx服务器-异步非阻塞</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Nginx-Worker抢占机制"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">Nginx Worker抢占机制</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-nginx-basic"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Nginx基本认知</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2020-04-27 08:39:29" datetime="2020-04-27T00:39:29.000Z"  itemprop="datePublished">2020-04-27</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Web/">Web</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">3</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。</p>
+<a id="more"></a>
+
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="Nginx方向代理"><a href="#Nginx方向代理" class="headerlink" title="Nginx方向代理"></a>Nginx方向代理</h3><p>大多时候我们使用Nginx时，可能都会使用Nginx反向代理的功能。那么什么是反向代理呢？<br>在理解什么是Nginx反向代理时，我们先得知道什么是正向代理。</p>
+<h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>正向代理服务器是<code>客户端</code>请求<code>目标服务器</code>之间的一个代理服务器。<br>一般我们发送了一个请求后，它会先经过代理服务器，然后在经过代理服务器转发请求到<code>指定的目标服务器</code>，获得内容后将结果最终响应给客户端。<br><img src="/images/2020/04/27-01-forward-proxy.png" width="70%" alt="正向代理"></p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><p>反向代理：用户请求目标服务器，由代理服务器决定访问哪个ip目标服务器<br><img src="/images/2020/04/27-02-reverse-proxy.png" width="70%" alt="反向代理"></p>
+<h4 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h4><p>理解这两种代理的关键在于代理服务器所代理的对象是什么，正向代理代理的是<code>客户端</code>，我们需要在客户端进行一些代理的设置。<br>而反向代理代理的是<code>服务器</code>，作为客户端的我们是我们是不知道代理服务器具体访问哪个ip目标服务器的。</p>
+<h3 id="Nginx进程模型"><a href="#Nginx进程模型" class="headerlink" title="Nginx进程模型"></a>Nginx进程模型</h3><p>Nginx作为高性能的服务器，离不开良好进程模型的支持。<br>Nginx有Master主进程和Worker工作进程。对于每个Worker进程来说，它们都是独立的进程，互相之间不会影响。<br>Master进程通过发指令信号的形式通知Worker工作进程</p>
+<img src="/images/2020/04/27-03-process-model.png" width="70%" alt="进程模型">
+
+<ul>
+<li>Master进程主要用来管理Worker进程</li>
+</ul>
+<ol>
+<li>Master进程接收来自外界的信号</li>
+<li>Master进程向各Worker进程发送信号</li>
+<li>Master进程监控Worker进程的运行状态</li>
+<li>当Worker进程异常退出后，会自动重新启动新的Worker进程。</li>
+</ol>
+<ul>
+<li>我们可以在配置文件<code>nginx.conf</code>配置Worker进程的数量<br><code>worker_processes 2</code></li>
+</ul>
+<h3 id="Nginx请求机制"><a href="#Nginx请求机制" class="headerlink" title="Nginx请求机制"></a>Nginx请求机制</h3><p>对于Nginx为什么性能这么高，能达到这么高的并发,最主要的是有<code>Worker抢占机制</code>和<code>处理请求的模型是异步非阻塞</code>(多路复用器)</p>
+<h4 id="传统服务器-同步阻塞"><a href="#传统服务器-同步阻塞" class="headerlink" title="传统服务器-同步阻塞"></a>传统服务器-同步阻塞</h4><p>传统服务器中，客户端发起一个请求，如果处理这个请求的工作进程由于处理的时间比较长被阻塞住了，那么它将不会处理后续其它Client的请求。Master进程会fork出新的Worker2进程来处理。很显然这种方式是不好的，如果刚fork的Worker2进程也被阻塞的话，Master又只能fork出现Worker进程。在高并发情况，发生阻塞的话，服务器会开很多进程来处理，这对服务器资源开销是非常大的。这就是同步阻塞的弊端。这在高并发情况下，这无疑是一场灾难。</p>
+<img src="/images/2020/04/27-04-traditional-event-processing.png" width="70%" alt="传统服务器事件处理">
+
+<h4 id="Nginx服务器-异步非阻塞"><a href="#Nginx服务器-异步非阻塞" class="headerlink" title="Nginx服务器-异步非阻塞"></a>Nginx服务器-异步非阻塞</h4><p>Nginx服务器，客户端发起一个请求，即便处理这个请求的工作进程1被阻塞住了，是不会影响它处理其它客户端的请求的，这样就不需要fork新的Worker进程来处理其它客户端的请求。这是异步非阻塞的好处。</p>
+<img src="/images/2020/04/27-05-nginx-event-processing.png" width="70%" alt="Nginx服务器事件处理">
+
+<h4 id="Nginx-Worker抢占机制"><a href="#Nginx-Worker抢占机制" class="headerlink" title="Nginx Worker抢占机制"></a>Nginx Worker抢占机制</h4><p>当一个请求过来时，会有一个accept_mutex 互斥锁。Worker进程会抢占这个锁，抢到后才能处理相对应客户端的请求，假设Worker1抢到这个锁后会建立关系，Worker1就会处理这个请求，将这个请求进行解析、处理、响应，而Worker2和Worker3没抢到则不需操作。</p>
+<img src="/images/2020/04/27-06-worker-seize.png" width="70%" alt="Nginx服务器事件处理">
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-04-26T16:44:52.734Z" itemprop="dateUpdated">2020-04-27 00:44:52</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/5d519c47.html" target="_blank" rel="external">https://www.zeffon.cn/posts/5d519c47.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&source=Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/5d519c47.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx基本认知》 — Zeffon's blog&url=https://www.zeffon.cn/posts/5d519c47.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/5d519c47.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/7a42ed0e.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：nginx.conf配置文件
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/aacd080c.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Redis缓存雪崩、穿透">下一篇：Redis缓存雪崩、穿透</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/5d519c47.html&title=《Nginx基本认知》 — Zeffon's blog&source=Nginx作为最常见的服务器，我们不但要知道能将项目部署在上面，还要知道其相关原理。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/5d519c47.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx基本认知》 — Zeffon's blog&url=https://www.zeffon.cn/posts/5d519c47.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/5d519c47.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzUlEQVR42u3ay27DMAwEwPz/T6dATz3Uzq5oK0EwOgV9yBMfCGnJxyNez991/vnvT47W0Z4XL1xc3DE3eUC+9TnufP/kS+Li4u7kJsXrxUblfyWvAxcX9/O5yQEoPyTh4uJ+B7fY9KCQta8DFxf3vdz2ctJefs7/5pa7Gi4u7oB7VWA6+fyGfBcXF3epK5EcUNYC1ufSwsXF3cM9b5SuPaZtqLRBCS4u7n5u2/xom6bzMAUXF3cPdy0ezaOTNvKIvhguLu7N3MkxpX3Y2rXqsXZKwsXFXeKuxRn5QSQvZ9GrwcXF3cJtG5/tMFbbiC0aq7i4uLdxW9A8GG3LJS4u7n7uPM44Px7l8UryUnBxcXdy1wLTZGyrHcXI98TFxb2PmwxAzBPZtSbuPzvg4uJu4bYdirbpko92FZcrXFzcm7ntaWitYE3CWVxc3Hdxk3KWH2vmxe5FTxgXF3cLtx2MaH87GeCIzke4uLiXctuCksSga2FHne/i4uLezF1rpk6K4GhEAxcXdyM3KTTtIEU9dJUPZuHi4n4M9ypcstvhU3BxcT+emzdKE2h0ccLFxd3Inceg86GNqJGDi4u7hdsGpkmEkbRJJi1eXFzc27g/W5q0ey2u2rUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>

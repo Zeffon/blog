@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>vimium的使用 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="vim">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="前言 vimium类似于vim的快捷键，是chrome浏览器的一款插件, 可以用键盘代替鼠标的操作, 提高我们的浏览速度和上网体验。  使用 Vimium作为Chrome的一个扩展工具，安装当然很简单。在Chrome应用店上安装即可Vimium  可以自定义快捷方式右击右上角扩展的图标 -&gt; 进入选项 -&gt; 在Custom key mappings新增下面快捷内容 -&gt; 点击下面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vimium的使用">
+<meta property="og:url" content="https://www.zeffon.cn/posts/179a1564.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="前言 vimium类似于vim的快捷键，是chrome浏览器的一款插件, 可以用键盘代替鼠标的操作, 提高我们的浏览速度和上网体验。  使用 Vimium作为Chrome的一个扩展工具，安装当然很简单。在Chrome应用店上安装即可Vimium  可以自定义快捷方式右击右上角扩展的图标 -&gt; 进入选项 -&gt; 在Custom key mappings新增下面快捷内容 -&gt; 点击下面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zeffon.cn/images/2019/11/vimium.png">
+<meta property="article:published_time" content="2019-11-04T04:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-18T09:01:27.781Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.zeffon.cn/images/2019/11/vimium.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vimium的使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用的快捷方式-默认"><span class="post-toc-number">3.</span> <span class="post-toc-text">常用的快捷方式(默认)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#扩展"><span class="post-toc-number">4.</span> <span class="post-toc-text">扩展</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ideavim"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">ideavim</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vscode-vim"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">vscode vim</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-vimium"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vimium的使用</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-11-04 12:00:00" datetime="2019-11-04T04:00:00.000Z"  itemprop="datePublished">2019-11-04</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Note/">Note</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>vimium类似于vim的快捷键，是chrome浏览器的一款插件, 可以用键盘代替鼠标的操作, 提高我们的浏览速度和上网体验。</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li><p><code>Vimium</code>作为Chrome的一个扩展工具，安装当然很简单。在Chrome应用店上安装即可<a href="https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Vimium</a></p>
+</li>
+<li><p>可以<code>自定义</code>快捷方式<br>右击右上角扩展的图标 -&gt; 进入选项 -&gt; 在Custom key mappings新增下面快捷内容 -&gt; 点击下面save changes</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Insert your preferred key mappings here.</span><br><span class="line">map w scrollUp</span><br><span class="line">map s scrollDown</span><br><span class="line">map a scrollLeft</span><br><span class="line">map d scrollRight</span><br><span class="line">map l scrollPageDown</span><br><span class="line">map h scrollPageUp</span><br><span class="line">map qq scrollToTop</span><br><span class="line">map ee scrollToBottom</span><br><span class="line">map j goBack</span><br><span class="line">map k goForward</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>官方的快捷方式说明</p>
+<img src="/images/2019/11/vimium.png" width="80%" alt="官方的快捷说明">
+
+</li>
+</ol>
+<h2 id="常用的快捷方式-默认"><a href="#常用的快捷方式-默认" class="headerlink" title="常用的快捷方式(默认)"></a>常用的快捷方式(默认)</h2><ol>
+<li><p><strong><code>页面的移动</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">r</td>
+<td align="center">刷新</td>
+</tr>
+<tr>
+<td align="center">f/F</td>
+<td align="center">跳转链接</td>
+</tr>
+<tr>
+<td align="center">h/j/k/l</td>
+<td align="center">左/下/上/右</td>
+</tr>
+<tr>
+<td align="center">u/d</td>
+<td align="center">上/下半页滚动</td>
+</tr>
+<tr>
+<td align="center">gg/G</td>
+<td align="center">回到顶部/底部</td>
+</tr>
+<tr>
+<td align="center">H/L</td>
+<td align="center">后退/前进</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<ol>
+<li><p><strong><code>复制&amp;粘贴</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">yy</td>
+<td align="center">复制当前页面的url到剪切板</td>
+</tr>
+<tr>
+<td align="center">yt</td>
+<td align="center">重复当前标签</td>
+</tr>
+<tr>
+<td align="center">p/P</td>
+<td align="center">搜索剪贴板关键字 在当前/新标签</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<ol>
+<li><p><strong><code>模式&amp;定位</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">i/v</td>
+<td align="center">编辑模式/可视模式</td>
+</tr>
+<tr>
+<td align="center">gi</td>
+<td align="center">定位到页面首个输入框</td>
+</tr>
+<tr>
+<td align="center">2gi</td>
+<td align="center">定位到页面第二个输入框</td>
+</tr>
+<tr>
+<td align="center">/</td>
+<td align="center">进入寻找模式</td>
+</tr>
+<tr>
+<td align="center">n/N</td>
+<td align="center">向下/上查找结果</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<ol>
+<li><p><strong><code>书签</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">o/O</td>
+<td align="center">查找历史记录+书签</td>
+</tr>
+<tr>
+<td align="center">b/B</td>
+<td align="center">打开书签 在当前/新窗口</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<ol>
+<li><p><strong><code>标签</code></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">t/T</td>
+<td align="center">创建/查看标签页</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">上一次标签切换</td>
+</tr>
+<tr>
+<td align="center">x/X</td>
+<td align="center">关闭/恢复标签</td>
+</tr>
+<tr>
+<td align="center">J,gT/K,gt</td>
+<td align="center">跳转标签页</td>
+</tr>
+<tr>
+<td align="center">g0/g$</td>
+<td align="center">切换到首个标签/最后标签</td>
+</tr>
+<tr>
+<td align="center">gu/gU</td>
+<td align="center">跳转到当前url上一级/最高级</td>
+</tr>
+<tr>
+<td align="center">ge/gE</td>
+<td align="center">编辑url 在当前/新标签</td>
+</tr>
+<tr>
+<td align="center">?</td>
+<td align="center">显示帮助</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>平时要是忘记了快捷方式,也可以在浏览器页面 <code>?</code> 显示快捷键帮助</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><h3 id="ideavim"><a href="#ideavim" class="headerlink" title="ideavim"></a>ideavim</h3><ol>
+<li><p>Jetbrains系列软件直接在<code>插件</code>浏览器搜索安装即可，重启后在边栏<code>tools</code>上可以看到<code>vim Emulator</code></p>
+</li>
+<li><p>由于ideavim有些快捷方式与IDEA原本快捷方式会<code>冲突</code>, 可以在以下位置进行设置。</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">preferences -&gt; Editor -&gt; Vim Emulation(mac系统)  </span><br><span class="line">Settings -&gt; Other Settings -&gt; Vim Emulation设置(win系统)</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+<li><p>可以选择冲突的按键统一设置成IDE的快捷键。</p>
+</li>
+</ol>
+<h3 id="vscode-vim"><a href="#vscode-vim" class="headerlink" title="vscode vim"></a>vscode vim</h3><ol>
+<li>直接在扩展搜索vim安装即可</li>
+<li>使用系统剪贴板-&gt;设置true<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在首选项 -&gt; 设置 -&gt; 配置搜索vim.useSystemClipboardsh -&gt; 设置true(打勾)</span><br></pre></td></tr></tbody></table></figure></div></li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-02-18T09:01:27.781Z" itemprop="dateUpdated">2020-02-18 17:01:27</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/179a1564.html" target="_blank" rel="external">https://www.zeffon.cn/posts/179a1564.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/" rel="tag">vim</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/179a1564.html&title=《vimium的使用》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/179a1564.html&title=《vimium的使用》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/179a1564.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vimium的使用》 — Zeffon's blog&url=https://www.zeffon.cn/posts/179a1564.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/179a1564.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/f098441a.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：GROUP BY和HAVING的用法
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/835116a6.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：vim的基本入门">下一篇：vim的基本入门</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/179a1564.html&title=《vimium的使用》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/179a1564.html&title=《vimium的使用》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/179a1564.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vimium的使用》 — Zeffon's blog&url=https://www.zeffon.cn/posts/179a1564.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/179a1564.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABuklEQVR42u3aS44CMQwFQO5/aWaLNGrm2U7SMKpeIdEoFRaWf49H/Dwvntdv37/5+s7vXy1+cHFxx9zkgN7BycWql8TFxT3JvTosCTqTy+Tv4OLifgs3T1OuwhYuLu5/4vaSIVxc3O/i5o2PJNHJy5uNtRouLu6A20tQ1n7e0t/FxcVtcZ/FJylm3gep0em4uLhHuL30pZeCJBdI0iZcXNy7uEkBk5Q989Fs1MXBxcVdyp0MRHuLVjnxMiPDxcXdzM1Z+dgjD3O95gsuLu5u7nzVcke381KCi4v7AdxJ0Kk2UKIFDlxc3CPcvJipHtkrbJL0CBcX915uUgKVD5sXS7i4uEe4SVozL4d6DZdo/oOLi3ucWy1seqlMtfTCxcXdzZ1De4tWedp02cvBxcXdzO2NVKvrWdWhyx+1Gi4u7mZuTslZk3Fs4WtcXNyl3Gfx6aUpzWEqLi7uTdy1a1XV8JQnUuXL4OLijrnVFueqFateoMTFxT3J7Q1XCgsTrXFsef8LFxf3Ju58EFu9JC4u7udzE2g1eBWEuLi4B7mrmqTVQUv1T8HFxT3DrYaS3rpGL7SN+ru4uLgd7g9ZggsJR9hSwAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Java JPA 原生SQL和JPQL | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="springBoot,JPA">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="记录Java JPA使用jPQL和原生SQL的方式获取数据。 前言SpringBoot项目中，通常会使用jpa或者mybatis ORM框架来作为Java持久层。或许我们习惯性地认为JPA不能处理复杂的SQL语句。其实这是不太正确地对JPA的认识。Java jpa其实是非常强大的，它是有多种方式操作数据库来获取数据，常见是Repository持久层的方法命名规则来获取数据。这种是大家最常见的使用方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java JPA 原生SQL和JPQL">
+<meta property="og:url" content="https://www.zeffon.cn/posts/5d8d4396.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="记录Java JPA使用jPQL和原生SQL的方式获取数据。 前言SpringBoot项目中，通常会使用jpa或者mybatis ORM框架来作为Java持久层。或许我们习惯性地认为JPA不能处理复杂的SQL语句。其实这是不太正确地对JPA的认识。Java jpa其实是非常强大的，它是有多种方式操作数据库来获取数据，常见是Repository持久层的方法命名规则来获取数据。这种是大家最常见的使用方">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-31T09:05:41.000Z">
+<meta property="article:modified_time" content="2020-03-30T14:57:24.922Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="springBoot">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java JPA 原生SQL和JPQL</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">2.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型关系"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">模型关系</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原生SQL"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">原生SQL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#JPQL"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">JPQL</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#非幂等性操作"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">非幂等性操作</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-java-jpa-jpql-and-native-sql"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Java JPA 原生SQL和JPQL</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2020-03-31 17:05:41" datetime="2020-03-31T09:05:41.000Z"  itemprop="datePublished">2020-03-31</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">4</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>记录Java JPA使用jPQL和原生SQL的方式获取数据。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>SpringBoot项目中，通常会使用<code>jpa</code>或者<code>mybatis</code> ORM框架来作为Java持久层。或许我们习惯性地认为JPA不能处理复杂的SQL语句。<br>其实这是不太正确地对JPA的认识。Java jpa其实是非常强大的，它是有多种方式操作数据库来获取数据，常见是<code>Repository持久层的方法命名规则</code>来获取数据。这种是大家最常见的使用方式，它对于简单的SQL语句真的非常方便，面对复杂SQL查询可能把写方法名写得很长很不优雅。这时候我们可以采取其他的方式来获取数据–<code>原生SQL</code>和<code>JPQL</code>。</p>
+<p>在 <a href="14d38de7.html"><strong>spring data jpa 方法命名规则</strong></a> 一文中介绍jpa方法的命名规则。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="模型关系"><a href="#模型关系" class="headerlink" title="模型关系"></a>模型关系</h3><p>有四张数据表：3张业务表activity、coupon、category，1张中间表coupon_category。对此在Java中需要3个模型(中间表无业务操作，故不需要建立模型)。</p>
+<p><strong><code>Activity</code></strong> &lt;— 一对多 —&gt; <strong><code>Coupon</code></strong> &lt;— 多对多(中间表coupon_category) —&gt; <strong><code>Category</code></strong></p>
+<p>1. 活动模型</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Activity</span> </span>{</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">// 导航属性 1对多关联Coupon模型中的activityId字段</span></span><br><span class="line">    <span class="meta">@OneToMany</span>(fetch = FetchType.LAZY)</span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"activityId"</span>)</span><br><span class="line">    <span class="keyword">private</span> List&lt;Coupon&gt; couponList;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>2. 优惠券模型</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Coupon</span> </span>{</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> Long activityId;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> Date startTime;</span><br><span class="line">    <span class="keyword">private</span> Date endTime;</span><br><span class="line">    <span class="comment">// 导航属性 多对多关联Category</span></span><br><span class="line">    <span class="meta">@ManyToMany</span>(fetch = FetchType.LAZY, mappedBy = <span class="string">"couponList"</span>)</span><br><span class="line">    <span class="keyword">private</span> List&lt;Category&gt; categoryList;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<p>2. 分类模型</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Category</span> </span>{</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">// 导航属性 多对多关联Coupon 加入中间表coupon_category，以category_id和coupon_id进行桥接</span></span><br><span class="line">    <span class="meta">@ManyToMany</span>(fetch = FetchType.LAZY)</span><br><span class="line">    <span class="meta">@JoinTable</span>(name = <span class="string">"coupon_category"</span>,</span><br><span class="line">            joinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"category_id"</span>),</span><br><span class="line">            inverseJoinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"coupon_id"</span>))</span><br><span class="line">    <span class="keyword">private</span> List&lt;Coupon&gt; couponList;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
+
+<h3 id="原生SQL"><a href="#原生SQL" class="headerlink" title="原生SQL"></a>原生SQL</h3><p>在方法上打上<code>@Query</code>,并且传入<code>nativeQuery=true</code>和 <code>value="sql原生语句"</code>。</p>
+<ol>
+<li>传入参数方式：<code>cid -&gt; :cid , now -&gt; :now</code> 也可以<code>cid -&gt; ?1 , now -&gt; ?2</code> (比较推荐<code>前者</code>，可读性比较高)<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Query</span>(nativeQuery=<span class="keyword">true</span>,</span><br><span class="line">        value = <span class="string">"select * from coupon c\n"</span> +</span><br><span class="line">        <span class="string">"join coupon_category cc on c.id = cc.coupon_id\n"</span> +</span><br><span class="line">        <span class="string">"join category ca on ca.id = cc.category_id\n"</span> +</span><br><span class="line">        <span class="string">"join activity a on a.id = c.activity_id\n"</span> +</span><br><span class="line">        <span class="string">"where c.id = :cid\n"</span> +</span><br><span class="line">        <span class="string">"and a.startTime &lt; :now \n"</span> +</span><br><span class="line">        <span class="string">"and a.endTime &gt; :now\n"</span>)</span><br><span class="line"><span class="function">List&lt;Coupon&gt; <span class="title">findByCategory</span><span class="params">(Long cid, Date now)</span></span>;</span><br></pre></td></tr></tbody></table></figure></div>
+
+</li>
+</ol>
+<blockquote>
+<p><strong><code>小技巧</code></strong> 编写@Query注解里面的SQL语句时，按住alt+enter会弹出选择框，选择<code>Edit Generic SQL Fragment</code>选项。随后我们进入一个SQL编写的控制面板。在这里是与@Query注解里面是同步的，有智能提示，回车也方便。</p>
+</blockquote>
+<h3 id="JPQL"><a href="#JPQL" class="headerlink" title="JPQL"></a>JPQL</h3><p>JPQL全称Java Persistence Query Language，它是一种查询语言，具有与SQL 相类似的特征，JPQL是完全面向对象的，具备继承、多态和关联等特性，和hibernate的HQL很相似。</p>
+<p>1. 由于JPQL操作的是模型对象而不再是数据库的表，因此这里的字段属性需要与模型中的字段保持一致</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Query</span>(<span class="string">"SELECT c from Coupon c\n"</span> +</span><br><span class="line">        <span class="string">"join c.categoryList ca\n"</span> +</span><br><span class="line">        <span class="string">"join Activity a on a.id = c.activityId\n"</span> +</span><br><span class="line">        <span class="string">"where ca.id = :cid\n"</span> +</span><br><span class="line">        <span class="string">"and a.startTime &lt; :now \n"</span> +</span><br><span class="line">        <span class="string">"and a.endTime &gt; :now\n"</span>)</span><br><span class="line"><span class="function">List&lt;Coupon&gt; <span class="title">findByCategory</span><span class="params">(Long cid, Date now)</span></span>;</span><br></pre></td></tr></tbody></table></figure></div>
+<blockquote>
+<p>由于Coupon中有导航属性categoryList，可以通过模型让Coupon与Category创建多对多联系。对此在编写JPQL时就不要像原生SQL语句那样要借助中间表coupon_category</p>
+</blockquote>
+<h3 id="非幂等性操作"><a href="#非幂等性操作" class="headerlink" title="非幂等性操作"></a>非幂等性操作</h3><p>首先<code>JPQL不支持INSERT</code>，但是UPDATE,DELETE操作是支持的。可能是jpa的理念就是更加注重别用SQL语句<br>而原生的是可以支持INSERT,UPDATE,DELETE</p>
+<ol>
+<li>加上<code>@Modifying</code>注解标注该操作是非查询操作，不然是会报错的。还可以加上事务<code>@Transactional</code>注解<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="JAVA"><figure class="iseeu highlight /java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="meta">@Modifying</span></span><br><span class="line"><span class="meta">@Query</span>(<span class="string">"update Activity set\n"</span> +</span><br><span class="line">        <span class="string">"name = :name\n"</span> +</span><br><span class="line">        <span class="string">"where id = :id"</span>)</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">updateTitle</span><span class="params">(Long id, String name)</span></span>;</span><br></pre></td></tr></tbody></table></figure></div>
+</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-03-30T14:57:24.922Z" itemprop="dateUpdated">2020-03-30 22:57:24</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/5d8d4396.html" target="_blank" rel="external">https://www.zeffon.cn/posts/5d8d4396.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JPA/" rel="tag">JPA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springBoot/" rel="tag">springBoot</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/5d8d4396.html&title=《Java JPA 原生SQL和JPQL》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/5d8d4396.html&title=《Java JPA 原生SQL和JPQL》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/5d8d4396.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java JPA 原生SQL和JPQL》 — Zeffon's blog&url=https://www.zeffon.cn/posts/5d8d4396.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/5d8d4396.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/cb1a6b6.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：Java注解检验器
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/397f8d1b.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Java正则表达式">下一篇：Java正则表达式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/5d8d4396.html&title=《Java JPA 原生SQL和JPQL》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/5d8d4396.html&title=《Java JPA 原生SQL和JPQL》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/5d8d4396.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Java JPA 原生SQL和JPQL》 — Zeffon's blog&url=https://www.zeffon.cn/posts/5d8d4396.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/5d8d4396.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3ay4rDMAwF0P7/T8/ArAol7pXlqB04WQUa7OMuhB5+POLn5+95fn991r8+f/O65uEHFxe3zU02uAIlq509JC4u7iQ3D14JKyfmBlxc3O/kXgWsTpKEi4v737mFRZfB7gNxFxcXd4t7ttmRF0g31mq4uLgN7l6Ccvb99v4uLi7uoalENWB1mqrR7ri4uCPcdcsj3yZfJz/eZZjDxcUd4eYbrINUPkTpNFNwcXHv5q7t1VHKgasV64CIi4s7wq02RDoHqwa4zYYpLi5um9sJJdVCpd98wcXFneeu3zvXL5Iha9JmxcXFneTmGdDeVa1qMYOLi/sN3E4ikiQ6/XB2mZHh4uLexs2TmHw4mpdG+WAGFxd3nlsNZHcMX9+EQlxc3BFutQmStE72qpXCVQ9cXNybuUkxkzdSO2lNdABcXNxB7l5nshApkzFJcjBcXNxB7qkiZ2/EUjgGLi7uCLcaUPI0qHppIy+0cHFxZ7h7w9RqAdNpwRSiLy4u7lFuNR3ZG6wmEfTNN7i4uF/GzYcie39EVETh4uJ+JbcK3SucLm24uLiD3FOXrpLiKh/ittoiuLi4DW61YVpNevYSHVxc3A9xfwHGB0P6t+zD8QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>
