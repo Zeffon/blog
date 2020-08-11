@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.zeffon.cn/"/>
-  <updated>2020-08-10T06:08:57.357Z</updated>
+  <updated>2020-08-11T22:19:37.212Z</updated>
   <id>https://www.zeffon.cn/</id>
   
   <author>
@@ -15,29 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>阿里的云开发技术活动总结</title>
-    <link href="https://www.zeffon.cn/posts/9cfc1e01.html"/>
-    <id>https://www.zeffon.cn/posts/9cfc1e01.html</id>
-    <published>2020-08-11T23:10:13.000Z</published>
-    <updated>2020-08-10T06:08:57.357Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>记录这七天来阿里的云开发技术活动的总结和一些个人的看法</p><a id="more"></a><h2 id="活动任务"><a href="#活动任务" class="headerlink" title="活动任务"></a>活动任务</h2><p>从这七天的活动任务来看，其实完成这些任务一点难度都没有。这些任务都是一些简单的Demo，只有修改一些输出。所以做这些任务其实只要看相关应用的<code>文档README.md</code>都可以完成。<br>这七天的课程之间是没有联系，只是带大家粗略地知道阿里<code>云开发</code>平台的一些操作和相关应用框架。这也可以理解是阿里在推广他们的云开发技术。课程中简单Demo是阿里在<strong>抛砖引玉</strong>，我们要不断思考和探索云开发技术。</p><h2 id="个人看法"><a href="#个人看法" class="headerlink" title="个人看法"></a>个人看法</h2><p>尽管这七天课程很简单，但是我们不能简单<code>因为要完成任务而去完成</code>，更重要的是思考课程背后的能给我们编程思维的<strong>转变或是提高</strong>。每次课程中我都能从中有所收获：有时思考云开发能应用场景、对之前的学过知识回顾。<br>我觉得学习编程的一项新技术或者一门新语言，我们都应该从一个实际的<code>项目或者小Demo</code>中去学习和探索。在这种实践性很强的业务中，我们是可以学到更多并且能记得牢固。<strong>业务是来承载知识，重要的是培养编程的思维。</strong></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录这七天来阿里的云开发技术活动的总结和一些个人的看法&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="aliyun" scheme="https://www.zeffon.cn/categories/aliyun/"/>
-    
-    
-      <category term="serverless" scheme="https://www.zeffon.cn/tags/serverless/"/>
-    
-  </entry>
   
   <entry>
     <title>阿里的云开发技术Day07</title>
