@@ -39,19 +39,19 @@
 
 
     
-    <meta name="description" content="记录阿里的云开发技术活动的第三天">
+    <meta name="description" content="记录阿里的云开发技术活动的第三天，基于依赖注入面向未来的Web开发框架MidwayJS。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阿里的云开发技术Day03">
 <meta property="og:url" content="https://www.zeffon.cn/posts/ee6b1b7d.html">
 <meta property="og:site_name" content="Zeffon&#39;s blog">
-<meta property="og:description" content="记录阿里的云开发技术活动的第三天">
+<meta property="og:description" content="记录阿里的云开发技术活动的第三天，基于依赖注入面向未来的Web开发框架MidwayJS。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-01-create-application.png">
 <meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-02-deploy-application.png">
 <meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-03-run-application.png">
 <meta property="og:image" content="https://www.zeffon.cn/images/2020/08/05-04-run-application.png">
 <meta property="article:published_time" content="2020-08-05T14:44:05.000Z">
-<meta property="article:modified_time" content="2020-08-08T04:39:43.638Z">
+<meta property="article:modified_time" content="2020-08-10T04:00:35.978Z">
 <meta property="article:author" content="Zeffon">
 <meta property="article:tag" content="serverless">
 <meta name="twitter:card" content="summary">
@@ -224,12 +224,12 @@
             阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>记录阿里的云开发技术活动的第三天</p>
+            <p>记录阿里的云开发技术活动的第三天，基于<code>依赖注入</code>面向未来的Web开发框架MidwayJS。</p>
 <a id="more"></a>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>MidwaysJs在<a href="https://github.com/midwayjs/midway" target="_blank" rel="noopener">官方Github</a>中有着详细的文档介绍。<br>这是一款基于<code>依赖注入</code>面向未来的Web开发框架，可见未来的开发模式是会偏向像Java这样面向对象的服务端编程模式。<br>当我看到以下简单的TS代码，感到十分惊讶。</p>
 <div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="TS"><figure class="iseeu highlight /ts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { Provide, Func } <span class="keyword">from</span> <span class="string">'@midwayjs/decorator'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Provide</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> IndexService {</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Func</span>(<span class="string">'index.handler'</span>)</span><br><span class="line">  <span class="keyword">async</span> handler() {</span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">      message: <span class="string">'Hello Midway Serverless!'</span>,</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div>
-<p>因为是node.js开发的，所以当时不明所以觉得：这个是Koa2框架吧?<br>在这之前看过Koa2项目的代码，上面的MidwayJS的代码风格非常像Koa2的风格，只需要简单<code>引入函数</code>，<code>加上装饰器</code>就可以响应前端的请求。这个封装太精彩了<br>在KOA2中，如果没有经过<code>二次开发</code>,是很难使用它来作为web开发的。而在MidwayJS完全不需要再额外的写其它函数来进行封装。因为很多二次开发的工作已经做好了。<br>这样可以让开发者可以更加<code>关注于业务</code>上的实现。这种设计能提供开发者简单的调用使用，可见内部方法设计是多么复杂的。</p>
+<p>因为是node.js开发的，所以当时不明所以觉得：这个是Koa2框架吧?<br>在这之前有使用Koa2作为web开发过项目，上面的MidwayJS的代码风格非常像Koa2的风格，只需要简单<code>引入函数</code>，<code>加上装饰器</code>就可以响应前端的请求。这个封装太精彩了<br>在Koa2中，如果没有经过<code>二次开发</code>,是很难使用它来作为web开发的。你可能需要将中间件进行注册到应用程序中、将路由进入映射、可能需要进行写校验层、统一异常处理的工作。总之，Koa2需要你扩展很多函数，这样开发起来才比较高效、便利。而在MidwayJS完全不需要再额外的写其它函数来进行封装。因为很多二次开发的工作已经做好了。<br>这样可以让开发者可以更加<code>关注于业务</code>上的实现。这种设计能提供开发者简单的调用使用，可见内部方法设计是多么复杂的。</p>
 <h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h3><ol>
 <li><p>新建应用 -&gt; 技术场景 -&gt; WEB -&gt; Midway Serverless 一体化解决方案(For NodeJS10)<br>随意填写应用相关的信息进行创建</p>
 <img src="/images/2020/08/05-01-create-application.png" width="70%" alt="create-application">
@@ -285,7 +285,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2020-08-08T04:39:43.638Z" itemprop="dateUpdated">2020-08-08 12:39:43</time>
+    最后更新：<time datetime="2020-08-10T04:00:35.978Z" itemprop="dateUpdated">2020-08-10 12:00:35</time>
 </span>
 
 
@@ -332,7 +332,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&source=记录阿里的云开发技术活动的第三天" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&source=记录阿里的云开发技术活动的第三天，基于依赖注入面向未来的Web开发框架MidwayJS。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -495,7 +495,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&source=记录阿里的云开发技术活动的第三天" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/ee6b1b7d.html&title=《阿里的云开发技术Day03》 — Zeffon's blog&source=记录阿里的云开发技术活动的第三天，基于依赖注入面向未来的Web开发框架MidwayJS。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
