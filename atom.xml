@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.zeffon.cn/"/>
-  <updated>2020-08-31T07:49:51.748Z</updated>
+  <updated>2020-09-07T21:12:47.613Z</updated>
   <id>https://www.zeffon.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vscode打包和安装vsix扩展包</title>
+    <link href="https://www.zeffon.cn/posts/9bf736f6.html"/>
+    <id>https://www.zeffon.cn/posts/9bf736f6.html</id>
+    <published>2020-09-07T22:24:52.000Z</published>
+    <updated>2020-09-07T21:12:47.613Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>vscode作为开发者青睐的开发工具，其强大之处就是免费开源、精小轻便，还有就是可以随意安装各种扩展应用。</p><a id="more"></a><h2 id="前文"><a href="#前文" class="headerlink" title="前文"></a>前文</h2><p>vscode作为开发者青睐的开发工具，其强大之处就是免费开源、精小轻便，还有就是可以随意安装各种扩展应用。<br>至于安装扩展应用的话十分简单，就是对vscode扩展商店中搜索对应的名称，点击安装之后即可使用；对于删除也是很简单，选择对应扩展应用进行删除即可。<br>下载后的扩展应用安装包会保存在相对应的计算机<code>C:\Users\YourName\.vscode\extensions</code>目录下，有时候我们在搬运扩展应用安装包时，这个传输是十分耗时的。因此将其打包成vsix文件的话，这样传输起来十分方便快速。之后，再将vsix文件进行安装即可。</p><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="打包扩展包"><a href="#打包扩展包" class="headerlink" title="打包扩展包"></a>打包扩展包</h3><ol><li><p>本地打包还是发布到应用市场都需要借助vsce工具</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SH"><figure class="iseeu highlight /sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i vsce -g</span><br></pre></td></tr></tbody></table></figure></div></li><li><p>进入<code>C:\Users\YourName\.vscode\extensions</code>选择需要打包的扩展</p></li><li><p>扩展包中需要的node_modules和package.json进行打包</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vsce package</span><br></pre></td></tr></tbody></table></figure></div></li><li><p>打包成功后会在扩展包的根目录生成vsix文件的</p></li></ol><blockquote><p>如果打包失败的话，可能需要删除node_modules，然后重新<code>npm install</code>，再打包<code>vsce package</code></p></blockquote><h3 id="安装vsix"><a href="#安装vsix" class="headerlink" title="安装vsix"></a>安装vsix</h3><p>在vscode安装vsix文件是十分简单的。</p><ol><li><p>打开vscode，选择左边扩展应用</p></li><li><p>点击扩展应用小页面左上角的<code>···</code>(也就是视图和更多操作，并不是指整个vscode页面的<code>···</code>)</p><img src="/images/2020/09/08-install-vsix.png" width="70%" alt="install-vsix"></li><li><p>选择<code>Install form VSIX...</code>(从VSIX安装) </p></li><li><p>跳转至选择存放vsix文件目录选择想要安装vsix文件即可</p></li></ol><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;vscode作为开发者青睐的开发工具，其强大之处就是免费开源、精小轻便，还有就是可以随意安装各种扩展应用。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Note" scheme="https://www.zeffon.cn/categories/Note/"/>
+    
+    
+      <category term="vscode" scheme="https://www.zeffon.cn/tags/vscode/"/>
+    
+  </entry>
   
   <entry>
     <title>Ajax中formdata上传图片</title>
