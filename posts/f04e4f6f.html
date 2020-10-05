@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>LaTex在vscode上编译运行 | Zeffon&#39;s blog | 个人博客</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="vscode">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="Latex注重文字编写，不需要去关注排版。这个对于写论文之类的特殊文章简直是个神奇。记录一下LaTex在vscode上进行编译运行的教程。 正文mac系统安装流程 下载mactex安装包在mactex官网下载(接近4G,下载要等待一段时间)  安装LaTex扩展在vscode扩展应用商城中，安装LaTeX Workshop扩展  添加XeFLaTeX配置LaTeX WorkShop 插件默认只提供">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LaTex在vscode上编译运行">
+<meta property="og:url" content="https://www.zeffon.cn/posts/f04e4f6f.html">
+<meta property="og:site_name" content="Zeffon&#39;s blog">
+<meta property="og:description" content="Latex注重文字编写，不需要去关注排版。这个对于写论文之类的特殊文章简直是个神奇。记录一下LaTex在vscode上进行编译运行的教程。 正文mac系统安装流程 下载mactex安装包在mactex官网下载(接近4G,下载要等待一段时间)  安装LaTex扩展在vscode扩展应用商城中，安装LaTeX Workshop扩展  添加XeFLaTeX配置LaTeX WorkShop 插件默认只提供">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/10/01-01-add-XeFLaTex-config.jpg">
+<meta property="og:image" content="https://www.zeffon.cn/images/2020/10/01-02-build-LaTex.jpg">
+<meta property="article:published_time" content="2020-10-01T05:12:35.000Z">
+<meta property="article:modified_time" content="2020-09-28T06:45:04.684Z">
+<meta property="article:author" content="Zeffon">
+<meta property="article:tag" content="vscode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.zeffon.cn/images/2020/10/01-01-add-XeFLaTex-config.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Zeffon&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=1.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"   >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Zeffon</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="https://algo.zeffon.cn/" target="_blank" >
+                    <i class="icon icon-lg icon-book"></i>
+                    <span>算 法</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+        <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:ZeffonWu@gmail.com" target="_blank"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Zeffon" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+        </div>
+      
+      </ul>
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">LaTex在vscode上编译运行</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜索站内的博客">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正文"><span class="post-toc-number">1.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mac系统"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">mac系统</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#安装流程"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">安装流程</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#win系统"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">win系统</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#下载安装texlive"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">下载安装texlive</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#vscode配置"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">vscode配置</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#报错处理"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">报错处理</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-vscode-build-latex"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">LaTex在vscode上编译运行</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2020-10-01 13:12:35" datetime="2020-10-01T05:12:35.000Z"  itemprop="datePublished">2020-10-01</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Note/">Note</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">3</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Latex注重文字编写，不需要去关注排版。这个对于写论文之类的特殊文章简直是个神奇。记录一下LaTex在vscode上进行编译运行的教程。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="mac系统"><a href="#mac系统" class="headerlink" title="mac系统"></a>mac系统</h3><h4 id="安装流程"><a href="#安装流程" class="headerlink" title="安装流程"></a>安装流程</h4><ol>
+<li><p>下载mactex安装包<br>在<a href="https://tug.org/mactex/mactex-download.html" target="_blank" rel="noopener">mactex官网下载</a>(接近4G,下载要等待一段时间)</p>
+</li>
+<li><p>安装LaTex扩展<br>在vscode扩展应用商城中，安装<code>LaTeX Workshop</code>扩展</p>
+</li>
+<li><p>添加XeFLaTeX配置<br>LaTeX WorkShop 插件默认只提供<strong>PDFLaTeX</strong>，如果是中文编译则需要<strong>XeFLaTeX</strong>，所以还需另行配置。</p>
+<img src="/images/2020/10/01-01-add-XeFLaTex-config.jpg" width="70%" alt="install-vsix"> 
+</li>
+<li><p>配置代码<br>依次选择 <code>Code &gt; Preferences &gt; Settings</code>，点击下图所示花括号图标进入 Settings 的 JSON 文件（<code>用户配置</code>）</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">"latex-workshop.latex.recipes": [</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">      <span class="attr">"tools"</span>: [</span><br><span class="line">        <span class="string">"xelatex"</span></span><br><span class="line">      ]</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"xe*2"</span>,</span><br><span class="line">      <span class="attr">"tools"</span>: [</span><br><span class="line">        <span class="string">"xelatex"</span>,</span><br><span class="line">        <span class="string">"xelatex"</span></span><br><span class="line">      ]</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"xelatex -&gt; bibtex -&gt; xelatex*2"</span>,</span><br><span class="line">      <span class="attr">"tools"</span>: [</span><br><span class="line">        <span class="string">"xelatex"</span>,</span><br><span class="line">        <span class="string">"bibtex"</span>,</span><br><span class="line">        <span class="string">"xelatex"</span>,</span><br><span class="line">        <span class="string">"xelatex"</span></span><br><span class="line">      ]</span><br><span class="line">    }</span><br><span class="line">  ],</span><br><span class="line">  "latex-workshop.latex.tools": [</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"latexmk"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"latexmk"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-synctex=1"</span>,</span><br><span class="line">        <span class="string">"-interaction=nonstopmode"</span>,</span><br><span class="line">        <span class="string">"-file-line-error"</span>,</span><br><span class="line">        <span class="string">"-pdf"</span>,</span><br><span class="line">        <span class="string">"%DOC%"</span></span><br><span class="line">      ]</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"-synctex=1"</span>,</span><br><span class="line">        <span class="string">"-interaction=nonstopmode"</span>,</span><br><span class="line">        <span class="string">"-file-line-error"</span>,</span><br><span class="line">        <span class="string">"%DOC%"</span></span><br><span class="line">      ]</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"bibtex"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"bibtex"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">        <span class="string">"%DOCFILE%"</span></span><br><span class="line">      ]</span><br><span class="line">    }</span><br><span class="line">  ],</span><br><span class="line">  "latex-workshop.view.pdf.viewer": "tab"</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>在.tex文件的右上角的启动按钮-&gt;点击运行</p>
+<img src="/images/2020/10/01-02-build-LaTex.jpg" width="70%" alt="install-vsix">
+
+</li>
+</ol>
+<h3 id="win系统"><a href="#win系统" class="headerlink" title="win系统"></a>win系统</h3><h4 id="下载安装texlive"><a href="#下载安装texlive" class="headerlink" title="下载安装texlive"></a>下载安装texlive</h4><p>选择清华大学镜像下载会更快-<a href="https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/" target="_blank" rel="noopener">地址</a></p>
+<p>安装 - 以管理员方式运行安装脚本<code>install-tl-windows.bat</code><br>安装过程中记得给 全部用户进行安装</p>
+<h4 id="vscode配置"><a href="#vscode配置" class="headerlink" title="vscode配置"></a>vscode配置</h4><p>win的<strong>xelatex配置</strong></p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">"latex-workshop.latex.tools": [</span><br><span class="line">  {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">          <span class="string">"-synctex=1"</span>,</span><br><span class="line">          <span class="string">"-interaction=nonstopmode"</span>,</span><br><span class="line">          <span class="string">"-file-line-error"</span>,</span><br><span class="line">          <span class="string">"-pdf"</span>,</span><br><span class="line">          <span class="string">"%DOCFILE%"</span></span><br><span class="line">      ]</span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"pdflatex"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"pdflatex"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">          <span class="string">"-synctex=1"</span>,</span><br><span class="line">          <span class="string">"-interaction=nonstopmode"</span>,</span><br><span class="line">          <span class="string">"-file-line-error"</span>,</span><br><span class="line">          <span class="string">"%DOCFILE%"</span></span><br><span class="line">      ]</span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"bibtex"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"bibtex"</span>,</span><br><span class="line">      <span class="attr">"args"</span>: [</span><br><span class="line">          <span class="string">"%DOCFILE%"</span></span><br><span class="line">      ]</span><br><span class="line">  }</span><br><span class="line">],</span><br><span class="line">"latex-workshop.latex.recipes": [</span><br><span class="line">  {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"xelatex"</span>,</span><br><span class="line">      <span class="attr">"tools"</span>: [</span><br><span class="line">          <span class="string">"xelatex"</span></span><br><span class="line">      ]</span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"xe-&gt;bib-&gt;xe-&gt;xe"</span>,</span><br><span class="line">      <span class="attr">"tools"</span>: [</span><br><span class="line">          <span class="string">"xelatex"</span>,</span><br><span class="line">          <span class="string">"bibtex"</span>,</span><br><span class="line">          <span class="string">"xelatex"</span>,</span><br><span class="line">          <span class="string">"xelatex"</span></span><br><span class="line">      ]</span><br><span class="line">  },</span><br><span class="line">  {</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"pdflatex"</span>,</span><br><span class="line">      <span class="attr">"tools"</span>:[</span><br><span class="line">          <span class="string">"pdflatex"</span></span><br><span class="line">      ]</span><br><span class="line">  }</span><br><span class="line">],</span><br><span class="line">"latex-workshop.view.pdf.viewer": "tab",</span><br></pre></td></tr></tbody></table></figure>
+<p>与mac系统一样就不细说了</p>
+<h3 id="报错处理"><a href="#报错处理" class="headerlink" title="报错处理"></a>报错处理</h3><p><strong>在不同的系统中可能会因为字体导不进来而报错</strong>，我们可以进行<code>修改字体的名字</code>或是<code>增加字体</code>。</p>
+<blockquote>
+<p>在Mac系统中因为字体问题而产生报错问题：<br>Could not map source abbreviation O for OT.<br>Need to update /usr/local/texlive/2020/texmf-dist/fonts/map/fontname/special.map<br>Package fontspec Error: The font “FangSong” cannot be found.（<strong>找不到仿宋字体相关的包</strong>）</p>
+</blockquote>
+<p><strong>报错原因：</strong><br>宋字体在mactex中没有存在的字体包，所以会导致报错。</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li><p>更改样式中字体名<br>更改成计算机有仿宋字体的名字</p>
+</li>
+<li><p>计算机添加字体<br>~/Library/Fonts添加入<a href="https://github.com/dolbydu/font" target="_blank" rel="noopener">font</a>(下载后记得重命名为font)</p>
+<div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">使用中文字体会有文件编码的问题以及会造成不同的浏览器，不同系统语言的不兼容</span><br><span class="line">所以建议使用中文字体的英文表示。 如下：</span><br><span class="line"></span><br><span class="line">Mac OS的一些： </span><br><span class="line">华文细黑：STHeiti Light [STXihei] </span><br><span class="line">华文黑体：STHeiti </span><br><span class="line">华文楷体：STKaiti </span><br><span class="line">华文宋体：STSong </span><br><span class="line">华文仿宋：STFangsong </span><br><span class="line">儷黑 Pro：LiHei Pro Medium </span><br><span class="line">儷宋 Pro：LiSong Pro Light </span><br><span class="line">標楷體：BiauKai </span><br><span class="line">蘋果儷中黑：Apple LiGothic Medium </span><br><span class="line">蘋果儷細宋：Apple LiSung Light</span><br><span class="line"></span><br><span class="line">Windows的一些： </span><br><span class="line">新細明體：PMingLiU </span><br><span class="line">細明體：MingLiU </span><br><span class="line">標楷體：DFKai-SB </span><br><span class="line">黑体：SimHei </span><br><span class="line">宋体：SimSun </span><br><span class="line">新宋体：NSimSun </span><br><span class="line">仿宋：FangSong </span><br><span class="line">楷体：KaiTi </span><br><span class="line">仿宋_GB2312：FangSong_GB2312 </span><br><span class="line">楷体_GB2312：KaiTi_GB2312 </span><br><span class="line">微軟正黑體：Microsoft JhengHei </span><br><span class="line">微软雅黑体：Microsoft YaHei</span><br><span class="line"></span><br><span class="line">装Office会生出来的一些： </span><br><span class="line">隶书：LiSu </span><br><span class="line">幼圆：YouYuan </span><br><span class="line">华文细黑：STXihei </span><br><span class="line">华文楷体：STKaiti </span><br><span class="line">华文宋体：STSong </span><br><span class="line">华文中宋：STZhongsong </span><br><span class="line">华文仿宋：STFangsong </span><br><span class="line">方正舒体：FZShuTi </span><br><span class="line">方正姚体：FZYaoti </span><br><span class="line">华文彩云：STCaiyun </span><br><span class="line">华文琥珀：STHupo </span><br><span class="line">华文隶书：STLiti </span><br><span class="line">华文行楷：STXingkai </span><br><span class="line">华文新魏：STXinwei</span><br></pre></td></tr></tbody></table></figure></div></li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2020-09-28T06:45:04.684Z" itemprop="dateUpdated">2020-09-28 14:45:04</time>
+</span>
+
+
+        
+        原文链接：<a href="/posts/f04e4f6f.html" target="_blank" rel="external">https://www.zeffon.cn/posts/f04e4f6f.html</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://www.zeffon.cn'">
+            <img src="/img/avatar.png" alt="Zeffon">
+            <a>Zeffon</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>请我喝一杯咖啡吧</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vscode/" rel="tag">vscode</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/f04e4f6f.html&title=《LaTex在vscode上编译运行》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/f04e4f6f.html&title=《LaTex在vscode上编译运行》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/f04e4f6f.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LaTex在vscode上编译运行》 — Zeffon's blog&url=https://www.zeffon.cn/posts/f04e4f6f.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/f04e4f6f.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/posts/49c3fbfb.html" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：git-commit规范提交
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/posts/d318b657.html" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Java中json字符串与对象的转换jackson">下一篇：Java中json字符串与对象的转换jackson</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var gitalk = new Gitalk({
+            clientID: 'c921e7e9bb5b890ea5fa',
+            clientSecret: 'e031a584010ec889f517f250170671f5e5f7c8c4',
+            repo: 'blog',
+            owner: 'Zeffon',
+            admin: ['Zeffon']
+        });
+        gitalk.render('gitalk-container');
+    </script>
+</section>
+
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019 - 2020
+            <a href="https://www.zeffon.cn">zeffon.cn</a>
+            粤ICP备20049033号
+        </span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+ - - <span id="RunTime" style="color:#a7a7a7;"></span>
+        </span>
+
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/coffee.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.zeffon.cn/posts/f04e4f6f.html&title=《LaTex在vscode上编译运行》 — Zeffon's blog&pic=https://www.zeffon.cn/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.zeffon.cn/posts/f04e4f6f.html&title=《LaTex在vscode上编译运行》 — Zeffon's blog&source=记录平时的学习经验与心得" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.zeffon.cn/posts/f04e4f6f.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《LaTex在vscode上编译运行》 — Zeffon's blog&url=https://www.zeffon.cn/posts/f04e4f6f.html&via=https://www.zeffon.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.zeffon.cn/posts/f04e4f6f.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aS27CQBAFwNz/0kTKiigxvOceTxypZoUA4RoWrf59fMTn8XWeXz+/8/ObR+foNxcfXFzcMTd5wNHDXr9/dMn801+uhIuLu5HbBq8kPOV/QWLAxcW9J3eeGL2+PC4u7n/k5uEsT4ZwcXHvzM2Lk0nTJEmYltVquLi4A+48WZm/vry/i4uLu2gq0Qa1/PGPUwcXF3cP9/WYZN7mODdoeXN5XFzci7lt+dGORs6tX0QhDBcXdws3L35WpSx5k/RbRoaLi7udOxp/lqlPmwbh4uLu5K7CtWPalo6Li7uHm48/2wZK3jAtcLi4uLfhJmVJu3SVhz9cXNz93LXj1XPpUVGA4eLibuRO0pdJY6UOhbi4uDfgnluYSB6cjGnfjFJwcXEv4yY/l5Q0eTujTaHqnRFcXNwxN1+uytHn0proAri4uBu5LTRpgiwYk+Di4v4pd75emac7eTo1GqXg4uIOuG1AaRumLT3/FBcX92puPl5tiXlxVQxycHFxN3LzdKQth841VUcxFRcXdyM3b6S2rdWijYKLi3tLbp7otMExWsjAxcXdyM0XI/K1qnaIG5VbuLi4W7htw7RtkuZrHLi4uDfgfgJnaL5VaDqH5AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=1.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=1.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=1.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/12/14");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: "处世明故，循名责实。"
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Zeffon");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+</body>
+</html>
