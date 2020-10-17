@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.zeffon.cn/"/>
-  <updated>2020-10-05T05:56:10.468Z</updated>
+  <updated>2020-10-17T09:04:40.864Z</updated>
   <id>https://www.zeffon.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL嵌套IFNULL的使用</title>
+    <link href="https://www.zeffon.cn/posts/810e0d0e.html"/>
+    <id>https://www.zeffon.cn/posts/810e0d0e.html</id>
+    <published>2020-10-17T08:07:48.000Z</published>
+    <updated>2020-10-17T09:04:40.864Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>最近写项目时，遇到两张表中的数据有三种情况的返回值。为了查询速度考虑，写了一种一次查询的sql语句。</p><a id="more"></a><h2 id="前文"><a href="#前文" class="headerlink" title="前文"></a>前文</h2><h3 id="IFNULL语法"><a href="#IFNULL语法" class="headerlink" title="IFNULL语法"></a>IFNULL语法</h3><ol><li><p><code>IFNULL()</code>函数用于判断第一个表达式是否为<strong>NULL</strong>，如果为<strong>NULL</strong>则返回第二个参数的值，如果不为<strong>NULL</strong>则返回第一个参数的值。</p></li><li><p>语法格式为：</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SQL"><figure class="iseeu highlight /sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IFNULL(expr1, expr2)</span><br></pre></td></tr></tbody></table></figure></div></li><li><p>简单使用的话：</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT IFNULL(1, 0)</span><br><span class="line">     &gt; 1</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT IFNULL(0, 2)</span><br><span class="line">     &gt; 0   #是根据是否为null作为判断的   </span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT IFNULL(1/0, 3)</span><br><span class="line">     &gt; 3.0000  # 1/0在mysql中运算结果为null</span><br></pre></td></tr></tbody></table></figure></div></li><li><p>经过上面简单的使用，大概知道<code>IFNULL</code>是怎么样的了。IFNULL(expr1, expr2)中的<strong>expr1和expr2</strong>不仅仅可以写数字、表达式、简单SELECT语句，还可以写带有<code>IFNULL</code>的<strong>SELECT嵌套语句</strong>。</p></li></ol><h3 id="IFNULL嵌套"><a href="#IFNULL嵌套" class="headerlink" title="IFNULL嵌套"></a>IFNULL嵌套</h3><p>格式如下：</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SQL"><figure class="iseeu highlight /sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">IFNULL</span>(expr1, (<span class="keyword">SELECT</span> <span class="keyword">IFNULL</span>(expr2, expr3)))</span><br></pre></td></tr></tbody></table></figure></div><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h3><p>比如有两张数据表，一张master表为主表（有id，uid…），slave表为从表(有id, master_id, uid…)，是通过slave表中的master_id进行关联master表的。<br>这样就好比是拼购下单商品的场景。master表就好比是订单主表。<br>如果用户是自己发起拼单的话，会在master表中新增一条记录（master表中有记录订单新建者的字段），并且也会在slave生成一条记录；<br>如果不是自己发起的订单，自己是加入他人的订单，则只会在slave中新建一条记录。</p><h3 id="查询要求"><a href="#查询要求" class="headerlink" title="查询要求"></a>查询要求</h3><p>要求根据订单id和用户uid来查询订单：是用户创建的，还是用户只是加入，或者与用户无关。<br>如果用户是创建的话返回<code>3</code>，如果用户是加入的话返回<code>2</code>， 如果跟用户毫无关系的话返回<code>1</code></p><p>如果采用单表查询的需要查询两次，然后进行逻辑判断即可。</p><p>但是要是采用一次sql查询的话，可以通过IFNULL来实现。</p><h3 id="IFNULL写法"><a href="#IFNULL写法" class="headerlink" title="IFNULL写法"></a>IFNULL写法</h3><p>查询的订单id为10 用户的uid为199</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="SQL"><figure class="iseeu highlight /sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">IFNULL</span>(</span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="number">3</span> <span class="keyword">FROM</span> master_table m <span class="keyword">WHERE</span> m.id = <span class="number">10</span> <span class="keyword">AND</span> m.uid = <span class="number">199</span>), </span><br><span class="line">        (<span class="keyword">SELECT</span> <span class="keyword">IFNULL</span>((<span class="keyword">SELECT</span> <span class="number">2</span> <span class="keyword">FROM</span> slave_table s <span class="keyword">WHERE</span> s.master_id = <span class="number">10</span> <span class="keyword">AND</span> s.uid = <span class="number">199</span>), <span class="number">1</span>) </span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure></div><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近写项目时，遇到两张表中的数据有三种情况的返回值。为了查询速度考虑，写了一种一次查询的sql语句。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="https://www.zeffon.cn/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="mysql" scheme="https://www.zeffon.cn/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>git-commit规范提交</title>
